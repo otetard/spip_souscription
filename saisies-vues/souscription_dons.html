@@ -1,0 +1,20 @@
+<BOUCLE_test_multiple(CONDITION){si #ENV{multiple}|=={on}|oui}>
+	[(#SET{valeur,[(#ENV*{valeur}|is_array|?{[(#ENV*{valeur})],[(#ENV*{valeur}|explode{','})]})]})]
+	<B_souscription_dons_selectionnes>
+	<ul>
+	<BOUCLE_souscription_dons_selectionnes(SOUSCRIPTION_DONS){id_souscription_don IN #GET*{valeur}}
+		{par num nom, nom}{tout}>
+		<li class="choix">#NOM (#ID_SOUSCRIPTION_DON)</li>
+	</BOUCLE_souscription_dons_selectionnes>
+	</ul>
+	</B_souscription_dons_selectionnes>
+   	[(#ENV*{sans_reponse}|propre)]
+	<//B_souscription_dons_selectionnes>
+</BOUCLE_test_multiple>
+	<BOUCLE_souscription_don_selectionne(SOUSCRIPTION_DONS){id_souscription_don=#ENV{valeur}}
+		{par num nom, nom}{tout}>
+	  	<p>#NOM (#ID_SOUSCRIPTION_DON)</p>
+	</BOUCLE_souscription_don_selectionne>
+   	[(#ENV*{sans_reponse}|propre)]
+	<//B_souscription_don_selectionne>
+<//B_test_multiple>

@@ -1,0 +1,67 @@
+<BOUCLE_souscription_don(SOUSCRIPTION_DONS transactions souscription_campagnes){id_souscription_don}>
+
+[<div class="champ contenu_courriel[ (#COURRIEL*|strlen|?{'',vide})]">
+	<label><:souscription_don:label_courriel:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{courriel} courriel">(#COURRIEL)</span>
+</div>]
+
+[<div class="champ contenu_titre_campagne[ (#TITRE*|strlen|?{'',vide})]">
+	<label><:souscription_don:label_titre_campagne:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{titre} titre">(#TITRE)</span>
+</div>]
+
+[<div class="champ contenu_montant[ (#MONTANT*|strlen|?{'',vide})]">
+	<label><:souscription_don:label_montant:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{montant} montant">(#MONTANT) €</span>
+</div>]
+
+<div>
+  <ul>
+    [<li><strong>Identifiant de la transaction</strong> : <span dir="#LANG_DIR" class="#EDIT{id_transaction} id_transaction">(#ID_TRANSACTION)</li>]
+    [<li><strong>Statut</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#STATUT)</span></li>]
+    [<li><strong>Mode de paiement</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#MODE)</span></li>]
+    [<li><strong>Date de paiement</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#DATE_PAIEMENT)</span></li>]
+    [<li><strong>Identifiant d'autorisation</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#AUTORISATION_ID)</span></li>]
+  </ul>
+</div>
+
+<div style="border: 1px solid black ; margin: 1em; padding: 1em;">
+
+[<div class="champ contenu_nom[ (#NOM*|strlen|?{'',vide})]">
+	<label><:souscription_don:label_nom:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{nom} nom">(#NOM)</span>
+</div>]
+
+[<div class="champ contenu_prenom[ (#PRENOM*|strlen|?{'',vide})]">
+	<label><:souscription_don:label_prenom:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{prenom} prenom">(#PRENOM)</span>
+</div>]
+
+[<div class="champ contenu_code_postal[ (#CODE_POSTAL*|strlen|?{'',vide})]">
+	<label><:souscription_don:label_code_postal:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{code_postal} code_postal">(#CODE_POSTAL)</span>
+</div>]
+
+[<div class="champ contenu_adresse[ (#ADRESSE*|strlen|?{'',vide})]">
+	<label><:souscription_don:label_adresse:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{adresse} adresse">(#ADRESSE)</span>
+</div>]
+
+[<div class="champ contenu_ville[ (#VILLE*|strlen|?{'',vide})]">
+	<label><:souscription_don:label_ville:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{ville} ville">(#VILLE)</span>
+</div>]
+
+[<div class="champ contenu_recu_fiscal">
+	<label><:souscription_don:label_recu_fiscal:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{recu_fiscal} recu_fiscal">(#RECU_FISCAL|?{"oui","non"})</span>
+</div>]
+
+[<div class="champ contenu_envoyer_info">
+	<label><:souscription_don:label_envoyer_info:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{envoyer_info} envoyer_info">(#ENVOYER_INFO|?{"oui","non"})</span>
+</div>]
+
+</div>
+
+</BOUCLE_souscription_don>

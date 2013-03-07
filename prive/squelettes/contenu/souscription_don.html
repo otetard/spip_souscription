@@ -1,0 +1,42 @@
+[(#AUTORISER{voir,souscription_don,#ID_SOUSCRIPTION_DON}|sinon_interdire_acces)]
+<BOUCLE_souscription_don(SOUSCRIPTION_DONS){id_souscription_don}{si #ENV{exec}|=={souscription_don}}>
+[(#BOITE_OUVRIR{[
+	[(#AUTORISER{modifier,souscription_don,#ID_SOUSCRIPTION_DON})
+		[(#ID_SOUSCRIPTION_DON|afficher_qui_edite{souscription_don}|non)
+			[(#URL_ECRIRE{souscription_don_edit,id_souscription_don=#ID_SOUSCRIPTION_DON}|icone_verticale{<:souscription_don:icone_modifier_souscription_don:>,souscription_don,edit,right ajax preload})]
+		]
+		[(#ID_SOUSCRIPTION_DON|afficher_qui_edite{souscription_don}|oui)
+			[(#URL_ECRIRE{souscription_don_edit,id_souscription_don=#ID_SOUSCRIPTION_DON}|icone_verticale{#ID_SOUSCRIPTION_DON|afficher_qui_edite{souscription_don},warning-24,'',right edition_deja ajax preload})]
+		]
+	]
+
+	<h1>#PRENOM (#NOM)</h1>
+
+],simple fiche_objet})]
+
+<!--affiche_milieu-->
+
+<div id="wysiwyg">
+<INCLURE{fond=prive/objets/contenu/souscription_don,id=#ID_SOUSCRIPTION_DON,id_souscription_don=#ID_SOUSCRIPTION_DON,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
+</div>
+
+<div class="nettoyeur"></div>
+
+[(#AUTORISER{modifier,souscription_don,#ID_SOUSCRIPTION_DON})
+	[(#ID_SOUSCRIPTION_DON|afficher_qui_edite{souscription_don}|non)
+		[(#URL_ECRIRE{souscription_don_edit,id_souscription_don=#ID_SOUSCRIPTION_DON}|icone_verticale{<:souscription_don:icone_modifier_souscription_don:>,souscription_don,edit,right ajax preload})]
+	]
+	[(#ID_SOUSCRIPTION_DON|afficher_qui_edite{souscription_don}|oui)
+		[(#URL_ECRIRE{souscription_don_edit,id_souscription_don=#ID_SOUSCRIPTION_DON}|icone_verticale{#ID_SOUSCRIPTION_DON|afficher_qui_edite{souscription_don},warning-24,'',right edition_deja ajax preload})]
+	]
+]
+
+#PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,souscription_don,id,#ID_SOUSCRIPTION_DON},data,'<div class="nettoyeur"></div>'}}
+
+#BOITE_FERMER
+[(#EVAL{_AJAX}|oui)
+	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin');/*\\]\\]>*/</script>
+]
+</BOUCLE_souscription_don>
+[(#ENV**{exec}|=={souscription_don_edit}|?{#INCLURE{fond=prive/squelettes/contenu/souscription_don_edit,redirect='',env,retourajax=oui},#REM|sinon_interdire_acces})]
+<//B_souscription_don>

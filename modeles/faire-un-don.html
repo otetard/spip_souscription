@@ -1,0 +1,19 @@
+<BOUCLE_campagne(SOUSCRIPTION_CAMPAGNES){id_souscription_campagne=#ENV{campagne}}>
+
+<h2>#TITRE</h2>
+
+#TEXTE
+
+<BOUCLE_campagne_dons(SOUSCRIPTION_DONS transactions){id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}{transactions.reglee=oui}{somme montant}>
+[(#SET{montant,#SOMME{montant}|plus{#OBJECTIF_INITIAL}})]
+[(#SET{pourcentage_objectif,#GET{montant}|div{#OBJECTIF}|mult{100}})]
+
+Avancement de la campagne : #GET{montant} € sur #OBJECTIF € !
+<div class="progress progress-striped active">
+  <div class="bar" style="width: #GET{pourcentage_objectif}%;">#GET{pourcentage_objectif} %</div>
+</div>
+</BOUCLE_campagne_dons>
+
+#FORMULAIRE_SOUSCRIPTION_DON{#ENV{campagne}}
+
+</BOUCLE_campagne>

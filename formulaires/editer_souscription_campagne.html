@@ -1,0 +1,25 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_souscription_campagne,nouveau}'>
+  [<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+  [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+  [(#ENV{editable})
+  <form method='post' action='#ENV{action}'><div>
+      #ACTION_FORMULAIRE{#ENV{action}}
+
+
+      <ul>
+	[(#SAISIE{input, titre, obligatoire=oui, label=<:souscription_campagne:label_titre:>})]
+	[(#SAISIE{selection, type_objectif, obligatoire=oui,
+          label=<:souscription_campagne:label_type_objectif:>,
+          explication=<:souscription_campagne:explication_type_objectif:>,
+          datas=#ARRAY{souscriptiondon, Dons, souscriptionadhesion, Adhésions, souscriptionabonnement, Abonnements}})]
+	[(#SAISIE{input, objectif, obligatoire=oui, label=<:souscription_campagne:label_objectif:>, explication=<:souscription_campagne:explication_objectif:>})]
+	[(#SAISIE{input, objectif_initial, obligatoire=oui, label=<:souscription_campagne:label_objectif_initial:>, explication=<:souscription_campagne:explication_objectif_initial:>})]
+	[(#SAISIE{textarea, texte, label=<:souscription_campagne:label_description:>, inserer_barre=edition, rows=10})]
+      </ul>
+
+      <p class="boutons"><input type='submit' class='submit' value='<:souscription_campagne:confirmer_creation_campagne:>' /></p>
+    </div>
+  </form>
+  ]
+</div>

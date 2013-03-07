@@ -1,0 +1,7 @@
+<BOUCLE_souscription_don(SOUSCRIPTION_DONS){id_souscription_don=#ENV{id}}>
+<div class='infos'>
+[(#SET{texte_objet,<:souscription_don:titre_souscription_don:>})]
+<div class='numero'><:titre_cadre_numero_objet{objet=#GET{texte_objet}}:><p>#ID_SOUSCRIPTION_DON</p></div>
+
+</div>
+</BOUCLE_souscription_don>
