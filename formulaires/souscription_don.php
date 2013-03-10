@@ -126,8 +126,9 @@ function formulaires_souscription_don_verifier_dist($id_souscription_campagne)
     }
   }
 
-  if(intval($id_souscription_campagne) != intval(_request('id_souscription_campagne')))
-    $erreurs['message_erreur'] = "Campagne invalide";
+  if(!$id_souscription_campagne || intval($id_souscription_campagne) != intval($campagne)) {
+      $erreurs['message_erreur'] = "Campagne invalide";
+  }
     
   /* La campagne doit être valide (définie dans la base) et doit
    * accepter les dons. */
