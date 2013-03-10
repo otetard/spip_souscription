@@ -204,7 +204,7 @@ function formulaires_souscription_don_traiter_dist($id_souscription_campagne)
   else {
     $hash = $row['transaction_hash'];
     $id_transaction = $row['id_transaction'];
-    $redirect = generer_url_public("payer", "id_transaction=$id_transaction&transaction_hash=$hash");
+    $redirect = generer_url_public("payer", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
     $ret['redirect'] = $redirect;
   }
 
