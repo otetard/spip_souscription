@@ -53,7 +53,8 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
                                                                 $row=array(),
                                                                 $hidden='')
 {
-  return formulaires_editer_objet_verifier('souscription_campagne',
+  
+  $ret = formulaires_editer_objet_verifier('souscription_campagne',
                                            $id_souscription_campagne,
                                            array('titre',
                                                  'objectif',
@@ -61,6 +62,11 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
                                                  'type_objectif',
                                                  ));
 
+  $type = _request("type_objectif");
+  if(!in_array($type, array('don', 'abonnement', 'adhesion')))
+     $ret['type_objectif'] = "Type d'objectif invalide";
+
+  return $ret;
 }
 
 function formulaires_editer_souscription_campagne_traiter_dist($id_souscription_campagne='new',

@@ -68,7 +68,8 @@ function don_modifier($id_souscription_don, $set=false) {
                                 'adresse',
                                 'code_postal',
                                 'ville',
-                                'id_souscription_campagne'),
+                                'id_souscription_campagne',
+                                'type_souscription'),
                           // black list
                           array('statut', 'date'),
                           // donnees eventuellement fournies
