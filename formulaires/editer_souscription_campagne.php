@@ -52,14 +52,20 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
   $ret = formulaires_editer_objet_verifier('souscription_campagne',
                                            $id_souscription_campagne,
                                            array('titre',
-                                                 'objectif',
-                                                 'objectif_initial',
                                                  'type_objectif',
                                                  ));
 
   $type = _request("type_objectif");
   if(!in_array($type, array('don', 'abonnement', 'adhesion')))
      $ret['type_objectif'] = "Type d'objectif invalide";
+
+  $objectif_initial = _request('objectif_initial');
+  if(!ctype_digit($objectif_initial) || intval($objectif_initial) < 0)
+    $ret['objectif_initial'] = "Valeur de l'objectif initial invalide";
+
+  $objectif = _request('objectif');
+  if(!ctype_digit($objectif) || intval($objectif) < 0)
+    $ret['objectif'] = "Valeur de l'objectif initial invalide";
 
   return $ret;
 }
