@@ -209,25 +209,6 @@ function formulaires_souscription_don_traiter_dist($id_souscription_campagne)
 
   return $ret;
 }
-    
-/*   /\* return array('message_ok' => "Transaction $id_transaction cree", *\/ */
-/*   /\*              'editable' => true, *\/ */
-/*   /\*              'redirect' => $redirect); *\/ */
-
-/*   return formulaires_editer_objet_traiter('souscription_don', */
-/*                                           $id_souscription_don, */
-/*                                           '', */
-/*                                           $lier_trad, */
-/*                                           $redirect, */
-/*                                           $config_fonc, */
-/*                                           $row), */
-/*                                           $hidden); */
-/* } */
-/* else { */
-/*   return array('message_erreur' => "Echec creation de la transaction", */
-/*                'editable' => true); */
-/* } */
-
 
 function verifier_campagne($id_souscription_campagne) {
   /* FIXME: vérifier que la campagne a bien le bon statut (ouverte, fermée, terminée, etc.) */

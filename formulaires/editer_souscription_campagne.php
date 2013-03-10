@@ -32,18 +32,13 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
                                                                $hidden='')
 {
   return formulaires_editer_objet_charger('souscription_campagne',
-                                              $id_souscription_campagne,
-                                              '',
-                                              $lier_trad,
-                                              $retour,
-                                              $config_fonc,
-                                              $row,
-                                              $hidden);
-
-  /* return  array_merge($valeurs, array('objectif' => '0', */
-  /*                                     'objectif_initial' => '0', */
-  /*                                     'type_objectif' => 'souscriptiondon', */
-  /*                                     )); */
+                                          $id_souscription_campagne,
+                                          '',
+                                          $lier_trad,
+                                          $retour,
+                                          $config_fonc,
+                                          $row,
+                                          $hidden);
 }
 
 function formulaires_editer_souscription_campagne_verifier_dist($id_souscription_campagne='new',
