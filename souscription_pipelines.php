@@ -23,7 +23,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  */
 function souscription_optimiser_base_disparus($flux){
   include_spip('action/editer_liens');
-  $flux['data'] += objet_optimiser_liens(array('souscription_don'=>'*'),'*');
+  $flux['data'] += objet_optimiser_liens(array('souscription'=>'*'),'*');
   return $flux;
 }
 

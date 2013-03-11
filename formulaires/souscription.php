@@ -1,6 +1,6 @@
 <?php
 /**
- * Gestion du formulaire de d'édition de souscription_don
+ * Gestion du formulaire de d'édition de souscription
  *
  * @plugin     Souscription
  * @copyright  2013
@@ -17,54 +17,54 @@ include_spip('inc/editer');
 /**
  * Identifier le formulaire en faisant abstraction des paramètres qui ne représentent pas l'objet edité
  *
- * @param int|string $id_souscription_don
- *     Identifiant du souscription_don. 'new' pour un nouveau souscription_don.
+ * @param int|string $id_souscription
+ *     Identifiant du souscription. 'new' pour un nouveau souscription.
  * @param string $retour
  *     URL de redirection après le traitement
  * @param int $lier_trad
- *     Identifiant éventuel d'un souscription_don source d'une traduction
+ *     Identifiant éventuel d'un souscription source d'une traduction
  * @param string $config_fonc
  *     Nom de la fonction ajoutant des configurations particulières au formulaire
  * @param array $row
- *     Valeurs de la ligne SQL du souscription_don, si connu
+ *     Valeurs de la ligne SQL du souscription, si connu
  * @param string $hidden
  *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
  * @return string
  *     Hash du formulaire
  */
-function formulaires_souscription_don_identifier_dist($id_souscription_don='new',
+function formulaires_souscription_identifier_dist($id_souscription='new',
                                                       $retour='',
                                                       $lier_trad=0,
                                                       $config_fonc='',
                                                       $row=array(),
                                                       $hidden='')
 {
-  return serialize(array(intval($id_souscription_don)));
+  return serialize(array(intval($id_souscription)));
 }
 
 /**
- * Chargement du formulaire d'édition de souscription_don
+ * Chargement du formulaire d'édition de souscription
  *
  * Déclarer les champs postés et y intégrer les valeurs par défaut
  *
  * @uses formulaires_editer_objet_charger()
  *
- * @param int|string $id_souscription_don
- *     Identifiant du souscription_don. 'new' pour un nouveau souscription_don.
+ * @param int|string $id_souscription
+ *     Identifiant du souscription. 'new' pour un nouveau souscription.
  * @param string $retour
  *     URL de redirection après le traitement
  * @param int $lier_trad
- *     Identifiant éventuel d'un souscription_don source d'une traduction
+ *     Identifiant éventuel d'un souscription source d'une traduction
  * @param string $config_fonc
  *     Nom de la fonction ajoutant des configurations particulières au formulaire
  * @param array $row
- *     Valeurs de la ligne SQL du souscription_don, si connu
+ *     Valeurs de la ligne SQL du souscription, si connu
  * @param string $hidden
  *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
  * @return array
  *     Environnement du formulaire
  */
-function formulaires_souscription_don_charger_dist($id_souscription_campagne) {
+function formulaires_souscription_charger_dist($id_souscription_campagne) {
 
   if(!verifier_campagne($id_souscription_campagne))
     return false;
@@ -84,32 +84,32 @@ function formulaires_souscription_don_charger_dist($id_souscription_campagne) {
 }
 
 /**
- * Vérifications du formulaire d'édition de souscription_don
+ * Vérifications du formulaire d'édition de souscription
  *
  * Vérifier les champs postés et signaler d'éventuelles erreurs
  *
  * @uses formulaires_editer_objet_verifier()
  *
- * @param int|string $id_souscription_don
- *     Identifiant du souscription_don. 'new' pour un nouveau souscription_don.
+ * @param int|string $id_souscription
+ *     Identifiant du souscription. 'new' pour un nouveau souscription.
  * @param string $retour
  *     URL de redirection après le traitement
  * @param int $lier_trad
- *     Identifiant éventuel d'un souscription_don source d'une traduction
+ *     Identifiant éventuel d'un souscription source d'une traduction
  * @param string $config_fonc
  *     Nom de la fonction ajoutant des configurations particulières au formulaire
  * @param array $row
- *     Valeurs de la ligne SQL du souscription_don, si connu
+ *     Valeurs de la ligne SQL du souscription, si connu
  * @param string $hidden
  *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
  * @return array
  *     Tableau des erreurs
  */
-function formulaires_souscription_don_verifier_dist($id_souscription_campagne)
+function formulaires_souscription_verifier_dist($id_souscription_campagne)
 {
   $campagne = _request('id_souscription_campagne');
 
-  $erreurs = formulaires_editer_objet_verifier('souscription_don', 'new',
+  $erreurs = formulaires_editer_objet_verifier('souscription', 'new',
                                                array('courriel',
                                                      'montant',
                                                      'id_souscription_campagne'));
@@ -155,28 +155,28 @@ function formulaires_souscription_don_verifier_dist($id_souscription_campagne)
 }
 
 /**
- * Traitement du formulaire d'édition de souscription_don
+ * Traitement du formulaire d'édition de souscription
  *
  * Traiter les champs postés
  *
  * @uses formulaires_editer_objet_traiter()
  *
- * @param int|string $id_souscription_don
- *     Identifiant du souscription_don. 'new' pour un nouveau souscription_don.
+ * @param int|string $id_souscription
+ *     Identifiant du souscription. 'new' pour un nouveau souscription.
  * @param string $retour
  *     URL de redirection après le traitement
  * @param int $lier_trad
- *     Identifiant éventuel d'un souscription_don source d'une traduction
+ *     Identifiant éventuel d'un souscription source d'une traduction
  * @param string $config_fonc
  *     Nom de la fonction ajoutant des configurations particulières au formulaire
  * @param array $row
- *     Valeurs de la ligne SQL du souscription_don, si connu
+ *     Valeurs de la ligne SQL du souscription, si connu
  * @param string $hidden
  *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
  * @return array
  *     Retours des traitements
  */
-function formulaires_souscription_don_traiter_dist($id_souscription_campagne)
+function formulaires_souscription_traiter_dist($id_souscription_campagne)
 {
 
   $lier_trad=0;
@@ -184,7 +184,7 @@ function formulaires_souscription_don_traiter_dist($id_souscription_campagne)
   $row=array();
   $hidden='';
 
-  $ret = formulaires_editer_objet_traiter('souscription_don',
+  $ret = formulaires_editer_objet_traiter('souscription',
                                           'new',
                                           '',
                                           $lier_trad,
@@ -195,8 +195,10 @@ function formulaires_souscription_don_traiter_dist($id_souscription_campagne)
 
   $redirect = "";
   $row = sql_fetsel("transaction_hash,id_transaction", /* $select */
-                    "spip_transactions LEFT JOIN spip_souscription_dons USING(id_transaction)", /* $from */
-                    "id_souscription_don=".$ret['id_souscription_don']); /* $where */
+                    "spip_transactions LEFT JOIN spip_souscriptions USING(id_transaction)", /* $from */
+                    "id_souscription=".$ret['id_souscription']); /* $where */
+
+  print_r($row);
 
   if(!$row) {
     $ret['message_erreur'] = "Echec creation de la transaction";

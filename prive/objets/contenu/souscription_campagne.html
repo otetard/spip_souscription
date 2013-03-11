@@ -15,7 +15,7 @@
 	<span dir='#LANG_DIR' class='#EDIT{objectif} objectif'>(#OBJECTIF)</span>
 </div>]
 
-<BOUCLE_souscription_campagne_montant(SOUSCRIPTION_DONS transactions){id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}{transactions.reglee=oui}{somme montant}>
+<BOUCLE_souscription_campagne_montant(SOUSCRIPTIONS transactions){id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}{transactions.reglee=oui}{somme montant}>
 [(#SET{montant,#SOMME{montant}|plus{#OBJECTIF_INITIAL}})]
 <div class="champ contenu_objectif">
 	<label><:souscription_campagne:label_montant_actuel:> : </label>

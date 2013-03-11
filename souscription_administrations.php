@@ -25,11 +25,9 @@ function souscription_upgrade($nom_meta_base_version, $version_cible) {
   $maj = array();
 
   $maj['create'] = array(array('maj_tables',
-                               array('spip_souscription_dons',
+                               array('spip_souscriptions',
                                      'spip_souscription_campagnes',
                                      )));
-  $maj['0.0.3'] = array(array('sql_alter', "TABLE spip_souscription_dons CHANGE envoyer_info envoyer_info VARCHAR(3) NOT NULL DEFAULT ''"),
-                        array('sql_alter', "TABLE spip_souscription_dons CHANGE recu_fiscal recu_fiscal VARCHAR(3) NOT NULL DEFAULT ''"));
 
   include_spip('base/upgrade');
   maj_plugin($nom_meta_base_version, $version_cible, $maj);
@@ -44,13 +42,13 @@ function souscription_upgrade($nom_meta_base_version, $version_cible) {
  **/
 function souscription_vider_tables($nom_meta_base_version) {
 
-  sql_drop_table("spip_souscription_dons");
+  sql_drop_table("spip_souscriptions");
   sql_drop_table("spip_souscription_campagnes");
 
   /* Nettoyer les versionnages et forums */
-  sql_delete("spip_versions",              sql_in("objet", array('souscription_don')));
-  sql_delete("spip_versions_fragments",    sql_in("objet", array('souscription_don')));
-  sql_delete("spip_forum",                 sql_in("objet", array('souscription_don')));
+  sql_delete("spip_versions",              sql_in("objet", array('souscription')));
+  sql_delete("spip_versions_fragments",    sql_in("objet", array('souscription')));
+  sql_delete("spip_forum",                 sql_in("objet", array('souscription')));
 
   effacer_meta($nom_meta_base_version);
 }

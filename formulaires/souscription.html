@@ -1,0 +1,48 @@
+<script language="JavaScript" type="text/javascript">
+$(document).ready(function() {
+    if($('input[type=radio][name=recu_fiscal]:checked').attr('value') == 'on') {
+        $("#souscription_bloc_fiscal").show();
+    }
+    else {
+        $("#souscription_bloc_fiscal").hide();
+    }
+
+    $("input[type=radio][name=recu_fiscal]").change(function() {
+        $("#souscription_bloc_fiscal").toggle();
+    });
+});
+</script>
+
+<div class='formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id_souscription,nouveau}'>
+  [<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+  [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+
+  [(#ENV{editable})
+  <form method='post' action='#ENV{action}'><div>
+      #ACTION_FORMULAIRE{#ENV{action}}
+      <ul>
+	[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>})]
+	[(#SAISIE{input, montant, obligatoire=oui, label=<:souscription:label_montant:>})]
+	[(#SAISIE{oui_non, recu_fiscal, label=<:souscription:label_recu_fiscal:>})]
+        [(#SAISIE{oui_non, envoyer_info, label=<:souscription:label_envoyer_info:> })]
+        [(#SAISIE{hidden, id_souscription_campagne})]
+        [(#SAISIE{hidden, type_souscription})]
+      </ul>
+
+      <fieldset id="souscription_bloc_fiscal">
+        <legend>Informations complémentaires</legend>
+        <p>Les informations suivantes sont nécessaires (...)</p>
+        <ul>
+	  [(#SAISIE{input, prenom, label=<:souscription:label_prenom:>})]
+          [(#SAISIE{input, nom, label=<:souscription:label_nom:>})]
+	  [(#SAISIE{textarea, adresse, label=<:souscription:label_adresse:>, rows=3})]
+	  [(#SAISIE{input, code_postal, label=<:souscription:label_code_postal:>})]
+	  [(#SAISIE{input, ville, label=<:souscription:label_ville:>})]                    
+	</ul>
+      </fieldset>
+      <p class="boutons"><input type='submit' class='submit' value='<:souscription:confirmer:>' /></p>
+    </div>
+  </form>
+  ]
+</div>

@@ -1,0 +1,42 @@
+[(#AUTORISER{voir,souscription,#ID_SOUSCRIPTION}|sinon_interdire_acces)]
+<BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{si #ENV{exec}|=={souscription}}>
+[(#BOITE_OUVRIR{[
+	[(#AUTORISER{modifier,souscription,#ID_SOUSCRIPTION})
+		[(#ID_SOUSCRIPTION|afficher_qui_edite{souscription}|non)
+			[(#URL_ECRIRE{souscription_edit,id_souscription=#ID_SOUSCRIPTION}|icone_verticale{<:souscription:icone_modifier_souscription:>,souscription,edit,right ajax preload})]
+		]
+		[(#ID_SOUSCRIPTION|afficher_qui_edite{souscription}|oui)
+			[(#URL_ECRIRE{souscription_edit,id_souscription=#ID_SOUSCRIPTION}|icone_verticale{#ID_SOUSCRIPTION|afficher_qui_edite{souscription},warning-24,'',right edition_deja ajax preload})]
+		]
+	]
+
+	<h1>#PRENOM (#NOM)</h1>
+
+],simple fiche_objet})]
+
+<!--affiche_milieu-->
+
+<div id="wysiwyg">
+<INCLURE{fond=prive/objets/contenu/souscription,id=#ID_SOUSCRIPTION,id_souscription=#ID_SOUSCRIPTION,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
+</div>
+
+<div class="nettoyeur"></div>
+
+[(#AUTORISER{modifier,souscription,#ID_SOUSCRIPTION})
+	[(#ID_SOUSCRIPTION|afficher_qui_edite{souscription}|non)
+		[(#URL_ECRIRE{souscription_edit,id_souscription=#ID_SOUSCRIPTION}|icone_verticale{<:souscription:icone_modifier_souscription:>,souscription,edit,right ajax preload})]
+	]
+	[(#ID_SOUSCRIPTION|afficher_qui_edite{souscription}|oui)
+		[(#URL_ECRIRE{souscription_edit,id_souscription=#ID_SOUSCRIPTION}|icone_verticale{#ID_SOUSCRIPTION|afficher_qui_edite{souscription},warning-24,'',right edition_deja ajax preload})]
+	]
+]
+
+#PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,souscription,id,#ID_SOUSCRIPTION},data,'<div class="nettoyeur"></div>'}}
+
+#BOITE_FERMER
+[(#EVAL{_AJAX}|oui)
+	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin');/*\\]\\]>*/</script>
+]
+</BOUCLE_souscription>
+[(#ENV**{exec}|=={souscription_edit}|?{#INCLURE{fond=prive/squelettes/contenu/souscription_edit,redirect='',env,retourajax=oui},#REM|sinon_interdire_acces})]
+<//B_souscription>

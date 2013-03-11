@@ -4,10 +4,10 @@
 <select name="#ENV{nom}[(#ENV{multiple}|?{\[\]})]" id="champ_[(#ENV{nom}|saisie_nom2classe)]"[ class="(#ENV{class})"][(#ENV{multiple}|oui) multiple="multiple" size="#ENV{size,10}"][ disabled="(#ENV{disable})"]>
 	[(#ENV{cacher_option_intro}|ou{#ENV{multiple}}|non)
 		<option value="">[(#ENV{option_intro})]</option>]
-	<BOUCLE_souscription_dons(SOUSCRIPTION_DONS){par num nom, nom}{id_transaction?}{recherche?}{tout}>
+	<BOUCLE_souscriptions(SOUSCRIPTIONS){par num nom, nom}{id_transaction?}{recherche?}{tout}>
 		[(#ENV{multiple}|oui)
-		<option value="#ID_SOUSCRIPTION_DON"[(#ID_SOUSCRIPTION_DON|in_array{#ENV{valeur_forcee,#GET{valeur,#ENV{defaut,#ARRAY}}}}|oui) selected="selected"]>#NOM</option>]
+		<option value="#ID_SOUSCRIPTION"[(#ID_SOUSCRIPTION|in_array{#ENV{valeur_forcee,#GET{valeur,#ENV{defaut,#ARRAY}}}}|oui) selected="selected"]>#NOM</option>]
 		[(#ENV{multiple}|non)
-		<option value="#ID_SOUSCRIPTION_DON"[(#ID_SOUSCRIPTION_DON|=={#ENV{valeur_forcee,#ENV{valeur,#ENV{defaut}}}}|oui) selected="selected"]>#NOM</option>]
-	</BOUCLE_souscription_dons>
+		<option value="#ID_SOUSCRIPTION"[(#ID_SOUSCRIPTION|=={#ENV{valeur_forcee,#ENV{valeur,#ENV{defaut}}}}|oui) selected="selected"]>#NOM</option>]
+	</BOUCLE_souscriptions>
 </select>

@@ -22,7 +22,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     Déclarations d'interface pour le compilateur
  */
 function souscription_declarer_tables_interfaces($interfaces) {
-  $interfaces['table_des_tables']['souscription_dons'] = 'souscription_dons';
+  $interfaces['table_des_tables']['souscriptions'] = 'souscriptions';
   $interfaces['table_des_tables']['souscription_campagnes'] = 'souscription_campagnes';
 
   return $interfaces;
@@ -40,11 +40,11 @@ function souscription_declarer_tables_interfaces($interfaces) {
  */
 function souscription_declarer_tables_objets_sql($tables) {
 
-  $tables['spip_souscription_dons'] =
-    array('type' => 'souscription_don',
+  $tables['spip_souscriptions'] =
+    array('type' => 'souscription',
           'principale' => "oui",
-          'table_objet_surnoms' => array('souscriptiondon'), // table_objet('souscription_don') => 'souscription_dons'
-          'field'=> array("id_souscription_don" => "bigint(21) NOT NULL",
+          'table_objet_surnoms' => array('souscription'), // table_objet('souscription') => 'souscription'
+          'field'=> array("id_souscription" => "bigint(21) NOT NULL",
                           "id_transaction"      => "bigint(21) NOT NULL DEFAULT 0",
                           "id_souscription_campagne" => "bigint(21) NOT NULL DEFAULT 0",
                           "courriel"            => "text NOT NULL DEFAULT ''",
@@ -59,7 +59,7 @@ function souscription_declarer_tables_objets_sql($tables) {
                           "date_souscription "  => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
                           "maj"                 => "TIMESTAMP"
                           ),
-          'key' => array("PRIMARY KEY"          => "id_souscription_don",
+          'key' => array("PRIMARY KEY"          => "id_souscription",
                          "KEY id_transaction"   => "id_transaction",
                          "KEY id_souscription_campagne" => "id_souscription_campagne"),
           'titre' => "nom AS titre, '' AS lang",

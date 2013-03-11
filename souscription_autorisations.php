@@ -19,22 +19,22 @@ function souscription_autoriser(){}
 
 
 // -----------------
-// Objet souscription_dons
+// Objet souscriptions
 
 
 /**
- * Autorisation de voir un élément de menu (souscriptiondons)
+ * Autorisation de voir un élément de menu (souscriptions)
  **/
-function autoriser_souscriptiondons_menu_dist($faire, $type, $id, $qui, $opt){
+function autoriser_souscriptions_menu_dist($faire, $type, $id, $qui, $opt){
   return true;
 }
 
 
 /**
- * Autorisation de voir le bouton d'accès rapide de création (souscriptiondon)
+ * Autorisation de voir le bouton d'accès rapide de création (souscription)
  **/
-function autoriser_souscriptiondoncreer_menu_dist($faire, $type, $id, $qui, $opt){
-  /* return autoriser('creer', 'souscription_don', '', $qui, $opt); */
+function autoriser_souscriptioncreer_menu_dist($faire, $type, $id, $qui, $opt){
+  /* return autoriser('creer', 'souscription', '', $qui, $opt); */
   return false;
 }
 
@@ -42,7 +42,7 @@ function autoriser_souscriptiondoncreer_menu_dist($faire, $type, $id, $qui, $opt
  * Autorisation de créer un don. Tout le monde est autorisé
  * à faire un don.
  **/
-function autoriser_souscriptiondon_creer_dist($faire, $type, $id, $qui, $opt) {
+function autoriser_souscription_creer_dist($faire, $type, $id, $qui, $opt) {
   return true;
 }
 
@@ -50,7 +50,7 @@ function autoriser_souscriptiondon_creer_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de voir un don. Il faut être administrateur pour voir
  * un don.
  **/
-function autoriser_souscriptiondon_voir_dist($faire, $type, $id, $qui, $opt) {
+function autoriser_souscription_voir_dist($faire, $type, $id, $qui, $opt) {
   return autoriser('webmestre', '', '', $qui);
 }
 
@@ -58,7 +58,7 @@ function autoriser_souscriptiondon_voir_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de modifier un don. Personne n'est autorisé à le
  * faire.
  **/
-function autoriser_souscriptiondon_modifier_dist($faire, $type, $id, $qui, $opt) {
+function autoriser_souscription_modifier_dist($faire, $type, $id, $qui, $opt) {
   return false;
 }
 
@@ -66,13 +66,13 @@ function autoriser_souscriptiondon_modifier_dist($faire, $type, $id, $qui, $opt)
  * Autorisation de supprimer un don. Personne n'est autorisé à le
  * faire.
  **/
-function autoriser_souscriptiondon_supprimer_dist($faire, $type, $id, $qui, $opt) {
+function autoriser_souscription_supprimer_dist($faire, $type, $id, $qui, $opt) {
   return false;
 }
 
 /* 
  * Autorisation d'exporter un don.
  */
-function autoriser_souscriptiondon_exporter_dist($faire, $type, $id, $qui, $opt) {
+function autoriser_souscription_exporter_dist($faire, $type, $id, $qui, $opt) {
   return autoriser('webmestre', '', '', $qui);
 }

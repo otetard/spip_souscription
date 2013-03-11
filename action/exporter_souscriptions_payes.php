@@ -1,7 +1,7 @@
 <?php
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-function action_exporter_dons_tous_dist($arg=null) {
+function action_exporter_souscriptions_payes_dist($arg=null) {
 
   /* FIXME: permettre de selectionner les exports */
   /* FIXME: améliorer la jointure... */
@@ -19,11 +19,12 @@ function action_exporter_dons_tous_dist($arg=null) {
   }
 
 
-  $row = sql_select("id_souscription_don, courriel,"
+  $row = sql_select("id_souscription, courriel,"
                     ."montant, reglee, spip_transactions.statut, date_paiement, mode, autorisation_id,"
                     ."nom, prenom, code_postal, ville, recu_fiscal, envoyer_info, date_souscription,"
-                    ."id_souscription_campagne, titre",
-                    "spip_souscription_dons LEFT JOIN spip_transactions USING(id_transaction) LEFT JOIN spip_souscription_campagnes USING(id_souscription_campagne)");
+                    ."id_souscription_campagne, titre", /* $select */
+                    "spip_souscriptions LEFT JOIN spip_transactions USING(id_transaction) LEFT JOIN spip_souscription_campagnes USING(id_souscription_campagne) ",
+                    "reglee='oui'"); /* $where */
 
   $entete = array("ID du don",
                   "Courriel",
@@ -46,6 +47,6 @@ function action_exporter_dons_tous_dist($arg=null) {
   /* Utilisation de la fonction exporter_csv de Bonux */
   $exporter_csv = charger_fonction('exporter_csv', 'inc/', true);
 
-  $exporter_csv('souscription_dons_tous', $row, ',', $entete);
+  $exporter_csv('souscriptions_payes', $row, ',', $entete);
   exit();
 }

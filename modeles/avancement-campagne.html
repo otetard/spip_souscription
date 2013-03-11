@@ -1,4 +1,4 @@
-<BOUCLE_avancement_campagne(SOUSCRIPTION_CAMPAGNES souscription_dons transactions){id_souscription_campagne=1}{transactions.reglee=oui}{somme montant}{objectif>0}>
+<BOUCLE_avancement_campagne(SOUSCRIPTION_CAMPAGNES souscriptions transactions){id_souscription_campagne=1}{transactions.reglee=oui}{somme montant}{objectif>0}>
 [(#SET{montant,#SOMME{montant}|plus{#OBJECTIF_INITIAL}})]
 [(#SET{pourcentage_objectif,#GET{montant}|div{#OBJECTIF}|mult{100}})]
 
