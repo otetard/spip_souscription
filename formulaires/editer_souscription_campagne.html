@@ -1,9 +1,9 @@
-<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_souscription_campagne,nouveau}'>
+<div class="formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_souscription_campagne,nouveau}">
   [<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
   [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
 
   [(#ENV{editable})
-  <form method='post' action='#ENV{action}'><div>
+  <form method="post" action="#ENV{action}"><div>
       #ACTION_FORMULAIRE{#ENV{action}}
 
 
@@ -18,7 +18,7 @@
 	[(#SAISIE{textarea, texte, label=<:souscription_campagne:label_description:>, inserer_barre=edition, rows=10})]
       </ul>
 
-      <p class="boutons"><input type='submit' class='submit' value='<:souscription_campagne:confirmer_creation_campagne:>' /></p>
+      <p class="boutons"><input type="submit" class="submit" value="<:souscription_campagne:confirmer_creation_campagne:>" /></p>
     </div>
   </form>
   ]
