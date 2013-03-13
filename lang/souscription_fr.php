@@ -64,8 +64,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_creer_associer_souscription' => 'Créer et associer un don',
 	'titre_langue_souscription' => 'Langue de ce don',
 	'titre_logo_souscription' => 'Logo de ce don',
-	'titre_souscription' => 'Don',
-	'titre_souscriptions' => 'Dons',
+	'titre_souscription' => 'Souscription',
+	'titre_souscriptions' => 'Souscriptions',
 	'titre_souscriptions_rubrique' => 'Dons de la rubrique',
 
         // V
