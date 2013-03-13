@@ -1,9 +1,18 @@
-<BOUCLE_avancement_campagne(SOUSCRIPTION_CAMPAGNES souscriptions transactions){id_souscription_campagne=1}{transactions.reglee=oui}{somme montant}{objectif>0}>
+<BOUCLE_campagne(SOUSCRIPTION_CAMPAGNES){id_souscription_campagne=#ENV{campagne}}{objectif>0}>
+<BOUCLE_avancement_campagne(SOUSCRIPTIONS transactions){id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}{transactions.reglee=oui}{somme montant}>
 [(#SET{montant,#SOMME{montant}|plus{#OBJECTIF_INITIAL}})]
-[(#SET{pourcentage_objectif,#GET{montant}|div{#OBJECTIF}|mult{100}})]
+[(#SET{pourcentage_objectif,#GET{montant}|div{#OBJECTIF}|mult{100}|round{2}})]
+</BOUCLE_avancement_campagne>
 
-Avancement de la campagne : #GET{montant} € sur #OBJECTIF € !
+<p>
+  Avancement de la campagne :
+  [(#TYPE_OBJECTIF|=={don}|oui) #GET{montant} € sur #OBJECTIF € !]
+  [(#TYPE_OBJECTIF|=={adhesion}|oui) #GET{montant} adhésions sur #OBJECTIF !]
+  [(#TYPE_OBJECTIF|=={abonnement}|oui) #GET{montant} abonnements sur #OBJECTIF !]
+</p>
+
 <div class="progress progress-striped active">
   <div class="bar" style="width: #GET{pourcentage_objectif}%;">#GET{pourcentage_objectif} %</div>
 </div>
-</BOUCLE_avancement_campagne>
+
+</BOUCLE_campagne>
