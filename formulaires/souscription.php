@@ -74,9 +74,13 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
                         "spip_souscription_campagnes",
                         "id_souscription_campagne=$id_souscription_campagne");
 
+  $recu_fiscal = "";
+  if($type == "adhesion")
+    $recu_fiscal = "on";
+
   return array('montant' => '',
                'courriel' => '',
-               'recu_fiscal' => '',
+               'recu_fiscal' => $recu_fiscal,
                'envoyer_info' => 'on',
                'prenom' => '',
                'nom' => '',
