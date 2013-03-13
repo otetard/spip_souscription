@@ -1,10 +1,9 @@
-<div class='formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id_souscription,nouveau}'>
+<div class="formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id_souscription,nouveau}[ formulaire_souscription_(#ENV{type_souscription})]">
   [<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
   [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
 
-
   [(#ENV{editable})
-  <form method='post' action='#ENV{action}'><div>
+  <form method="post" action="#ENV{action}"><div>
       #ACTION_FORMULAIRE{#ENV{action}}
       <ul>
 	[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>})]
@@ -15,9 +14,9 @@
         [(#SAISIE{hidden, type_souscription})]
       </ul>
 
-      <fieldset id="souscription_bloc_fiscal">
+      <fieldset class="souscription_bloc_fiscal">
         <legend>Informations complémentaires</legend>
-        <p>Les informations suivantes sont nécessaires (...)</p>
+        <p>FIXME: Les informations suivantes sont nécessaires (...)</p>
         <ul>
 	  [(#SAISIE{input, prenom, label=<:souscription:label_prenom:>})]
           [(#SAISIE{input, nom, label=<:souscription:label_nom:>})]
@@ -26,7 +25,7 @@
 	  [(#SAISIE{input, ville, label=<:souscription:label_ville:>})]                    
 	</ul>
       </fieldset>
-      <p class="boutons"><input type='submit' class='submit' value='<:souscription:confirmer:>' /></p>
+      <p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer:>" /></p>
     </div>
   </form>
   ]

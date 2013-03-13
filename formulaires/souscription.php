@@ -69,6 +69,11 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
   if(!verifier_campagne($id_souscription_campagne))
     return false;
 
+  /* Récupération des information à propos de la campagne */
+  $type = sql_getfetsel("type_objectif",
+                        "spip_souscription_campagnes",
+                        "id_souscription_campagne=$id_souscription_campagne");
+
   return array('montant' => '',
                'courriel' => '',
                'recu_fiscal' => '',
@@ -79,7 +84,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
                'code_postal' => '',
                'ville' => '',
                'id_souscription_campagne' => $id_souscription_campagne,
-               'type_souscription' => "don",
+               'type_souscription' => $type,
                );
 }
 
@@ -115,7 +120,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne)
                                                      'id_souscription_campagne'));
 
   if(!verifier_campagne($id_souscription_campagne)) {
-    $erreurs['message_erreur'] = "La campagne à laquelle est associée ce don est invalide";
+    $erreurs['message_erreur'] = "La campagne à laquelle est associée cette souscription est invalide";
   }
 
   if(_request('recu_fiscal')) {
@@ -136,11 +141,12 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne)
                         "spip_souscription_campagnes",
                         "id_souscription_campagne=$id_souscription_campagne");
 
-  if(!$type || $type != "don")
+  if(!$type || !in_array($type, array("don", "adhesion", "abonnement")))
     $erreurs['message_erreur'] = "Type de souscription invalide";
 
-  /* Le champ 'type' (hidden) doit être « don » */
-  if(_request('type_souscription') != "don")
+  /* Le champ 'type' (hidden) doit être le même que celui défini dans
+   * la campagne. */
+  if(_request('type_souscription') != $type)
     $erreurs['message_erreur'] = "Type de souscription invalide: " . _request('type_souscription');
 
   if ($e = _request('courriel') AND !email_valide($e))
@@ -218,8 +224,7 @@ function verifier_campagne($id_souscription_campagne) {
 
   /* Vérification de l'existance de la *campagne*, de son *statut* et de la *concordance du type* */
   if(intval($id_souscription_campagne)
-     AND $t = sql_getfetsel('type_objectif', 'spip_souscription_campagnes', 'id_souscription_campagne='.intval($id_souscription_campagne))
-     AND $t == 'don')
+     AND $t = sql_getfetsel('type_objectif', 'spip_souscription_campagnes', 'id_souscription_campagne='.intval($id_souscription_campagne)))
     {
       return true;
     }
