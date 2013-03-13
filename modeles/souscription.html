@@ -1,10 +1,8 @@
 <BOUCLE_campagne(SOUSCRIPTION_CAMPAGNES){id_souscription_campagne=#ENV{campagne}}>
+<h3>#TITRE</h3>
 
-<h2>#TITRE</h2>
+[(#TEXTE)]
 
-#TEXTE
-
-#MODELE{avancement-campagne,bla=1}
+#MODELE{avancement-campagne,campagne=#ENV{campagne}}
 #FORMULAIRE_SOUSCRIPTION{#ENV{campagne}}
-
 </BOUCLE_campagne>
