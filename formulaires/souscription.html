@@ -1,18 +1,3 @@
-<script language="JavaScript" type="text/javascript">
-$(document).ready(function() {
-    if($('input[type=radio][name=recu_fiscal]:checked').attr('value') == 'on') {
-        $("#souscription_bloc_fiscal").show();
-    }
-    else {
-        $("#souscription_bloc_fiscal").hide();
-    }
-
-    $("input[type=radio][name=recu_fiscal]").change(function() {
-        $("#souscription_bloc_fiscal").toggle();
-    });
-});
-</script>
-
 <div class='formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id_souscription,nouveau}'>
   [<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
   [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
