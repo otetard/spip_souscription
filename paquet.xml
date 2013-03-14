@@ -6,7 +6,7 @@
     compatibilite="[3.0.5;3.0.*]"
     logo=""
     documentation=""
-    schema="0.0.3"
+    schema="0.1"
     >
 
   <nom>Souscription</nom>

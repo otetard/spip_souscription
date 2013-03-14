@@ -63,6 +63,7 @@ function souscription_modifier($id_souscription, $set=false) {
                           array('courriel',
                                 'recu_fiscal',
                                 'envoyer_info',
+                                'informer_comite_local',
                                 'prenom',
                                 'nom',
                                 'adresse',

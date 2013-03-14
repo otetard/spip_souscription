@@ -82,6 +82,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
                'courriel' => '',
                'recu_fiscal' => $recu_fiscal,
                'envoyer_info' => 'on',
+               'informer_comite_local' => 'on',
                'prenom' => '',
                'nom' => '',
                'adresse' => '',

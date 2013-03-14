@@ -10,6 +10,7 @@
 	[(#SAISIE{input, montant, obligatoire=oui, label=<:souscription:label_montant:>})]
 	[(#SAISIE{oui_non, recu_fiscal, label=<:souscription:label_recu_fiscal:>})]
         [(#SAISIE{oui_non, envoyer_info, label=<:souscription:label_envoyer_info:> })]
+        [(#ENV{type_souscription}|=={adhesion}|oui) [(#SAISIE{oui_non, informer_comite_local, label=<:souscription:label_informer_comite_local:> })]]
         [(#SAISIE{hidden, id_souscription_campagne})]
         [(#SAISIE{hidden, type_souscription})]
       </ul>
