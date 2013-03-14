@@ -16,7 +16,7 @@
 
       <fieldset class="souscription_bloc_fiscal">
         <legend>Informations complémentaires</legend>
-        <p>FIXME: Les informations suivantes sont nécessaires (...)</p>
+        [(#INCLURE{fond=inclure/souscription_bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
         <ul>
 	  [(#SAISIE{input, prenom, label=<:souscription:label_prenom:>})]
           [(#SAISIE{input, nom, label=<:souscription:label_nom:>})]

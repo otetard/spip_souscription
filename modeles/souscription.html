@@ -1,6 +1,8 @@
 <BOUCLE_campagne(SOUSCRIPTION_CAMPAGNES){id_souscription_campagne=#ENV{campagne}}>
 <h3>#TITRE</h3>
 
+[(#INCLURE{fond=#VAL{inclure/presentation_type},type_objectif=#TYPE_OBJECTIF})]
+
 [(#TEXTE)]
 
 #MODELE{avancement-campagne,campagne=#ENV{campagne}}
