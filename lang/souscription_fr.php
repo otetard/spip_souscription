@@ -22,21 +22,21 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
         'titre_types_souscriptions' => 'Types de souscriptions',
 
 	// A
-	'ajouter_lien_souscription' => 'Ajouter ce don',
+	'ajouter_lien_souscription' => 'Ajouter cette souscription',
 
 	// C
-        'confirmer' => 'Faire un don',
+        'confirmer' => 'Faire une souscription',
 
 	// E
 	'explication_envoyer_info' => 'Souhaite recevoir des informations publiques',
 
 	// I
-	'icone_creer_souscription' => 'Créer un don',
-	'icone_modifier_souscription' => 'Modifier ce don',
-	'info_1_souscription' => 'Un don',
-	'info_aucun_souscription' => 'Aucun don',
-	'info_nb_souscriptions' => '@nb@ dons',
-	'info_souscriptions_auteur' => 'Les dons de cet auteur',
+	'icone_creer_souscription' => 'Créer une souscription',
+	'icone_modifier_souscription' => 'Modifier cette souscription',
+	'info_1_souscription' => 'Une souscription',
+	'info_aucun_souscription' => 'Aucune souscription',
+	'info_nb_souscriptions' => '@nb@ souscriptions',
+	'info_souscriptions_auteur' => 'Les souscriptions de cet auteur',
 
 	// L
 	'label_adresse' => 'Adresse',
@@ -51,24 +51,16 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_ville' => 'Ville',
         'label_campagne' => 'Campagne',
         'label_titre_campagne' => 'Titre de la campagne',
-        'label_exporter_payes' => 'Exporter les dons payés',
-        'label_exporter_tous' => 'Exporter tous les dons',
+        'label_exporter_payes' => 'Exporter les souscriptions payés',
+        'label_exporter_tous' => 'Exporter toutes les souscriptions',
         'label_informer_comite_local' => "Informer le comité local le plus proche",
         'label_type_souscription' => "Type de souscription",
 
-	// R
-	'retirer_lien_souscription' => 'Retirer ce don',
-	'retirer_tous_liens_souscriptions' => 'Retirer tous les dons',
-
 	// T
-	'texte_ajouter_souscription' => 'Ajouter un don',
-	'texte_changer_statut_souscription' => 'Ce don est :',
-	'texte_creer_associer_souscription' => 'Créer et associer un don',
-	'titre_langue_souscription' => 'Langue de ce don',
-	'titre_logo_souscription' => 'Logo de ce don',
+	'texte_ajouter_souscription' => 'Ajouter une souscription',
+	'texte_changer_statut_souscription' => 'Cette souscription est :',
 	'titre_souscription' => 'Souscription',
 	'titre_souscriptions' => 'Souscriptions',
-	'titre_souscriptions_rubrique' => 'Dons de la rubrique',
 
         // V
         'voir_exporter' => "Exporter les dons",
