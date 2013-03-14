@@ -127,14 +127,6 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne)
     $erreurs['message_erreur'] = "La campagne à laquelle est associée cette souscription est invalide";
   }
 
-  if(_request('recu_fiscal')) {
-    foreach(array('prenom', 'nom', 'adresse', 'code_postal', 'ville') as $obligatoire) {
-      if(!_request($obligatoire)) {
-        $erreurs[$obligatoire] = 'Ce champ est obligatoire (reçu fiscal demandé)';
-      }
-    }
-  }
-
   if(!$id_souscription_campagne || intval($id_souscription_campagne) != intval($campagne)) {
       $erreurs['message_erreur'] = "Campagne invalide";
   }
@@ -152,6 +144,20 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne)
    * la campagne. */
   if(_request('type_souscription') != $type)
     $erreurs['message_erreur'] = "Type de souscription invalide: " . _request('type_souscription');
+
+
+  if(_request('recu_fiscal') || $type == "adhesion") {
+    foreach(array('prenom', 'nom', 'adresse', 'code_postal', 'ville') as $obligatoire) {
+      if(!_request($obligatoire)) {
+        if($type == "adhesion") {
+          $erreurs[$obligatoire] = "Ce champ est obligatoire pour les adhésions";
+        }
+        else {
+          $erreurs[$obligatoire] = 'Ce champ est obligatoire (reçu fiscal demandé)';
+        }
+      }
+    }
+  }
 
   if ($e = _request('courriel') AND !email_valide($e))
     $erreurs['courriel'] = _T('form_prop_indiquer_email');
