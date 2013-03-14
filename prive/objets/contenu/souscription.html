@@ -1,5 +1,10 @@
 <BOUCLE_souscription(SOUSCRIPTIONS transactions souscription_campagnes){id_souscription}>
 
+[<div class="champ contenu_type_souscription[ (#TYPE_SOUSCRIPTION*|strlen|?{'',vide})]">
+	<label><:souscription:label_type_souscription:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{type_souscription} type_souscription">(#TYPE_SOUSCRIPTION)</span>
+</div>]
+
 [<div class="champ contenu_courriel[ (#COURRIEL*|strlen|?{'',vide})]">
 	<label><:souscription:label_courriel:> : </label>
 	<span dir="#LANG_DIR" class="#EDIT{courriel} courriel">(#COURRIEL)</span>

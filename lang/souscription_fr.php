@@ -54,6 +54,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
         'label_exporter_payes' => 'Exporter les dons payés',
         'label_exporter_tous' => 'Exporter tous les dons',
         'label_informer_comite_local' => "Informer le comité local le plus proche",
+        'label_type_souscription' => "Type de souscription",
 
 	// R
 	'retirer_lien_souscription' => 'Retirer ce don',
