@@ -1,4 +1,11 @@
 #FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
 <div class="nettoyeur"></div>
+<div class="onglets_simple clearfix">
+	<ul>
+		<li>[(#SELF|parametre_url{type_souscription,'XXX'}|replace{XXX,''}|lien_ou_expose{Toutes,[(#ENV{type_souscription}|non)],ajax})]</li>
+		<li>[(#SELF|parametre_url{type_souscription,'don'}|lien_ou_expose{Dons,#ENV{type_souscription}|=={don},ajax})]</li>
+		<li>[(#SELF|parametre_url{type_souscription,'adhesion'}|lien_ou_expose{Adhésions,#ENV{type_souscription}|=={adhesion},ajax})]</li>
+	</ul>
+</div>
 
 <INCLURE{fond=prive/objets/liste/souscriptions, par=nom, env, ajax, sinon=<:souscription:info_aucun_souscription:>}>
