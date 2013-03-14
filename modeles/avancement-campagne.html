@@ -1,6 +1,7 @@
 <BOUCLE_campagne(SOUSCRIPTION_CAMPAGNES){id_souscription_campagne=#ENV{campagne}}{objectif>0}>
-  <BOUCLE_avancement_campagne(SOUSCRIPTIONS transactions){id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}{transactions.reglee=oui}{somme montant}>
-    [(#SET{montant,#SOMME{montant}|plus{#OBJECTIF_INITIAL}})]
+  <BOUCLE_avancement_campagne(SOUSCRIPTIONS transactions){id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}{transactions.reglee=oui}{somme montant}{fusion id_transaction}>
+    [(#TYPE_OBJECTIF|=={don}|oui) #SET{montant,#SOMME{montant}|plus{#OBJECTIF_INITIAL}}]
+    [(#TYPE_OBJECTIF|=={adhesion}|oui) #SET{montant,#TOTAL_BOUCLE}]
     [(#SET{pourcentage_objectif,#GET{montant}|div{#OBJECTIF}|mult{100}|round{2}})]
   </BOUCLE_avancement_campagne>
 
