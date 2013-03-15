@@ -138,7 +138,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne)
                         "spip_souscription_campagnes",
                         "id_souscription_campagne=$id_souscription_campagne");
 
-  if(!$type || !in_array($type, array("don", "adhesion", "abonnement")))
+  if(!$type || !in_array($type, array("don", "adhesion")))
     $erreurs['message_erreur'] = "Type de souscription invalide";
 
   /* Le champ 'type' (hidden) doit être le même que celui défini dans

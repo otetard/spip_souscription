@@ -12,7 +12,7 @@ $GLOBALS[$GLOBALS['idx_lang']] =
 
         // E
         'explication_objectif' => "Permet d'indiquer un objectif monétaire pour la campagne.<br/>Mettre 0 si la campagne n'a pas d'objectif.",
-        'explication_objectif_initial' => "Permet d'indiquer le niveau initial de la campagne. Ce champs peut être utilisé pour indiquer des dons, adhésions ou abonnements n'ayant pas été compatibilisées par le module de souscriptions.",
+        'explication_objectif_initial' => "Permet d'indiquer le niveau initial de la campagne. Ce champs peut être utilisé pour indiquer des dons ou adhésions n'ayant pas été compatibilisées par le module de souscriptions.",
         'explication_type_objectif' => "Type de l'objectif (influe le montant de l'objectif)",
 
         // I
