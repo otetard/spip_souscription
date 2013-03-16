@@ -17,7 +17,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
         'titre_souscriptions' => 'Souscriptions',
 
 	// T
-	'titre_page_configurer_souscription' => 'Configuration des modules de souscription',
+	'titre_configurer_souscriptions' => 'Souscriptions',
+	'titre_page_configurer_souscriptions' => 'Configuration des souscriptions',
         'titre_page_souscriptions_tous' => 'Liste des souscriptions',
         'titre_types_souscriptions' => 'Types de souscriptions',
 
@@ -29,6 +30,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// E
 	'explication_envoyer_info' => 'Souhaite recevoir des informations publiques',
+	'explication_montants' => "Le montants divent être au format suivant: <code>[montant]|[description]</code> à raison d'une entrée par ligne.",
 
 	// I
 	'icone_creer_souscription' => 'Créer une souscription',
@@ -55,12 +57,18 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
         'label_exporter_tous' => 'Exporter toutes les souscriptions',
         'label_informer_comite_local' => "Informer le comité local le plus proche",
         'label_type_souscription' => "Type de souscription",
+        'label_activer_adhesion' => "Activer le module d'adhésions",
+        'label_activer_don' => "Activer le module dons",
+        'label_type_saisie' => "Types de saisies",
+        'label_montants' => "Montants",
 
 	// T
 	'texte_ajouter_souscription' => 'Ajouter une souscription',
 	'texte_changer_statut_souscription' => 'Cette souscription est :',
 	'titre_souscription' => 'Souscription',
 	'titre_souscriptions' => 'Souscriptions',
+        'titre_configuration_adhesions' => 'Adhésions',
+        'titre_configuration_dons' => 'Dons',
 
         // V
         'voir_exporter' => "Exporter les dons",

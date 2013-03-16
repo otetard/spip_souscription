@@ -25,5 +25,5 @@
   <pipeline nom="optimiser_base_disparus" inclure="souscription_pipelines.php" />
 
   <menu nom="souscription" titre="souscription:titre_souscriptions" parent="menu_activite" icone="images/souscription_don-16.png" action="souscriptions" />
-
+  <menu nom="souscriptions" titre="souscription:titre_configurer_souscriptions" parent="menu_configuration" icone="images/souscriptions-16.png" action="configurer_souscriptions" />
 </paquet>

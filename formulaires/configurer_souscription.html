@@ -9,6 +9,22 @@
 	<div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 
+                <h2><:souscription:titre_configuration_adhesions:></h2>
+
+                <ul>
+	          [(#SAISIE{case, adhesion_activer, label=<:souscription:label_activer_adhesion:>})]
+	          [(#SAISIE{selection, adhesion_type_saisie, label=<:souscription:label_type_saisie:>, datas=#ARRAY{input, Entrée libre, radio, Boutons radio, selection, Liste déroulante}})]
+	          [(#SAISIE{textarea, adhesion_montants, rows=4, label=<:souscription:label_montants:>, explication=<:souscription:explication_montants:>})]
+                </ul>
+
+                <h2><:souscription:titre_configuration_dons:></h2>
+
+                <ul>
+	          [(#SAISIE{case, don_activer, label=<:souscription:label_activer_don:>})]
+	          [(#SAISIE{selection, don_type_saisie, label=<:souscription:label_type_saisie:>, datas=#ARRAY{input, Entrée libre, radio, Boutons radio, selection, Liste déroulante}})]
+	          [(#SAISIE{textarea, don_montants, rows=4, label=<:souscription:label_montants:>, explication=<:souscription:explication_montants:>})]
+                </ul>
+
 		<input type="hidden" name="_meta_casier" value="souscription" />
 		<p class="boutons"><span class="image_loading">&nbsp;</span><input type="submit" class="submit" value="<:bouton_enregistrer:>" /></p>
 	</div>
