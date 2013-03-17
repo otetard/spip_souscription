@@ -23,6 +23,7 @@
   <pipeline nom="declarer_tables_objets_sql" inclure="base/souscription.php" />
   <pipeline nom="declarer_tables_interfaces" inclure="base/souscription.php" />
   <pipeline nom="optimiser_base_disparus" inclure="souscription_pipelines.php" />
+  <pipeline nom="trig_bank_notifier_reglement" inclure="souscription_pipelines.php" />
 
   <menu nom="souscription" titre="souscription:titre_souscriptions" parent="menu_activite" icone="images/souscription_don-16.png" action="souscriptions" />
   <menu nom="souscriptions" titre="souscription:titre_configurer_souscriptions" parent="menu_configuration" icone="images/souscriptions-16.png" action="configurer_souscriptions" />
