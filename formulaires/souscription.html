@@ -4,6 +4,7 @@
 
   [(#ENV{editable})
   <form method="post" action="#ENV{action}"><div>
+
       #ACTION_FORMULAIRE{#ENV{action}}
       <ul>
 	[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>})]
