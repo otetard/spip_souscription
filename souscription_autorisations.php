@@ -34,7 +34,6 @@ function autoriser_souscriptions_menu_dist($faire, $type, $id, $qui, $opt){
  * Autorisation de voir le bouton d'accès rapide de création (souscription)
  **/
 function autoriser_souscriptioncreer_menu_dist($faire, $type, $id, $qui, $opt){
-  /* return autoriser('creer', 'souscription', '', $qui, $opt); */
   return false;
 }
 

@@ -38,8 +38,7 @@ function formulaires_souscription_identifier_dist($id_souscription='new',
                                                       $lier_trad=0,
                                                       $config_fonc='',
                                                       $row=array(),
-                                                      $hidden='')
-{
+                                                      $hidden='') {
   return serialize(array(intval($id_souscription)));
 }
 
@@ -116,8 +115,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
  * @return array
  *     Tableau des erreurs
  */
-function formulaires_souscription_verifier_dist($id_souscription_campagne)
-{
+function formulaires_souscription_verifier_dist($id_souscription_campagne) {
   $campagne = _request('id_souscription_campagne');
 
   $erreurs = formulaires_editer_objet_verifier('souscription', 'new',
@@ -132,7 +130,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne)
   if(!$id_souscription_campagne || intval($id_souscription_campagne) != intval($campagne)) {
       $erreurs['message_erreur'] = "Campagne invalide";
   }
-    
+
   /* La campagne doit être valide (définie dans la base) et doit
    * accepter les dons. */
   $type = sql_getfetsel("type_objectif",
@@ -207,9 +205,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne)
  * @return array
  *     Retours des traitements
  */
-function formulaires_souscription_traiter_dist($id_souscription_campagne)
-{
-
+function formulaires_souscription_traiter_dist($id_souscription_campagne) {
   $lier_trad=0;
   $config_fonc='';
   $row=array();
@@ -225,16 +221,16 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne)
                                           $hidden);
 
   $redirect = "";
-  $row = sql_fetsel("transaction_hash,id_transaction", /* $select */
-                    "spip_transactions LEFT JOIN spip_souscriptions USING(id_transaction)", /* $from */
-                    "id_souscription=".$ret['id_souscription']); /* $where */
-
-  print_r($row);
+  $row = sql_fetsel("transaction_hash,id_transaction",
+                    "spip_transactions LEFT JOIN spip_souscriptions USING(id_transaction)",
+                    "id_souscription=".$ret['id_souscription']);
 
   if(!$row) {
+    spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
     $ret['message_erreur'] = "Echec creation de la transaction";
   }
   else {
+    spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
     $hash = $row['transaction_hash'];
     $id_transaction = $row['id_transaction'];
     $redirect = generer_url_public("payer", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
