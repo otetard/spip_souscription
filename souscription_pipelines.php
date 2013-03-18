@@ -46,6 +46,10 @@ function souscription_trig_bank_notifier_reglement($flux) {
     $message = recuperer_fond('modeles/mail-souscription-echec',
                               array('id_transaction' => $flux['args']['id_transaction']));
   }
+
+  spip_log(sprintf("Envoi de notifiaction de confirmation de paiement à [%] pour la souscription [%s].", $email, $flux['args']['id_transaction']),
+           "souscription");
+
   $envoyer_mail = charger_fonction('envoyer_mail', 'inc');
   $envoyer_mail($email, $sujet, $message, $GLOBALS['meta']['email_webmaster']);
 
