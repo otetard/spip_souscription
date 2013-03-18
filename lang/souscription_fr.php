@@ -26,7 +26,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ajouter_lien_souscription' => 'Ajouter cette souscription',
 
 	// C
-        'confirmer' => 'Faire une souscription',
+        'confirmer' => 'Confirmer',
 
 	// E
 	'explication_envoyer_info' => 'Souhaite recevoir des informations publiques',
