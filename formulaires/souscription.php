@@ -13,6 +13,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('inc/actions');
 include_spip('inc/editer');
+include_spip('inc/config');
 
 /**
  * Identifier le formulaire en faisant abstraction des paramètres qui ne représentent pas l'objet edité
@@ -163,9 +164,22 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne)
   if ($e = _request('courriel') AND !email_valide($e))
     $erreurs['courriel'] = _T('form_prop_indiquer_email');
 
-  if ($e = _request('montant') AND !(ctype_digit($e))) {
-    /* FIXME: vérifier que le montant est compris dans les bornes. */
-    $erreurs['montant'] = "Montant invalide";
+  if ($e = _request('code_postal') AND !preg_match("/^(2[ABab]|0[1-9]|[1-9][0-9])[0-9]{3}$/", $e)) {
+    $erreurs['code_postal'] = "Code postal invalide";
+  }
+
+  if ($e = _request('montant')) {
+    if(!(ctype_digit($e)))
+      $erreurs['montant'] = "Montant invalide";
+    else {
+      $type_saisie = lire_config("souscription/${type}_type_sasie");
+
+      /* On ne vérifie strictement la valeur du montant que si on
+       * n'utilise pas le type de saisie « entrée libre » (input) pour
+       * le montant. */
+      if(($type_saisie != "input") AND !array_key_exists($e, lire_config("souscription/${type}_montants")))
+        $erreurs['montant'] = "Le montant spécifié est invalide";
+    }
   }
 
   return $erreurs;
