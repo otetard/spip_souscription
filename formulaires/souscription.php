@@ -163,10 +163,17 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
   if ($e = _request('courriel') AND !email_valide($e))
     $erreurs['courriel'] = _T('form_prop_indiquer_email');
 
-  /* Le code postal n'est vérifié que si on est dans le cas de la France */
-  if($e = _request('pays') AND strtolower(trim($e)) == "france") {
-    if ($e = _request('code_postal') AND !preg_match("/^(2[ABab]|0[1-9]|[1-9][0-9])[0-9]{3}$/", $e)) {
-      $erreurs['code_postal'] = "Code postal invalide";
+  if($e = _request('pays')) {
+    $ret = sql_select('nom', 'spip_pays', "code='${e}'");
+
+    if(sql_count($ret) != 1)
+      $erreurs['pays'] = "Pays invalide";
+
+    /* Le code postal n'est vérifié que si on est dans le cas de la France */
+    elseif($e = _request('pays') AND $e == "FR") {
+      if ($e = _request('code_postal') AND !preg_match("/^(2[ABab]|0[1-9]|[1-9][0-9])[0-9]{3}$/", $e)) {
+        $erreurs['code_postal'] = "Code postal invalide";
+      }
     }
   }
 

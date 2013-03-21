@@ -69,7 +69,6 @@ function souscription_modifier($id_souscription, $set=false) {
                                 'adresse',
                                 'code_postal',
                                 'ville',
-                                'pays',
                                 'id_souscription_campagne',
                                 'type_souscription'),
                           // black list
@@ -90,7 +89,13 @@ function souscription_modifier($id_souscription, $set=false) {
     return "Identifiant de transaction introuvable..."; /* FIXME: à rendre traduisible. */
   }
 
-  $c = array_merge($c, array("id_transaction" => $id_transaction));
+  /* Récupération du nom du pays */
+  $code_pays = _request('pays');
+  $pays = sql_getfetsel(sql_multi("nom", $GLOBALS['spip_lang']), 'spip_pays', "code='$code_pays'");
+
+  $c = array_merge($c,
+                   array("id_transaction" => $id_transaction,
+                         "pays" => $pays));
 
   if($err = objet_modifier_champs('souscription', $id_souscription, array(), $c))
     return $err;
