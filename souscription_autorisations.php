@@ -69,7 +69,7 @@ function autoriser_souscription_supprimer_dist($faire, $type, $id, $qui, $opt) {
   return false;
 }
 
-/* 
+/*
  * Autorisation d'exporter un don.
  */
 function autoriser_souscription_exporter_dist($faire, $type, $id, $qui, $opt) {

@@ -28,7 +28,7 @@ function formulaires_configurer_souscription_verifier_dist() {
     if(!_request("adhesion_type_saisie")) {
       $erreurs["adhesion_type_saisie"] = "Ce champs est obligatoire";
     }
-    
+
     if(!in_array(_request("adhesion_type_saisie"), $type_saisies)) {
       $erreurs["adhesion_type_saisie"] = "Le type de saisie pour le montant est invalide";
     }
@@ -39,7 +39,7 @@ function formulaires_configurer_souscription_verifier_dist() {
     if(!_request("don_type_saisie")) {
       $erreurs["don_type_saisie"] = "Ce champs est obligatoire";
     }
-    
+
     if(!in_array(_request("don_type_saisie"), $type_saisies)) {
       $erreurs["don_type_saisie"] = "Le type de saisie pour le montant est invalide";
     }
@@ -59,7 +59,7 @@ function formulaires_configurer_souscription_traiter_dist() {
   ecrire_config("souscription/don_activer", _request("don_activer"));
 
   $res = array('message_ok'=>_T('facteur:config_info_enregistree'));
-  
+
   return $res;
 }
 

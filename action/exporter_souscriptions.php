@@ -2,7 +2,7 @@
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 function action_exporter_souscriptions_dist($arg=null) {
-  /* 
+  /*
    * $arg contient les différents arguments, séparés par des '/'. Une
    * fois passés dans la fonctions split, il se présente de la manière
    * suivante :
@@ -28,7 +28,7 @@ function action_exporter_souscriptions_dist($arg=null) {
   $arg = explode("/", $arg);
 
   $type_statut = $arg[0];
-  $type_souscription = $arg[1];   
+  $type_souscription = $arg[1];
 
   /* Préparation de la requête */
   $select = "id_souscription, courriel, type_souscription,"
@@ -53,7 +53,7 @@ function action_exporter_souscriptions_dist($arg=null) {
   else {
     include_spip('inc/minipres');
     echo minipres("Argument invalide");
-    exit;    
+    exit;
   }
 
   $row = sql_select($select, $from, $where);

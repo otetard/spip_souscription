@@ -28,7 +28,7 @@ function action_editer_souscription_dist($arg=null) {
 function souscription_inserer() {
 
   $champs = array('date_souscription' => date('Y-m-d H:i:s'));
-	
+
   // Envoyer aux plugins
   $champs = pipeline('pre_insertion',
                      array('args' => array('table' => 'spip_souscriptions'),

@@ -48,7 +48,7 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
                                                                 $row=array(),
                                                                 $hidden='')
 {
-  
+
   $ret = formulaires_editer_objet_verifier('souscription_campagne',
                                            $id_souscription_campagne,
                                            array('titre',
@@ -90,7 +90,7 @@ function formulaires_editer_souscription_campagne_traiter_dist($id_souscription_
   /* // Un lien a prendre en compte ? */
   /* if ($associer_objet AND $id_souscription_campagne = $res['id_souscription_campagne']) { */
   /*   list($objet, $id_objet) = explode('|', $associer_objet); */
-    
+
   /*   if ($objet AND $id_objet AND autoriser('modifier', $objet, $id_objet)) { */
   /*     include_spip('action/editer_liens'); */
   /*     objet_associer(array('souscription_campagne' => $id_souscription_campagne), array($objet => $id_objet)); */
