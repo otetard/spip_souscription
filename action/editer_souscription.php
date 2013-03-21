@@ -69,6 +69,7 @@ function souscription_modifier($id_souscription, $set=false) {
                                 'adresse',
                                 'code_postal',
                                 'ville',
+                                'pays',
                                 'id_souscription_campagne',
                                 'type_souscription'),
                           // black list

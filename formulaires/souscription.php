@@ -88,6 +88,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
                'adresse' => '',
                'code_postal' => '',
                'ville' => '',
+               'pays' => '',
                'id_souscription_campagne' => $id_souscription_campagne,
                'type_souscription' => $type,
                );
@@ -147,7 +148,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
 
 
   if(_request('recu_fiscal') || $type == "adhesion") {
-    foreach(array('prenom', 'nom', 'adresse', 'code_postal', 'ville') as $obligatoire) {
+    foreach(array('prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire) {
       if(!_request($obligatoire)) {
         if($type == "adhesion") {
           $erreurs[$obligatoire] = "Ce champ est obligatoire pour les adhésions";
@@ -162,8 +163,11 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
   if ($e = _request('courriel') AND !email_valide($e))
     $erreurs['courriel'] = _T('form_prop_indiquer_email');
 
-  if ($e = _request('code_postal') AND !preg_match("/^(2[ABab]|0[1-9]|[1-9][0-9])[0-9]{3}$/", $e)) {
-    $erreurs['code_postal'] = "Code postal invalide";
+  /* Le code postal n'est vérifié que si on est dans le cas de la France */
+  if($e = _request('pays') AND strtolower(trim($e)) == "france") {
+    if ($e = _request('code_postal') AND !preg_match("/^(2[ABab]|0[1-9]|[1-9][0-9])[0-9]{3}$/", $e)) {
+      $erreurs['code_postal'] = "Code postal invalide";
+    }
   }
 
   if ($e = _request('montant')) {

@@ -33,7 +33,7 @@ function action_exporter_souscriptions_dist($arg=null) {
   /* Préparation de la requête */
   $select = "id_souscription, courriel, type_souscription,"
     ."montant, reglee, spip_transactions.statut, date_paiement, mode, autorisation_id,"
-    ."nom, prenom, code_postal, ville, recu_fiscal, envoyer_info, date_souscription,"
+    ."nom, prenom, code_postal, ville, pays, recu_fiscal, envoyer_info, date_souscription,"
     ."spip_souscription_campagnes.id_souscription_campagne, titre";
   $from = "spip_souscriptions LEFT JOIN spip_transactions USING(id_transaction) LEFT JOIN spip_souscription_campagnes USING(id_souscription_campagne)";
 
@@ -71,6 +71,7 @@ function action_exporter_souscriptions_dist($arg=null) {
                   "Prénom",
                   "Code Postal",
                   "Ville",
+                  "Pays",
                   "Souhaite reçu fiscal",
                   "Souhaite être informé",
                   "Date don",

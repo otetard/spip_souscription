@@ -30,6 +30,8 @@ function souscription_upgrade($nom_meta_base_version, $version_cible) {
                                      )));
   $maj['0.1'] = array(array('sql_alter', "TABLE spip_souscriptions ADD informer_comite_local varchar(3) NOT NULL DEFAULT ''"));
 
+  $maj['0.2'] = array(array('sql_alter', "TABLE spip_souscriptions ADD pays text NOT NULL DEFAULT ''"));
+
   include_spip('base/upgrade');
   maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }

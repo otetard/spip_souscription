@@ -53,6 +53,7 @@ function souscription_declarer_tables_objets_sql($tables) {
                           "code_postal"         => "text NOT NULL DEFAULT ''",
                           "adresse"             => "text NOT NULL DEFAULT ''",
                           "ville"               => "text NOT NULL DEFAULT ''",
+                          "pays"                => "text NOT NULL DEFAULT ''",
                           "recu_fiscal"         => "varchar(3) NOT NULL DEFAULT ''",
                           "type_souscription"   => "varchar(255) NOT NULL DEFAULT ''",
                           "informer_comite_local" => "varchar(3) NOT NULL DEFAULT ''",
@@ -65,8 +66,8 @@ function souscription_declarer_tables_objets_sql($tables) {
                          "KEY id_souscription_campagne" => "id_souscription_campagne"),
           'titre' => "nom AS titre, '' AS lang",
           'date' => "date_souscription",
-          'champs_editables'  => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'recu_fiscal', 'envoyer_info'),
-          'champs_versionnes' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'recu_fiscal', 'envoyer_info'),
+          'champs_editables'  => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'recu_fiscal', 'envoyer_info'),
+          'champs_versionnes' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'recu_fiscal', 'envoyer_info'),
           'rechercher_champs' => array(),
           'join' => array("id_transaction" => "id_transaction"),
           /* 'join' => array("id_souscription_campagne" => "id_souscription_campagne"), */

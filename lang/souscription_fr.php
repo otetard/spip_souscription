@@ -51,6 +51,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_prenom' => 'Prénom',
 	'label_recu_fiscal' => 'Envoyer un reçu fiscal',
 	'label_ville' => 'Ville',
+	'label_pays' => 'Pays',
         'label_campagne' => 'Campagne',
         'label_titre_campagne' => 'Titre de la campagne',
         'label_exporter_payes' => 'Exporter les souscriptions payés',
