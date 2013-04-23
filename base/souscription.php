@@ -71,8 +71,6 @@ function souscription_declarer_tables_objets_sql($tables) {
           'champs_versionnes' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'recu_fiscal', 'envoyer_info'),
           'rechercher_champs' => array(),
           'join' => array("id_transaction" => "id_transaction"),
-          /* 'join' => array("id_souscription_campagne" => "id_souscription_campagne"), */
-          /* 'tables_jointures'  => array('souscription_campagnes'), */
           'tables_jointures'  => array('spip_transactions'),
           );
 
@@ -98,7 +96,6 @@ function souscription_declarer_tables_objets_sql($tables) {
           'champs_editables'  => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif'),
           'champs_versionnes' => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif'),
           'rechercher_champs' => array(),
-          /* 'tables_jointures'  => array('spip_souscription_campagnes'), */
           );
 
   return $tables;
