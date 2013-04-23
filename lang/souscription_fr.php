@@ -31,6 +31,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// E
 	'explication_envoyer_info' => 'Souhaite recevoir des informations publiques',
 	'explication_montants' => "Le montants divent être au format suivant: <code>[montant]|[description]</code> à raison d'une entrée par ligne.",
+	'explication_montant' => " ",
+	'explication_recu_fiscal' => " ",
 
 	// I
 	'icone_creer_souscription' => 'Créer une souscription',
@@ -50,7 +52,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_id_transaction' => 'Identifiant de la transaction',
 	'label_nom' => 'Nom',
 	'label_prenom' => 'Prénom',
-	'label_recu_fiscal' => 'Envoyer un reçu fiscal',
+	'label_recu_fiscal' => 'Recevoir un reçu fiscal',
 	'label_ville' => 'Ville',
 	'label_pays' => 'Pays',
         'label_campagne' => 'Campagne',

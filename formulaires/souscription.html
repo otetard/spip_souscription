@@ -16,9 +16,10 @@
 	[(#SAISIE{#CONFIG{souscription/#ENV{type_souscription}|concat{_type_saisie},input},
                   montant,
                   obligatoire=oui,
-                  label=<:souscription:label_montant:>,
+                  label=<:souscription:label_montant:>,	
+                  explication=<:souscription:explication_montant:>,
                   datas=#CONFIG{souscription/#ENV{type_souscription}|concat{_montants}}})]
-	[(#SAISIE{oui_non, recu_fiscal, label=<:souscription:label_recu_fiscal:>})]
+	[(#SAISIE{oui_non, recu_fiscal, label=<:souscription:label_recu_fiscal:>, explication=<:souscription:explication_recu_fiscal:>})]
         [(#SAISIE{oui_non, envoyer_info, label=<:souscription:label_envoyer_info:> })]
         [(#ENV{type_souscription}|=={adhesion}|oui) [(#SAISIE{oui_non, informer_comite_local, label=<:souscription:label_informer_comite_local:> })]]
         [(#SAISIE{hidden, id_souscription_campagne})]
