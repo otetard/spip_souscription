@@ -89,6 +89,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
                'code_postal' => '',
                'ville' => '',
                'pays' => 'FR',
+               'telephone' => '',
                'id_souscription_campagne' => $id_souscription_campagne,
                'type_souscription' => $type,
                );

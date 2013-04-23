@@ -62,6 +62,11 @@
 	<span dir="#LANG_DIR" class="#EDIT{pays} pays">(#PAYS)</span>
 </div>]
 
+[<div class="champ contenu_telephone[ (#TELEPHONE*|strlen|?{'',vide})]">
+	<label><:souscription:label_telephone:> : </label>
+	<span dir="#LANG_DIR" class="#EDIT{telephone} telephone">(#TELEPHONE)</span>
+</div>]
+
 [<div class="champ contenu_recu_fiscal">
 	<label><:souscription:label_recu_fiscal:> : </label>
 	<span dir="#LANG_DIR" class="#EDIT{recu_fiscal} recu_fiscal">(#RECU_FISCAL|?{"oui","non"})</span>

@@ -54,6 +54,7 @@ function souscription_declarer_tables_objets_sql($tables) {
                           "adresse"             => "text NOT NULL DEFAULT ''",
                           "ville"               => "text NOT NULL DEFAULT ''",
                           "pays"                => "text NOT NULL DEFAULT ''",
+                          "telephone"           => "text NOT NULL DEFAULT ''",
                           "recu_fiscal"         => "varchar(3) NOT NULL DEFAULT ''",
                           "type_souscription"   => "varchar(255) NOT NULL DEFAULT ''",
                           "informer_comite_local" => "varchar(3) NOT NULL DEFAULT ''",
