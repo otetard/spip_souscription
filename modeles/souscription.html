@@ -5,6 +5,6 @@
 
 [(#TEXTE)]
 
-#MODELE{avancement-campagne,campagne=#ENV{campagne}}
+[(#ENV{avancement}|!={non}) #MODELE{avancement-campagne,campagne=#ENV{campagne}}]
 #FORMULAIRE_SOUSCRIPTION{#ENV{campagne}}
 </BOUCLE_campagne>
