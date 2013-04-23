@@ -45,6 +45,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_code_postal' => 'Code postal',
 	'label_courriel' => 'Courriel',
 	'label_montant' => 'Montant',
+	'label_montant_liste' => 'Montant',
 	'label_envoyer_info' => 'Souhaite recevoir des informations publiques',
 	'label_id_transaction' => 'Identifiant de la transaction',
 	'label_nom' => 'Nom',
