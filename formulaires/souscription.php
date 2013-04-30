@@ -197,6 +197,10 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
     }
   }
 
+  if(count($erreurs) > 0) {
+    $erreurs['message_erreur'] = "Le formulaire contient des erreurs";
+  }
+
   return $erreurs;
 }
 
