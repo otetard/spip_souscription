@@ -1,5 +1,5 @@
 [(#SET{defaut_tri,#ARRAY{
-	courriel,1, 
+	courriel,-1, 
         nom,-1,
 	date_souscription,-1, 
 	id_souscription,1,
@@ -11,6 +11,7 @@
 	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{souscription:info_1_souscription,souscription:info_nb_souscriptions}})</strong></caption>]
 	<thead>
 		<tr class="first_row">
+			<th class="id" scope="col">[(#TRI{id_souscription,<:info_numero_abbreviation:>,ajax})]</th>
 			<th class="courriel" scope="col">[(#TRI{courriel,<:souscription:label_courriel:>,ajax})]</th>
 			<th class="type_souscription" scope="col">[(#TRI{type_souscription,<:souscription:label_type_souscription:>,ajax})]</th>
 			<th class="montant" scope="col">[(#TRI{montant,<:souscription:label_montant_liste:>,ajax})]</th>
@@ -18,12 +19,15 @@
 			<th class="date" scope="col">[(#TRI{date_souscription,<:date:>,ajax})]</th> 
 			<th class="statut" scope="col">[(#TRI{statut,<:statut:>,ajax})]</th> 
 			<th class="id_souscription_campagne" scope="col">[(#TRI{id_souscription_campagne,<:souscription:label_campagne:>,ajax})]</th>
-			<th class="id" scope="col">[(#TRI{id_souscription,<:info_numero_abbreviation:>,ajax})]</th>
 		</tr>
 	</thead>
 	<tbody>
 	<BOUCLE_liste_souscriptions(SOUSCRIPTIONS transactions){id_transaction?}{id_mot?}{id_auteur?}{where?}{recherche?}{type_souscription==#ENV{type_souscription,'.'}}{tri #ENV{par,num nom},#GET{defaut_tri}}{par nom}{pagination #ENV{nb,10}}>
 		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]">
+			<td class="id">[(#AUTORISER{modifier,souscription,#ID_SOUSCRIPTION}|?{
+				<a href="[(#URL_ECRIRE{souscription_edit,id_souscription=#ID_SOUSCRIPTION})]">#ID_SOUSCRIPTION</a>,
+				#ID_SOUSCRIPTION
+			})]</td>
 			<td class="courriel principale"><a href="[(#ID_SOUSCRIPTION|generer_url_entite{souscription})]" title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">[(#RANG). ]#COURRIEL</a></td>
 			<td class="type_souscription secondaire">[(#TYPE_SOUSCRIPTION)]</td> 
 			<td class="montant secondaire">[(#MONTANT) €]</td> 
@@ -31,10 +35,6 @@
 			<td class="date secondaire">[(#DATE_SOUSCRIPTION|affdate_jourcourt)]</td> 
 			<td class="statut secondaire">[(#STATUT)]</td> 
 			<td class="id_souscription_campagne" scope="col">[(#ID_SOUSCRIPTION_CAMPAGNE)]</td>
-			<td class="id">[(#AUTORISER{modifier,souscription,#ID_SOUSCRIPTION}|?{
-				<a href="[(#URL_ECRIRE{souscription_edit,id_souscription=#ID_SOUSCRIPTION})]">#ID_SOUSCRIPTION</a>,
-				#ID_SOUSCRIPTION
-			})]</td>
 		</tr>
 	</BOUCLE_liste_souscriptions>
 	</tbody>
