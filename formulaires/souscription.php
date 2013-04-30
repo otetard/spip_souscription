@@ -178,6 +178,11 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
     }
   }
 
+  if ($e = _request('telephone') AND !preg_match("/^[0-9\+ \.]+$/", $e)) {
+    $erreurs['telephone'] = "Numéro de téléphone incorrect";
+  }
+
+
   if ($e = _request('montant')) {
     if(!(ctype_digit($e)))
       $erreurs['montant'] = "Montant invalide";
