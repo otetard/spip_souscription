@@ -26,12 +26,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ajouter_lien_souscription' => 'Ajouter cette souscription',
 
 	// C
-        'confirmer' => 'Confirmer',
+        'confirmer' => 'Valider',
 
 	// E
-	'explication_envoyer_info' => 'Souhaite recevoir des informations publiques',
 	'explication_montants' => "Le montants divent être au format suivant: <code>[montant]|[description]</code> à raison d'une entrée par ligne.",
-	'explication_montant' => " ",
+	'explication_montant_adhesion' => "",
+	'explication_montant_don' => " ",
 	'explication_recu_fiscal' => " ",
 
 	// I
@@ -48,7 +48,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_courriel' => 'Courriel',
 	'label_montant' => 'Montant',
 	'label_montant_liste' => 'Montant',
-	'label_envoyer_info' => 'Souhaite recevoir des informations publiques',
+	'label_envoyer_info' => "M'inscrire sur la liste d'information",
 	'label_id_transaction' => 'Identifiant de la transaction',
 	'label_nom' => 'Nom',
 	'label_prenom' => 'Prénom',
@@ -60,7 +60,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
         'label_titre_campagne' => 'Titre de la campagne',
         'label_exporter_payes' => 'Exporter les souscriptions payés',
         'label_exporter_tous' => 'Exporter toutes les souscriptions',
-        'label_informer_comite_local' => "Informer le comité local le plus proche",
+        'label_informer_comite_local' => "Me faire connaître auprès du comité local le plus proche",
         'label_type_souscription' => "Type de souscription",
         'label_activer_adhesion' => "Activer le module d'adhésions",
         'label_activer_don' => "Activer le module dons",
