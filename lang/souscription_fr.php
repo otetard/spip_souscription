@@ -77,6 +77,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
         // V
         'voir_exporter' => "Exporter les dons",
+
+	'label_montants_explication' => "Texte d'explication des montants",	
+	'label_montants_label' => "Label pour le champ «&nbsp;montants&nbsp;»",
+	'label_dispositions_fiscales_explications' => 'Texte de présentation des dispositions fiscales',
+	'titre_configuration_general' => 'Options générales',
 );
 
 ?>
