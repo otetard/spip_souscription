@@ -60,8 +60,8 @@ function action_exporter_souscriptions_dist($arg=null) {
 
   $entete = array("ID du don",
                   "Courriel",
-                  "Montant",
                   "Type de souscription",
+                  "Montant",
                   "Reglée",
                   "Statut",
                   "Date de paiement",
