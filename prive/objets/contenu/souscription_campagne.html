@@ -1,24 +1,24 @@
 <BOUCLE_souscription_campagne(SOUSCRIPTION_CAMPAGNES souscription_campagnes_liens){id_souscription_campagne}>
 
 [<div class="champ contenu_type_objectif[ (#TYPE_OBJECTIF*|strlen|?{'',vide})]">
-	<label><:souscription_campagne:label_type_objectif:> : </label>
+	<label><:souscription:label_type_objectif:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{type_objectif} type_objectif'>(#TYPE_OBJECTIF)</span>
 </div>]
 
 [<div class="champ contenu_objectif_initial[ (#OBJECTIF_INITIAL*|strlen|?{'',vide})]">
-	<label><:souscription_campagne:label_objectif_initial:> : </label>
+	<label><:souscription:label_objectif_initial:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{objectif_initial} objectif_initial'>(#OBJECTIF_INITIAL)</span>
 </div>]
 
 [<div class="champ contenu_objectif[ (#OBJECTIF*|strlen|?{'',vide})]">
-	<label><:souscription_campagne:label_objectif:> : </label>
+	<label><:souscription:label_objectif:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{objectif} objectif'>(#OBJECTIF)</span>
 </div>]
 
 <BOUCLE_souscription_campagne_montant(SOUSCRIPTIONS transactions){id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}{transactions.reglee=oui}{somme montant}>
 [(#SET{montant,#SOMME{montant}|plus{#OBJECTIF_INITIAL}})]
 <div class="champ contenu_objectif">
-	<label><:souscription_campagne:label_montant_actuel:> : </label>
+	<label><:souscription:label_montant_actuel:> : </label>
 	<span class='montant_actuel'>#GET{montant}</span>
 </div>
 </BOUCLE_souscription_campagne_montant>

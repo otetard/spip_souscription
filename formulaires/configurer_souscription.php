@@ -70,7 +70,7 @@ function formulaires_configurer_souscription_traiter_dist() {
 
   ecrire_config("souscription/dispositions_fiscales_explications", _request("dispositions_fiscales_explications"));
 
-  $res = array('message_ok'=>_T('facteur:config_info_enregistree'));
+  $res = array('message_ok'=>_T('souscription:config_info_enregistree'));
 
   return $res;
 }

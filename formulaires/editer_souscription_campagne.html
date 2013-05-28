@@ -8,17 +8,17 @@
 
 
       <ul>
-	[(#SAISIE{input, titre, obligatoire=oui, label=<:souscription_campagne:label_titre:>})]
+	[(#SAISIE{input, titre, obligatoire=oui, label=<:souscription:label_titre:>})]
 	[(#SAISIE{selection, type_objectif, obligatoire=oui,
-          label=<:souscription_campagne:label_type_objectif:>,
-          explication=<:souscription_campagne:explication_type_objectif:>,
+          label=<:souscription:label_type_objectif:>,
+          explication=<:souscription:explication_type_objectif:>,
           datas=#ARRAY{don, Dons, adhesion, Adhésions}})]
-	[(#SAISIE{input, objectif, obligatoire=oui, label=<:souscription_campagne:label_objectif:>, explication=<:souscription_campagne:explication_objectif:>})]
-	[(#SAISIE{input, objectif_initial, obligatoire=oui, label=<:souscription_campagne:label_objectif_initial:>, explication=<:souscription_campagne:explication_objectif_initial:>})]
-	[(#SAISIE{textarea, texte, label=<:souscription_campagne:label_description:>, inserer_barre=edition, rows=10})]
+	[(#SAISIE{input, objectif, obligatoire=oui, label=<:souscription:label_objectif:>, explication=<:souscription_campagne:explication_objectif:>})]
+	[(#SAISIE{input, objectif_initial, obligatoire=oui, label=<:souscription:label_objectif_initial:>, explication=<:souscription_campagne:explication_objectif_initial:>})]
+	[(#SAISIE{textarea, texte, label=<:souscription:label_description:>, inserer_barre=edition, rows=10})]
       </ul>
 
-      <p class="boutons"><input type="submit" class="submit" value="<:souscription_campagne:confirmer_creation_campagne:>" /></p>
+      <p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer_creation_campagne:>" /></p>
     </div>
   </form>
   ]
