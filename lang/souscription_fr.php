@@ -85,6 +85,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_exporter_date_fin' => 'Date de fin',
 	'label_exporter_statut' => 'Statut des souscriptions',
 	'label_exporter_type_souscription' => "Type de souscription",
+	'label_statut' => 'Statut',
 
 // S
 	'souscription_titre' => 'Souscription',

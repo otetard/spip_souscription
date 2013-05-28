@@ -1,7 +1,7 @@
 [(#SET{defaut_tri,#ARRAY{
-	courriel,-1, 
+	courriel,-1,
         nom,-1,
-	date_souscription,-1, 
+	date_souscription,-1,
 	id_souscription,1,
 	points,-1
 }})]<B_liste_souscriptions>
@@ -16,8 +16,8 @@
 			<th class="type_souscription" scope="col">[(#TRI{type_souscription,<:souscription:label_type_souscription:>,ajax})]</th>
 			<th class="montant" scope="col">[(#TRI{montant,<:souscription:label_montant_liste:>,ajax})]</th>
 			<th class="nom" scope="col">[(#TRI{nom,<:souscription:label_nom:>,ajax})]</th>
-			<th class="date" scope="col">[(#TRI{date_souscription,<:date:>,ajax})]</th> 
-			<th class="statut" scope="col">[(#TRI{statut,<:statut:>,ajax})]</th> 
+			<th class="date" scope="col">[(#TRI{date_souscription,<:date:>,ajax})]</th>
+			<th class="statut" scope="col">[(#TRI{statut,<:souscription:label_statut:>,ajax})]</th>
 			<th class="id_souscription_campagne" scope="col">[(#TRI{id_souscription_campagne,<:souscription:label_campagne:>,ajax})]</th>
 		</tr>
 	</thead>
@@ -29,11 +29,11 @@
 				#ID_SOUSCRIPTION
 			})]</td>
 			<td class="courriel principale"><a href="[(#ID_SOUSCRIPTION|generer_url_entite{souscription})]" title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">[(#RANG). ]#COURRIEL</a></td>
-			<td class="type_souscription secondaire">[(#TYPE_SOUSCRIPTION)]</td> 
-			<td class="montant secondaire">[(#MONTANT) €]</td> 
-			<td class="nom secondaire">#NOM #PRENOM</td> 
-			<td class="date secondaire">[(#DATE_SOUSCRIPTION|affdate_jourcourt)]</td> 
-			<td class="statut secondaire">[(#STATUT)]</td> 
+			<td class="type_souscription secondaire">[(#TYPE_SOUSCRIPTION)]</td>
+			<td class="montant secondaire">[(#MONTANT) €]</td>
+			<td class="nom secondaire">#NOM #PRENOM</td>
+			<td class="date secondaire">[(#DATE_SOUSCRIPTION|affdate_jourcourt)]</td>
+			<td class="statut secondaire">[(#STATUT)]</td>
 			<td class="id_souscription_campagne" scope="col">[(#ID_SOUSCRIPTION_CAMPAGNE)]</td>
 		</tr>
 	</BOUCLE_liste_souscriptions>
