@@ -4,7 +4,7 @@
 // Produit automatiquement par le plugin LangOnet a partir de la langue source fr
 // Module: souscription
 // Langue: fr
-// Date: 28-05-2013 19:48:54
+// Date: 28-05-2013 19:55:44
 // Items: 72
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
@@ -14,12 +14,16 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 // A
 	'ajouter_lien_souscription' => 'Ajouter cette souscription',
 
+// B
+	'bouton_exporter' => 'Exporter',
+
 // C
 	'cfg_exemple' => 'Exemple',
 	'cfg_exemple_explication' => 'Explication de cet exemple',
 	'cfg_titre_parametrages' => 'Paramétrages',
 	'confirmer' => 'Valider',
 	'confirmer_creation_campagne' => 'Enregistrer',
+	'config_info_enregistree' => 'La nouvelle configuration a été enregistrée',
 
 // E
 	'explication_montant_adhesion' => '<NEW>',
@@ -76,6 +80,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_type_saisie' => 'Types de saisies',
 	'label_type_souscription' => 'Type de souscription',
 	'label_ville' => 'Ville',
+	'label_exporter_campagne' => 'Campagne',
+	'label_exporter_date_debut' => 'Date de début',
+	'label_exporter_date_fin' => 'Date de fin',
+	'label_exporter_statut' => 'Statut des souscriptions',
+	'label_exporter_type_souscription' => "Type de souscription",
 
 // S
 	'souscription_titre' => 'Souscription',

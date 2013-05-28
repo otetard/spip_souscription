@@ -6,11 +6,15 @@ function action_exporter_souscriptions_dist($arg=null) {
    * $arg contient les différents arguments, séparés par des '/'. Une
    * fois passés dans la fonctions split, il se présente de la manière
    * suivante :
-   *   argument en position 1 : 'paye' ou 'tous'
-   *   argument en position 2 : type de souscription (dons, adhesion)
+   *
+   *   argument en position 1 : 'paye', 'commande', 'erreur' ou 'tous'
+   *   argument en position 2 : type de souscription ('dons',
+   *                            'adhesion')
+   *   argument en position 3 : identifiant de la campagne
+   *   argument en position 4 : date de début (au format timestamp)
+   *   argument en position 5 : date de fin (au format timestamp)
    */
 
-  /* FIXME: permettre de selectionner les exports */
   /* FIXME: améliorer la jointure... */
 
   if (is_null($arg)) {
@@ -19,16 +23,41 @@ function action_exporter_souscriptions_dist($arg=null) {
   }
 
   /* Vérification des droits de l'utilisateur. */
-  if(!autoriser("exporter", "souscriptiondon", '')) {
+  if(!autoriser("exporter", "souscription", '')) {
     include_spip('inc/minipres');
     echo minipres();
     exit;
   }
 
-  $arg = explode("/", $arg);
+  try {
+    $arg = explode("/", $arg);
 
-  $type_statut = $arg[0];
-  $type_souscription = $arg[1];
+    if(sizeof($arg) != 5)
+      throw new Exception();
+
+    $type_souscription = $arg[0];
+    if($type_souscription && !in_array($type_souscription, array('don', 'adhesion')))
+      throw new Exception();
+
+    $statut = $arg[1];
+    if($statut && !in_array($statut, array('paye', 'commande', 'erreur')))
+      throw new Exception();
+
+    $id_campagne = $arg[2];
+    if($id_campagne && !ctype_digit($id_campagne))
+      throw new Exception();
+
+    $date_debut = $arg[3];
+    $date_fin = $arg[4];
+
+    if(($date_debut && !ctype_digit($date_debut)) || ($date_fin && !ctype_digit($date_fin)))
+      throw new Exception();
+  }
+  catch(Exception $e) {
+    include_spip('inc/minipres');
+    echo minipres();
+    exit;
+  }
 
   /* Préparation de la requête */
   $select = "id_souscription, courriel, type_souscription,"
@@ -40,21 +69,24 @@ function action_exporter_souscriptions_dist($arg=null) {
   $where = array();
   if($type_souscription)
     $where[] = "type_souscription='$type_souscription'";
-  else
-    $type_souscription = "tous";
 
+  if($statut) {
+    if($statut == "paye")
+      $where[] = "reglee='oui'";
+    elseif($statut == "commande")
+      $where[] = "spip_transactions.statut='commande'";
+    elseif($statut == "erreur")
+      $where[] = "spip_transactions.statut like 'echec'";
+  }
 
-  if($type_statut == "payes") {
-    $where[] = "reglee='oui'";
-  }
-  elseif($type_statut == "tous") {
-    /* Afficher toutes les transactions du type demandé */
-  }
-  else {
-    include_spip('inc/minipres');
-    echo minipres("Argument invalide");
-    exit;
-  }
+  if($id_campagne)
+    $where[] = "spip_souscription_campagnes.id_souscription_campagne = '$id_campagne'";
+
+  if($date_debut)
+    $where[] = "date_souscription > '" . date ("Y-m-d 00:00:00", $date_debut) . "'";
+
+  if($date_fin)
+    $where[] = "date_souscription < '" . date ("Y-m-d 23:59:59", $date_fin) . "'";
 
   $row = sql_select($select, $from, $where);
 
@@ -83,6 +115,6 @@ function action_exporter_souscriptions_dist($arg=null) {
   /* Utilisation de la fonction exporter_csv de Bonux */
   $exporter_csv = charger_fonction('exporter_csv', 'inc/', true);
 
-  $exporter_csv("souscriptions_${type_souscription}_${type_statut}", $row, ',', $entete);
+  $exporter_csv("souscriptions", $row, ',', $entete);
   exit();
 }

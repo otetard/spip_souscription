@@ -45,13 +45,4 @@
 <div class="liste-objets souscriptions caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
 ]<//B_liste_souscriptions>
 
-[(#BOITE_OUVRIR{<:souscription:voir_exporter:>,'simple','section'})]
-[(#SET{arguments_export, ''})]
-
-[(#SET{arguments_export,#GET{arguments_export}|concat{/#ENV{type_souscription}|?{#ENV{type_souscription}}, /}})]
-
-<ul>
-  <li><a href="[(#URL_ACTION_AUTEUR{exporter_souscriptions,[(#VAL{payes}|concat{#GET{arguments_export}})]})]"><:souscription:label_exporter_payes:></a></li>
-  <li><a href="[(#URL_ACTION_AUTEUR{exporter_souscriptions,[(#VAL{tous}|concat{#GET{arguments_export}})]})]"><:souscription:label_exporter_tous:></a></li>
-</ul>
-#BOITE_FERMER
+#FORMULAIRE_EXPORTER_SOUSCRIPTIONS{#ENV{type_souscription}}

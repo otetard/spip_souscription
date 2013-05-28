@@ -1,0 +1,38 @@
+[(#REM) Le tableau est inversé pour ne pas tomber dans le panneau de
+array_merge qui ne réindexe le tableau si la valeur est numérique. Le
+tableau est retourné lors de son utilisation via le filtre
+array_flip. ]
+#SET{liste_campagnes, #ARRAY{Tous, tous}}
+<BOUCLE_souscription_campagne(SOUSCRIPTION_CAMPAGNES)>
+  #SET{liste_campagnes, #GET{liste_campagnes}|array_merge{#ARRAY{#TITRE, #ID_SOUSCRIPTION_CAMPAGNE}}}
+</BOUCLE_souscription_campagne>
+
+<div class="formulaire_spip formulaire_exporter formulaire_#FORM">
+
+  <h3 class="titrem"><:souscription:voir_exporter:></h3>
+
+  [<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+  [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+  [(#ENV{editable})
+  <form method="post" action="#ENV{action}">
+    #ACTION_FORMULAIRE{#ENV{action}}
+    <ul>
+      [(#SAISIE{selection, exporter_type_souscription, label=<:souscription:label_exporter_type_souscription:>,
+                cacher_option_intro=oui, datas=#ARRAY{tous, Tous, don, Dons, adhesion, Adhésions}})]
+
+      [(#SAISIE{selection, exporter_statut, label=<:souscription:label_exporter_statut:>, cacher_option_intro=oui,
+                datas=#ARRAY{tous, Tous, paye, Payés, commande, Commandes, erreur, Erreurs}})]
+
+      [(#SAISIE{selection, exporter_campagne, label=<:souscription:label_exporter_campagne:>,
+                cacher_option_intro=oui, datas=#GET{liste_campagnes}|array_flip})]
+
+      [(#SAISIE{date, exporter_date_debut, label=<:souscription:label_exporter_date_debut:>})]
+
+      [(#SAISIE{date, exporter_date_fin, label=<:souscription:label_exporter_date_fin:>})]
+    </ul>
+
+    <p class="boutons"><input type="submit" class="submit" value="<:souscription:bouton_exporter:>" /></p>
+  </form>
+  ]
+</div>
