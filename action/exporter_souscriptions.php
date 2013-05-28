@@ -76,7 +76,7 @@ function action_exporter_souscriptions_dist($arg=null) {
     elseif($statut == "commande")
       $where[] = "spip_transactions.statut='commande'";
     elseif($statut == "erreur")
-      $where[] = "spip_transactions.statut like 'echec'";
+      $where[] = "spip_transactions.statut like 'echec%'";
   }
 
   if($id_campagne)
