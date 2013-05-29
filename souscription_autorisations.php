@@ -25,10 +25,9 @@ function souscription_autoriser(){}
 /**
  * Autorisation de voir un élément de menu (souscriptions)
  **/
-function autoriser_souscriptions_menu_dist($faire, $type, $id, $qui, $opt){
-  return true;
+function autoriser_souscription_menu_dist($faire, $type, $id, $qui, $opt){
+  return autoriser('webmestre');
 }
-
 
 /**
  * Autorisation de voir le bouton d'accès rapide de création (souscription)
@@ -74,4 +73,12 @@ function autoriser_souscription_supprimer_dist($faire, $type, $id, $qui, $opt) {
  */
 function autoriser_souscription_exporter_dist($faire, $type, $id, $qui, $opt) {
   return autoriser('webmestre', '', '', $qui);
+}
+
+function autoriser_souscription_configurer_dist($faire, $mode='', $id=0, $qui = NULL, $opt = NULL){
+  return autoriser('webmestre');
+}
+
+function autoriser_souscriptioncampagne_dist($faire, $mode='', $id=0, $qui = NULL, $opt = NULL){
+  return autoriser('webmestre');
 }
