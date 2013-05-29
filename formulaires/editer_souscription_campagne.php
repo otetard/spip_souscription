@@ -87,18 +87,5 @@ function formulaires_editer_souscription_campagne_traiter_dist($id_souscription_
                                           $row,
                                           $hidden);
 
-  /* // Un lien a prendre en compte ? */
-  /* if ($associer_objet AND $id_souscription_campagne = $res['id_souscription_campagne']) { */
-  /*   list($objet, $id_objet) = explode('|', $associer_objet); */
-
-  /*   if ($objet AND $id_objet AND autoriser('modifier', $objet, $id_objet)) { */
-  /*     include_spip('action/editer_liens'); */
-  /*     objet_associer(array('souscription_campagne' => $id_souscription_campagne), array($objet => $id_objet)); */
-  /*     if (isset($res['redirect'])) { */
-  /*       $res['redirect'] = parametre_url ($res['redirect'], "id_lien_ajoute", $id_souscription_campagne, '&'); */
-  /*     } */
-  /*   } */
-  /* } */
-
   return $res;
 }
