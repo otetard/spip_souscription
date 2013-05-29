@@ -1,0 +1,30 @@
+[(#SET{defaut_tri,#ARRAY{
+	id_souscription_campagne,1,
+	titre,1,
+}})]<B_liste_souscription_campagnes>
+#ANCRE_PAGINATION
+<div class="liste-objets souscription_campagnes">
+<table class="spip liste">
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{souscription:info_1_souscription_campagnes,souscription:info_nb_souscription_campagnes}})</strong></caption>]
+	<thead>
+		<tr class="first_row">
+			<th class="id" scope="col">[(#TRI{id_souscription_campagne,<:info_numero_abbreviation:>,ajax})]</th>
+			<th class="titre" scope="col">[(#TRI{titre,<:souscription:label_titre:>,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_liste_souscription_campagnes(SOUSCRIPTION_CAMPAGNES){id_mot?}{id_auteur?}{where?}{recherche?}{tri #ENV{par,id_souscription_campagne},#GET{defaut_tri}}{pagination #ENV{nb,10}}>
+		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]">
+			<td class="id">#ID_SOUSCRIPTION_CAMPAGNE</td>
+			<td class="titre secondaire">[(#AUTORISER{voir,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE}|?{
+				<a href="[(#URL_ECRIRE{souscription_campagne,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE})]">#TITRE</a>,
+			})]</td>
+		</tr>
+	</BOUCLE_liste_souscription_campagnes>
+	</tbody>
+</table>
+[<p class="pagination">(#PAGINATION{prive})</p>]
+</div>
+</B_liste_souscription_campagnes>[
+<div class="liste-objets souscription_campagnes caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_liste_souscription_campagnes>

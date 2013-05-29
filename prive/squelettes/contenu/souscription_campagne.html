@@ -1,0 +1,42 @@
+[(#AUTORISER{voir,souscriptioncampagne,#ID_SOUSCRIPTION}|sinon_interdire_acces)]
+<BOUCLE_souscription_campagne(SOUSCRIPTION_CAMPAGNES){id_souscription_campagne}{si #ENV{exec}|=={souscription_campagne}}>
+[(#BOITE_OUVRIR{[
+	[(#AUTORISER{modifier,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE})
+		[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|non)
+			[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
+		]
+		[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|oui)
+			[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne},warning-24,'',right edition_deja ajax preload})]
+		]
+	]
+
+	<h1>#PRENOM (#NOM)</h1>
+
+],simple fiche_objet})]
+
+<!--affiche_milieu-->
+
+<div id="wysiwyg">
+<INCLURE{fond=prive/objets/contenu/souscription_campagne,id=#ID_SOUSCRIPTION_CAMPAGNE,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
+</div>
+
+<div class="nettoyeur"></div>
+
+[(#AUTORISER{modifier,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE})
+	[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|non)
+		[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
+	]
+	[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|oui)
+		[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne},warning-24,'',right edition_deja ajax preload})]
+	]
+]
+
+#PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,souscription_campagne,id,#ID_SOUSCRIPTION_CAMPAGNE},data,'<div class="nettoyeur"></div>'}}
+
+#BOITE_FERMER
+[(#EVAL{_AJAX}|oui)
+	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin');/*\\]\\]>*/</script>
+]
+</BOUCLE_souscription_campagne>
+[(#ENV**{exec}|=={souscription_campagne_edit}|?{#INCLURE{fond=prive/squelettes/contenu/souscription_campagne_edit,redirect='',env,retourajax=oui},#REM|sinon_interdire_acces})]
+<//B_souscription_campagne>
