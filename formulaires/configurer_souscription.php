@@ -32,22 +32,22 @@ function formulaires_configurer_souscription_verifier_dist() {
 
   if(_request("adhesion_activer")) {
     if(!_request("adhesion_type_saisie")) {
-      $erreurs["adhesion_type_saisie"] = "Ce champs est obligatoire";
+      $erreurs["adhesion_type_saisie"] = _T("souscription:message_nok_champ_obligatoire");
     }
 
     if(!in_array(_request("adhesion_type_saisie"), $type_saisies)) {
-      $erreurs["adhesion_type_saisie"] = "Le type de saisie pour le montant est invalide";
+      $erreurs["adhesion_type_saisie"] = _T("souscription:message_nok_champ_invalide");
     }
   }
 
   if(_request("don_activer")) {
 
     if(!_request("don_type_saisie")) {
-      $erreurs["don_type_saisie"] = "Ce champs est obligatoire";
+      $erreurs["don_type_saisie"] = _T("souscription:message_nok_champ_obligatoire");
     }
 
     if(!in_array(_request("don_type_saisie"), $type_saisies)) {
-      $erreurs["don_type_saisie"] = "Le type de saisie pour le montant est invalide";
+      $erreurs["don_type_saisie"] = _T("souscription:message_nok_champ_invalide");
     }
   }
 

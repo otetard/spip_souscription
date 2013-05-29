@@ -21,18 +21,23 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'cfg_exemple' => 'Exemple',
 	'cfg_exemple_explication' => 'Explication de cet exemple',
 	'cfg_titre_parametrages' => 'Paramétrages',
+	'config_info_enregistree' => 'La nouvelle configuration a été enregistrée',
 	'confirmer' => 'Valider',
 	'confirmer_creation_campagne' => 'Enregistrer',
-	'config_info_enregistree' => 'La nouvelle configuration a été enregistrée',
+	'configurer_type_saisie_input' => 'Entrée libre',
+	'configurer_type_saisie_radio' => 'Boutons radio',
+	'configurer_type_saisie_selection' => 'Liste déroulante',
 
 // E
-	'explication_montant_adhesion' => '<NEW>',
+	'explication_montant_adhesion' => ' ',
 	'explication_montant_don' => ' ',
 	'explication_montants' => 'Le montants divent être au format suivant: <code>[montant]|[description]</code> à raison d\'une entrée par ligne.',
 	'explication_objectif' => 'Permet d\'indiquer un objectif monétaire pour la campagne.<br/>Mettre 0 si la campagne n\'a pas d\'objectif.',
 	'explication_objectif_initial' => 'Permet d\'indiquer le niveau initial de la campagne. Ce champs peut être utilisé pour indiquer des dons ou adhésions n\'ayant pas été compatibilisées par le module de souscriptions.',
 	'explication_recu_fiscal' => ' ',
 	'explication_type_objectif' => 'Type de l\'objectif (influe le montant de l\'objectif)',
+	'explication_bloc_fiscal_adhesion' => "Les informations suivantes sont nécessaire pour nous permettre de réaliser l'adhésion&nbsp;:",
+	'explication_bloc_fiscal_don' => "Ces informations sont nécessaire en vue de l'établissement du reçu permettant une déduction fiscale qui vous sera envoyé",
 
 // I
 	'icone_creer_souscription' => 'Créer une souscription',
@@ -48,6 +53,27 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_souscriptions_auteur' => 'Les souscriptions de cet auteur',
 
 // L
+	"label_exporter_entete_adresse" => "Adresse",
+	"label_exporter_entete_code_postal" => "Code Postal",
+	"label_exporter_entete_courriel" => "Courriel",
+	"label_exporter_entete_date_don" => "Date don",
+	"label_exporter_entete_date_paiement" => "Date de paiement",
+	"label_exporter_entete_id_autorisation" => "ID de l'autorisation",
+	"label_exporter_entete_id_campagne" => "ID Campagne",
+	"label_exporter_entete_id_don" => "ID du don",
+	"label_exporter_entete_informer" => "Souhaite être informé",
+	"label_exporter_entete_mode_paiement" => "Mode de paiement",
+	"label_exporter_entete_montant" => "Montant",
+	"label_exporter_entete_nom" => "Nom",
+	"label_exporter_entete_pays" => "Pays",
+	"label_exporter_entete_prenom" => "Prénom",
+	"label_exporter_entete_recu_fiscal" => "Souhaite reçu fiscal",
+	"label_exporter_entete_reglee" => "Reglée",
+	"label_exporter_entete_statut" => "Statut",
+	"label_exporter_entete_telephone" => "Téléphone",
+	"label_exporter_entete_titre_campagne" => "Titre de la campagne",
+	"label_exporter_entete_type_souscription" => "Type de souscription",
+	"label_exporter_entete_ville" => "Ville",
 	'label_activer_adhesion' => 'Activer le module d\'adhésions',
 	'label_activer_don' => 'Activer le module dons',
 	'label_adresse' => 'Adresse',
@@ -78,6 +104,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_pays' => 'Pays',
 	'label_prenom' => 'Prénom',
 	'label_recu_fiscal' => 'Recevoir un reçu fiscal',
+	'label_statut' => 'Statut',
 	'label_telephone' => 'Téléphone',
 	'label_titre' => 'Titre',
 	'label_titre_campagne' => 'Titre de la campagne',
@@ -85,10 +112,21 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_type_saisie' => 'Types de saisies',
 	'label_type_souscription' => 'Type de souscription',
 	'label_ville' => 'Ville',
-	'label_statut' => 'Statut',
+	'label_avancement_campagne_adhesions' => "Avancement de la campagne&nbsp;: @nombre@ sur @objectif@&nbsp;!",
+	'label_avancement_campagne_dons' => "Avancement de la campagne&nbsp;: @montant@&nbsp;€ sur @objectif@&nbsp;€&nbsp;!",
+	'label_legende_bloc_fiscal' => "Informations complémentaires",
+
+// M
+	'message_nok_champ_invalide' => "Le type de saisie pour le montant est invalide",
+	'message_nok_champ_obligatoire' => 'Ce champ est obligatoire',
+	'message_nok_objectif_initial_invalide' => "Valeur de l'objectif initial invalide",
+	'message_nok_objectif_initial_valeur' => "Valeur de l'objectif initial invalide",
+	'message_nok_objectif_invalide' => "Type d'objectif invalide",
 
 // S
 	'souscription_titre' => 'Souscription',
+	'sous_titre_type_adhesions' => "Campagne d'adhésion",
+	'sous_titre_type_dons' => "Campagne de dons",
 
 // T
 	'texte_ajouter_souscription' => 'Ajouter une souscription',
@@ -108,5 +146,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 // V
 	'voir_exporter' => 'Exporter les dons',
+
 );
 ?>

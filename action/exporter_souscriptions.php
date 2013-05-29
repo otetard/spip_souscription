@@ -90,27 +90,27 @@ function action_exporter_souscriptions_dist($arg=null) {
 
   $row = sql_select($select, $from, $where);
 
-  $entete = array("ID du don",
-                  "Courriel",
-                  "Type de souscription",
-                  "Montant",
-                  "Reglée",
-                  "Statut",
-                  "Date de paiement",
-                  "Mode de paiement",
-                  "ID de l'autorisation",
-                  "Nom",
-                  "Prénom",
-                  "Adresse",
-                  "Code Postal",
-                  "Ville",
-                  "Pays",
-                  "Téléphone",
-                  "Souhaite reçu fiscal",
-                  "Souhaite être informé",
-                  "Date don",
-                  "ID Campagne",
-                  "Titre de la campagne");
+  $entete = array(_T("souscription:label_exporter_entete_id_don"),
+                  _T("souscription:label_exporter_entete_courriel"),
+                  _T("souscription:label_exporter_entete_type_souscription"),
+                  _T("souscription:label_exporter_entete_montant"),
+                  _T("souscription:label_exporter_entete_reglee"),
+                  _T("souscription:label_exporter_entete_statut"),
+                  _T("souscription:label_exporter_entete_date_paiement"),
+                  _T("souscription:label_exporter_entete_mode_paiement"),
+                  _T("souscription:label_exporter_entete_id_autorisation"),
+                  _T("souscription:label_exporter_entete_nom"),
+                  _T("souscription:label_exporter_entete_prenom"),
+                  _T("souscription:label_exporter_entete_adresse"),
+                  _T("souscription:label_exporter_entete_code_postal"),
+                  _T("souscription:label_exporter_entete_ville"),
+                  _T("souscription:label_exporter_entete_pays"),
+                  _T("souscription:label_exporter_entete_telephone"),
+                  _T("souscription:label_exporter_entete_recu_fiscal"),
+                  _T("souscription:label_exporter_entete_informer"),
+                  _T("souscription:label_exporter_entete_date_don"),
+                  _T("souscription:label_exporter_entete_id_campagne"),
+                  _T("souscription:label_exporter_entete_titre_campagne"));
 
   /* Utilisation de la fonction exporter_csv de Bonux */
   $exporter_csv = charger_fonction('exporter_csv', 'inc/', true);

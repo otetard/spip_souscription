@@ -7,9 +7,8 @@
   [(#SET{pourcentage_objectif,#GET{montant}|div{#OBJECTIF}|mult{100}|round{2}})]
 
   <p>
-    Avancement de la campagne :
-    [(#TYPE_OBJECTIF|=={don}|oui) #GET{montant} € sur #OBJECTIF € !]
-    [(#TYPE_OBJECTIF|=={adhesion}|oui) #GET{montant} adhésions sur #OBJECTIF !]
+    [(#TYPE_OBJECTIF|=={don}|oui) <:souscription:label_avancement_campagne_dons{montant=#GET{montant},objectif=#OBJECTIF}:>]
+    [(#TYPE_OBJECTIF|=={adhesion}|oui) <:souscription:label_avancement_campagne_adhesions{nombre=#GET{montant},objectif=#OBJECTIF:>}]
   </p>
 
   <div class="progress progress-striped active">
