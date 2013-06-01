@@ -9,4 +9,13 @@
 	</ul>
 </div>
 
+<div class="onglets_simple second clearfix">
+	<ul>
+		<li>[(#SELF|parametre_url{statut_transaction,'XXX'}|replace{XXX,''}|lien_ou_expose{Tous,[(#ENV{statut_transaction}|non)],ajax})]</li>
+		<li>[(#SELF|parametre_url{statut_transaction,'ok'}|lien_ou_expose{Payés,#ENV{statut_transaction}|=={ok},ajax})]</li>
+		<li>[(#SELF|parametre_url{statut_transaction,'echec'}|lien_ou_expose{Echec,#ENV{statut_transaction}|=={echec},ajax})]</li>
+		<li>[(#SELF|parametre_url{statut_transaction,'commande'}|lien_ou_expose{Commande,#ENV{statut_transaction}|=={commande},ajax})]</li>
+	</ul>
+</div>
+ 
 <INCLURE{fond=prive/objets/liste/souscriptions, par=id_souscription, env, ajax, sinon=<:souscription:info_aucun_souscription:>}>
