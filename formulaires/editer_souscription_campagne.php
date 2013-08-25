@@ -56,7 +56,7 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
                                                  ));
 
   $type = _request("type_objectif");
-  if(!in_array($type, array('don', 'adhesion')))
+  if(!in_array($type, array('don', 'adhesion', 'abonnement')))
     $ret['type_objectif'] = _T("souscription:message_nok_objectif_invalide");
 
   $objectif_initial = _request('objectif_initial');
