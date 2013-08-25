@@ -2,5 +2,5 @@
 <INCLURE{fond=prive/objets/liste/souscription_campagnes, par=id_souscription_campagne, env, ajax, sinon=<:souscription:info_aucun_souscription_campagnes:>}>
 
 [(#AUTORISER{creer,souscriptioncampagne})
-        [(#URL_ECRIRE{souscription_campagnes_edit,new=oui}|icone_verticale{<:souscription:icone_creer_souscription_campagne:>,souscription_campagne,new,right})]
+        [(#URL_ECRIRE{souscription_campagne_edit,new=oui}|icone_verticale{<:souscription:icone_creer_souscription_campagne:>,souscription_campagne,new,right})]
 ]
