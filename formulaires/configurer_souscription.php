@@ -18,6 +18,12 @@ function formulaires_configurer_souscription_charger_dist() {
                    "don_montants_description" => lire_config("souscription/don_montants_description"),
                    "don_montants_label" => lire_config("souscription/don_montants_label"),
 
+                   'abonnement_montants' => montants_array2str(lire_config("souscription/abonnement_montants")),
+                   'abonnement_type_saisie' => lire_config("souscription/abonnement_type_saisie"),
+                   "abonnement_activer" => lire_config("souscription/abonnement_activer"),
+                   "abonnement_montants_description" => lire_config("souscription/abonnement_montants_description"),
+                   "abonnement_montants_label" => lire_config("souscription/abonnement_montants_label"),
+
 		   "dispositions_fiscales_explications" => lire_config("souscription/dispositions_fiscales_explications"),
                    );
 
@@ -51,6 +57,17 @@ function formulaires_configurer_souscription_verifier_dist() {
     }
   }
 
+  if(_request("abonnement_activer")) {
+
+    if(!_request("abonnement_type_saisie")) {
+      $erreurs["abonnement_type_saisie"] = _T("souscription:message_nok_champ_obligatoire");
+    }
+
+    if(!in_array(_request("abonnement_type_saisie"), $type_saisies)) {
+      $erreurs["abonnement_type_saisie"] = _T("souscription:message_nok_champ_invalide");
+    }
+  }
+
   return $erreurs;
 }
 
@@ -67,6 +84,12 @@ function formulaires_configurer_souscription_traiter_dist() {
   ecrire_config("souscription/don_activer", _request("don_activer"));
   ecrire_config("souscription/don_montants_description", _request("don_montants_description"));
   ecrire_config("souscription/don_montants_label", _request("don_montants_label"));
+
+  ecrire_config("souscription/abonnement_montants", montants_str2array(_request("abonnement_montants")));
+  ecrire_config("souscription/abonnement_type_saisie", _request("abonnement_type_saisie"));
+  ecrire_config("souscription/abonnement_activer", _request("abonnement_activer"));
+  ecrire_config("souscription/abonnement_montants_description", _request("abonnement_montants_description"));
+  ecrire_config("souscription/abonnement_montants_label", _request("abonnement_montants_label"));
 
   ecrire_config("souscription/dispositions_fiscales_explications", _request("dispositions_fiscales_explications"));
 

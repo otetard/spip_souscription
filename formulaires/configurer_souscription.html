@@ -32,6 +32,15 @@
 	          [(#SAISIE{textarea, don_montants_description, rows=4, label=<:souscription:label_montants_explication:>})]
                 </ul>
 
+                <h2><:souscription:titre_configuration_abonnements:></h2>
+                <ul>
+	          [(#SAISIE{case, abonnement_activer, label=<:souscription:label_activer_abonnement:>})]
+	          [(#SAISIE{selection, abonnement_type_saisie, label=<:souscription:label_type_saisie:>, cacher_option_intro=oui, datas=#GET{liste_saisies}})]
+	          [(#SAISIE{input, abonnement_montants_label, label=<:souscription:label_montants_label:>})]
+	          [(#SAISIE{textarea, abonnement_montants, rows=4, label=<:souscription:label_montants:>, explication=<:souscription:explication_montants:>})]
+	          [(#SAISIE{textarea, abonnement_montants_description, rows=4, label=<:souscription:label_montants_explication:>})]
+                </ul>
+
                 <h2><:souscription:titre_configuration_general:></h2>
 
 		<ul>
