@@ -74,6 +74,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	"label_exporter_entete_titre_campagne" => "Titre de la campagne",
 	"label_exporter_entete_type_souscription" => "Type de souscription",
 	"label_exporter_entete_ville" => "Ville",
+	'label_activer_abonnement' => 'Activer le module d\'abonnement',
 	'label_activer_adhesion' => 'Activer le module d\'adhésions',
 	'label_activer_don' => 'Activer le module dons',
 	'label_adresse' => 'Adresse',
@@ -131,6 +132,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 // T
 	'texte_ajouter_souscription' => 'Ajouter une souscription',
 	'texte_changer_statut_souscription' => 'Cette souscription est :',
+	'titre_configuration_abonnements' => 'Abonnements',
 	'titre_configuration_adhesions' => 'Adhésions',
 	'titre_configuration_dons' => 'Dons',
 	'titre_configuration_general' => 'Options générales',
