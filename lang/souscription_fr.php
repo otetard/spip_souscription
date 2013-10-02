@@ -62,6 +62,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	"label_exporter_entete_id_campagne" => "ID Campagne",
 	"label_exporter_entete_id_don" => "ID du don",
 	"label_exporter_entete_informer" => "Souhaite être informé",
+	"label_exporter_entete_informer_comite_local" => "Informer comité local",
 	"label_exporter_entete_mode_paiement" => "Mode de paiement",
 	"label_exporter_entete_montant" => "Montant",
 	"label_exporter_entete_nom" => "Nom",
