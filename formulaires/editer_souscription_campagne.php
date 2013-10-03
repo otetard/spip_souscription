@@ -80,8 +80,12 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
 						  'options' => array('nom' => 'objectif_initial',
 								     'label' => _T('souscription:label_objectif_initial'),
 								     'explication' => _T('souscription:explication_campagne_objectif_initial'))
-						  )
-					    )
+					    ),
+					    array('saisie' => 'oui_non',
+						  'options' => array('nom' => 'objectif_limiter',
+								     'explication' => _T('souscription:explication_campagne_objectif_limite'),
+								     'label' => _T('souscription:label_objectif_limite')))
+					    ),
 			 ),
 		   array('saisie' => 'textarea',
 			 'options' => array('nom' => 'texte',
@@ -129,6 +133,15 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
     }
   }
 
+  /* Si une limite est demandée, alors, on vérifie que le champs est
+   * bien un entier. */
+  $limite_oui_non = _request('limite_oui_non');
+  if($limite_oui_non == "on") {
+    $limite = _request('limite');
+    if(!ctype_digit($objectif))
+      $ret['limite'] = _T("souscription:message_nok_limite_valeur");
+  }
+
   return $ret;
 }
 
@@ -139,12 +152,12 @@ function formulaires_editer_souscription_campagne_traiter_dist($id_souscription_
                                                                $row=array(),
                                                                $hidden='')
 {
-
   /* Si un objectif n'est pas demandée, alors, on remplace la valeur
    * fournie (quelqu'elle soit, par 0) */
   if(_request('objectif_oui_non') != "on") {
     set_request('objectif', 0);
     set_request('objectif_initial', 0);
+    set_request('objectif_limiter', '');
   }
 
   $res = formulaires_editer_objet_traiter('souscription_campagne',

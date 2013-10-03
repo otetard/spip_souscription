@@ -34,7 +34,7 @@ function souscription_upgrade($nom_meta_base_version, $version_cible) {
 
   $maj['0.3'] = array(array('sql_alter', "TABLE spip_souscriptions ADD telephone text NOT NULL DEFAULT ''"));
 
-  $maj['0.4'] = array(array('sql_alter', "TABLE spip_souscription_campagnes ADD limite bigint(21) NOT NULL DEFAULT 0"));
+  $maj['0.4'] = array(array('sql_alter', "TABLE spip_souscription_campagnes ADD objectif_limiter varchar(3) NOT NULL DEFAULT ''"));
 
   include_spip('base/upgrade');
   maj_plugin($nom_meta_base_version, $version_cible, $maj);
