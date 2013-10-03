@@ -85,6 +85,7 @@ function souscription_declarer_tables_objets_sql($tables) {
                           "titre"                    => "text NOT NULL DEFAULT ''",
                           "texte"                    => "longtext NOT NULL DEFAULT ''",
                           "statut"                   => "varchar(255) NOT NULL DEFAULT 0",
+                          "limite"                   => "bigint(21) NOT NULL DEFAULT 0",
                           "date"                     => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
                           "maj"                      => "TIMESTAMP"
                           ),
