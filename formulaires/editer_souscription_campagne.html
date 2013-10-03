@@ -7,14 +7,7 @@
       #ACTION_FORMULAIRE{#ENV{action}}
 
       <ul>
-	[(#SAISIE{input, titre, obligatoire=oui, label=<:souscription:label_titre:>})]
-	[(#SAISIE{selection, type_objectif, obligatoire=oui,
-          label=<:souscription:label_type_objectif:>,
-          explication=<:souscription:explication_type_objectif:>,
-          datas=#ARRAY{don, Dons, adhesion, Adhésions}})]
-	[(#SAISIE{input, objectif, obligatoire=oui, label=<:souscription:label_objectif:>, explication=<:souscription:explication_campagne_objectif:>})]
-	[(#SAISIE{input, objectif_initial, obligatoire=oui, label=<:souscription:label_objectif_initial:>, explication=<:souscription:explication_campagne_objectif_initial:>})]
-	[(#SAISIE{textarea, texte, label=<:souscription:label_description:>, inserer_barre=edition, rows=10})]
+      #GENERER_SAISIES{#ENV{_saisies}}
       </ul>
 
       <p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer_creation_campagne:>" /></p>

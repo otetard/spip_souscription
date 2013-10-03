@@ -31,14 +31,51 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
                                                                $row=array(),
                                                                $hidden='')
 {
-  return formulaires_editer_objet_charger('souscription_campagne',
-                                          $id_souscription_campagne,
-                                          '',
-                                          $lier_trad,
-                                          $retour,
-                                          $config_fonc,
-                                          $row,
-                                          $hidden);
+  $valeurs = formulaires_editer_objet_charger('souscription_campagne',
+					      $id_souscription_campagne,
+					      '',
+					      $lier_trad,
+					      $retour,
+					      $config_fonc,
+					      $row,
+					      $hidden);
+
+
+  $saisies = array(array('saisie' => 'input',
+			 'options' => array('nom' => 'titre',
+					    'label' => _T('souscription:label_titre'),
+					    'obligatoire' => 'oui')
+			 ),
+		   array('saisie' => 'selection',
+			 'options' => array('nom' => 'type_objectif',
+					    'obligatoire' => 'oui',
+					    'label' => _T('souscription:label_type_objectif'),
+					    'explication' => _T('souscription:explication_type_objectif'),
+					    'datas' => array('don' => 'Dons',
+							     'adhesion' => 'Adhésions'))
+			 ),
+		   array('saisie' => 'input',
+			 'options' => array('nom' => 'objectif',
+					    'obligatoire' => 'oui',
+					    'label' => _T('souscription:label_objectif'),
+					    'explication' => _T('souscription:explication_campagne_objectif'))
+			 ),
+		   array('saisie' => 'input',
+			 'options' => array('nom' => 'objectif_initial',
+					    'obligatoire' => 'oui',
+					    'label' => _T('souscription:label_objectif_initial'),
+					    'explication' => _T('souscription:explication_campagne_objectif_initial'))
+			 ),
+		   array('saisie' => 'textarea',
+			 'options' => array('nom' => 'texte',
+					    'label' => _T('souscription:label_description'),
+					    'inserer_barre' => 'edition',
+					    'rows' => '10'))
+		   );
+
+  $valeurs['_saisies'] = $saisies;
+
+  return $valeurs;
 }
 
 function formulaires_editer_souscription_campagne_verifier_dist($id_souscription_campagne='new',
