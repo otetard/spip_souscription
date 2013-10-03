@@ -40,6 +40,13 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
 					      $row,
 					      $hidden);
 
+  $valeurs['objectif_oui_non'] = _request('objectif_oui_non');
+
+  /* Si la valeur du champ 'objectif' est 0, alors, c'est que
+   * l'objectif n'est pas activé. */
+  $defaut_objectif = "";
+  if($valeurs['objectif'] && $valeurs['objectif'] > 0)
+    $defaut_objectif = "on";
 
   $saisies = array(array('saisie' => 'input',
 			 'options' => array('nom' => 'titre',
@@ -54,17 +61,27 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
 					    'datas' => array('don' => 'Dons',
 							     'adhesion' => 'Adhésions'))
 			 ),
-		   array('saisie' => 'input',
-			 'options' => array('nom' => 'objectif',
-					    'obligatoire' => 'oui',
-					    'label' => _T('souscription:label_objectif'),
-					    'explication' => _T('souscription:explication_campagne_objectif'))
+		   array('saisie' => 'oui_non',
+			 'options' => array('nom' => 'objectif_oui_non',
+					    'label' => _T('souscription:label_objectif_oui_non'),
+					    'defaut' => $defaut_objectif)
 			 ),
-		   array('saisie' => 'input',
-			 'options' => array('nom' => 'objectif_initial',
-					    'obligatoire' => 'oui',
-					    'label' => _T('souscription:label_objectif_initial'),
-					    'explication' => _T('souscription:explication_campagne_objectif_initial'))
+		   array('saisie' => 'fieldset',
+			 'options' => array('nom' => 'groupe_limite',
+					    'label' => _T('souscription:label_objectif_groupe'),
+					    'afficher_si' => '@objectif_oui_non@ == "on"'),
+			 'saisies' => array(array('saisie' => 'input',
+						  'options' => array('nom' => 'objectif',
+								     'obligatoire' => 'oui',
+								     'label' => _T('souscription:label_objectif'),
+								     'explication' => _T('souscription:explication_campagne_objectif')),
+						  ),
+					    array('saisie' => 'input',
+						  'options' => array('nom' => 'objectif_initial',
+								     'label' => _T('souscription:label_objectif_initial'),
+								     'explication' => _T('souscription:explication_campagne_objectif_initial'))
+						  )
+					    )
 			 ),
 		   array('saisie' => 'textarea',
 			 'options' => array('nom' => 'texte',
@@ -96,13 +113,17 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
   if(!in_array($type, array('don', 'adhesion')))
     $ret['type_objectif'] = _T("souscription:message_nok_objectif_invalide");
 
-  $objectif_initial = _request('objectif_initial');
-  if(!ctype_digit($objectif_initial) || intval($objectif_initial) < 0)
-    $ret['objectif_initial'] = _T("souscription:message_nok_objectif_initial_invalide");
+  /* Si un objectif est demandé, alors on vérifie que les champs sont
+   * bien des entiers. */
+  if(_request('objectif_oui_non') == 'on') {
+    $objectif_initial = _request('objectif_initial');
+    if(!ctype_digit($objectif_initial) || intval($objectif_initial) < 0)
+      $ret['objectif_initial'] = _T("souscription:message_nok_objectif_initial_invalide");
 
-  $objectif = _request('objectif');
-  if(!ctype_digit($objectif) || intval($objectif) < 0)
-    $ret['objectif'] = _T("souscription:message_nok_objectif_initial_valeur");
+    $objectif = _request('objectif');
+    if(!ctype_digit($objectif) || intval($objectif) < 0)
+      $ret['objectif'] = _T("souscription:message_nok_objectif_initial_valeur");
+  }
 
   return $ret;
 }
@@ -114,6 +135,13 @@ function formulaires_editer_souscription_campagne_traiter_dist($id_souscription_
                                                                $row=array(),
                                                                $hidden='')
 {
+
+  /* Si un objectif n'est pas demandée, alors, on remplace la valeur
+   * fournie (quelqu'elle soit, par 0) */
+  if(_request('objectif_oui_non') != "on") {
+    set_request('objectif', 0);
+    set_request('objectif_initial', 0);
+  }
 
   $res = formulaires_editer_objet_traiter('souscription_campagne',
                                           $id_souscription_campagne,
