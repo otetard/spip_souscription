@@ -6,5 +6,11 @@
 [(#TEXTE)]
 
 [(#ENV{avancement}|!={non}|?{#MODELE{avancement-campagne,campagne=#ENV{campagne}}})]
+
+[(#OBJECTIF_LIMITER|=={on}|oui|et{#AVANCEMENT_CAMPAGNE|<{#OBJECTIF}|oui})
 #FORMULAIRE_SOUSCRIPTION{#ENV{campagne}}
+]
+[(#OBJECTIF_LIMITER|=={on}|oui|et{#AVANCEMENT_CAMPAGNE|<{#OBJECTIF}|non})
+[(#INCLURE{fond=inclure/objectif_atteint,env})]
+]
 </BOUCLE_campagne>
