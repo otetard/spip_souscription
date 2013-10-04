@@ -82,7 +82,7 @@ function souscription_declarer_tables_objets_sql($tables) {
                           "objectif"                 => "int(11) NOT NULL DEFAULT 0",
                           "objectif_initial"         => "int(11) NOT NULL DEFAULT 0",
                           "type_objectif"            => "varchar(255) NOT NULL DEFAULT 0",
-                          "objectif_limiter"         => "varchar(3) NOT NULL DEFAULT 0",
+                          "objectif_limiter"         => "varchar(3) NOT NULL DEFAULT ''",
                           "titre"                    => "text NOT NULL DEFAULT ''",
                           "texte"                    => "longtext NOT NULL DEFAULT ''",
                           "statut"                   => "varchar(255) NOT NULL DEFAULT 0",
