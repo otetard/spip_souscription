@@ -116,13 +116,17 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
   /* Si un objectif est demandé, alors on vérifie que les champs sont
    * bien des entiers. */
   if(_request('objectif_oui_non') == 'on') {
-    $objectif_initial = _request('objectif_initial');
-    if(!ctype_digit($objectif_initial) || intval($objectif_initial) < 0)
-      $ret['objectif_initial'] = _T("souscription:message_nok_objectif_initial_invalide");
-
     $objectif = _request('objectif');
     if(!ctype_digit($objectif) || intval($objectif) < 0)
-      $ret['objectif'] = _T("souscription:message_nok_objectif_initial_valeur");
+      $ret['objectif'] = _T("souscription:message_nok_objectif_invalide");
+
+    $objectif_initial = _request('objectif_initial');
+    if($objectif_initial != '') {
+      if(!ctype_digit($objectif_initial) || intval($objectif_initial < 0))
+	$ret['objectif_initial'] = _T("souscription:message_nok_objectif_initial_valeur");
+      elseif(intval($objectif_initial) > $objectif)
+	$ret['objectif_initial'] = _T("souscription:message_nok_objectif_initial_supperieur_objectif");
+    }
   }
 
   return $ret;

@@ -126,6 +126,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_nok_champ_obligatoire' => 'Ce champ est obligatoire',
 	'message_nok_objectif_initial_invalide' => "Valeur de l'objectif initial invalide",
 	'message_nok_objectif_initial_valeur' => "Valeur de l'objectif initial invalide",
+	'message_nok_objectif_initial_supperieur_objectif' => "Valeur de l'objectif initial suppérieur à l'objectif",
 	'message_nok_objectif_invalide' => "Type d'objectif invalide",
 
 // S
