@@ -78,6 +78,11 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
   if($type == "adhesion")
     $recu_fiscal = "on";
 
+  $montant_type = lire_config("souscription/{$type}_type_saisie", 'input');
+  $montant_datas = lire_config("souscription/${type}_montants", array());
+  $montant_label = lire_config("souscription/${type}_montants_label", _T('souscription:label_montant'));
+  $montant_explication = nl2br(lire_config("souscription/${type}_montants_description"));
+
   return array('montant' => '',
                'courriel' => '',
                'recu_fiscal' => $recu_fiscal,
@@ -92,6 +97,10 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
                'telephone' => '',
                'id_souscription_campagne' => $id_souscription_campagne,
                'type_souscription' => $type,
+               'montant_datas' => $montant_datas,
+               'montant_type' => $montant_type,
+               'montant_label' => $montant_label,
+               'montant_explication' => $montant_explication
                );
 }
 
