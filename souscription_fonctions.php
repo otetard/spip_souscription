@@ -42,3 +42,28 @@ function balise_AVANCEMENT_CAMPAGNE_dist($p) {
 
   return $p;
 }
+
+function montants_array2str($array) {
+  include_spip('inc/saisies');
+
+  $montants = "";
+  foreach($array as $prix => $description) {
+    $montants .= $prix . "|" . $description . "\n";
+  }
+
+  return $montants;
+}
+
+function montants_str2array($str) {
+  include_spip('inc/saisies');
+
+  /* Vérification du format de la chaine. Elle doit être sous la forme
+   * « [montant] | [label] », par exemple « 10 | 10 € ». */
+  foreach(explode("\n", $str) as $l) {
+    if(!preg_match('/^[0-9]+\|.*/', $l)) {
+      return false;
+    }
+  }
+
+  return saisies_chaine2tableau(saisies_aplatir_chaine($str));
+}

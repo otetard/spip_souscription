@@ -74,24 +74,3 @@ function formulaires_configurer_souscription_traiter_dist() {
 
   return $res;
 }
-
-
-function montants_array2str($array) {
-  $montants = "";
-  foreach($array as $prix => $description) {
-    $montants .= $prix . "|" . $description . "\n";
-  }
-
-  return $montants;
-}
-
-function montants_str2array($str) {
-  $montants = array();
-
-  foreach(explode("\n", trim($str)) as $montant) {
-    list($prix, $description) = explode("|", $montant, 2);
-    $montants[trim($prix)] = trim($description);
-  }
-
-  return $montants;
-}
