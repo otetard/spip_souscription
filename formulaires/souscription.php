@@ -196,7 +196,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
     if(!(ctype_digit($e)))
       $erreurs['montant'] = "Montant invalide";
     else {
-      $type_saisie = lire_config("souscription/${type}_type_sasie");
+      $type_saisie = lire_config("souscription/${type}_type_saisie");
 
       /* On ne vérifie strictement la valeur du montant que si on
        * n'utilise pas le type de saisie « entrée libre » (input) pour
