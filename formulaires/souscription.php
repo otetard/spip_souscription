@@ -70,16 +70,25 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
     return false;
 
   /* Récupération des information à propos de la campagne */
-  $type = sql_getfetsel("type_objectif",
-                        "spip_souscription_campagnes",
-                        "id_souscription_campagne=$id_souscription_campagne");
+  $campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
+			 "spip_souscription_campagnes",
+			 "id_souscription_campagne=$id_souscription_campagne");
+
+  $type = $campagne['type_objectif'];
 
   $recu_fiscal = "";
   if($type == "adhesion")
     $recu_fiscal = "on";
 
-  $montant_type = lire_config("souscription/{$type}_type_saisie", 'input');
-  $montant_datas = lire_config("souscription/${type}_montants", array());
+  if($campagne['configuration_specifique'] !== 'on') {
+    $montant_type = lire_config("souscription/{$type}_type_saisie", 'input');
+    $montant_datas = lire_config("souscription/${type}_montants", array());
+  }
+  else {
+    $montant_type = $campagne['type_saisie'];
+    $montant_datas = montants_str2array($campagne['montants']);
+  }
+
   $montant_label = lire_config("souscription/${type}_montants_label", _T('souscription:label_montant'));
   $montant_explication = nl2br(lire_config("souscription/${type}_montants_description"));
 
@@ -134,33 +143,29 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
                                                      'montant',
                                                      'id_souscription_campagne'));
 
-  if(!verifier_campagne($id_souscription_campagne)) {
-    $erreurs['message_erreur'] = "La campagne à laquelle est associée cette souscription est invalide";
-  }
-
   if(!$id_souscription_campagne || intval($id_souscription_campagne) != intval($campagne)) {
       $erreurs['message_erreur'] = "Campagne invalide";
   }
 
-  /* La campagne doit être valide (définie dans la base) et doit
-   * accepter les dons. */
-  $type = sql_getfetsel("type_objectif",
-                        "spip_souscription_campagnes",
-                        "id_souscription_campagne=$id_souscription_campagne");
+  $campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
+			 "spip_souscription_campagnes", "id_souscription_campagne=$id_souscription_campagne");
 
-  if(!$type || !in_array($type, array("don", "adhesion")))
-    $erreurs['message_erreur'] = "Type de souscription invalide";
+  $type_campagne = $campagne['type_objectif'];
 
   /* Le champ 'type' (hidden) doit être le même que celui défini dans
    * la campagne. */
-  if(_request('type_souscription') != $type)
-    $erreurs['message_erreur'] = "Type de souscription invalide: " . _request('type_souscription');
+  if(_request('type_souscription') != $type_campagne)
+    $erreurs['message_erreur'] = "Type de souscription invalide : " . _request('type_souscription');
+
+  if(!verifier_campagne($id_souscription_campagne, $type_campagne)) {
+    $erreurs['message_erreur'] = "La campagne à laquelle est associée cette souscription est invalide";
+  }
 
 
-  if(_request('recu_fiscal') || $type == "adhesion") {
+  if(_request('recu_fiscal') || $type_campagne == "adhesion") {
     foreach(array('prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire) {
       if(!_request($obligatoire)) {
-        if($type == "adhesion") {
+        if($type_campagne == "adhesion") {
           $erreurs[$obligatoire] = "Ce champ est obligatoire pour les adhésions";
         }
         else {
@@ -191,18 +196,29 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
     $erreurs['telephone'] = "Numéro de téléphone incorrect";
   }
 
-
+  /* Vérification du montant. Si la campagne est configurée pour
+   * utiliser une configuration spécifique, alors, il faut vérifier
+   * avec les montants de la campagne. Autrement, il faut utiliser les
+   * paramètres globaux.
+   */
   if ($e = _request('montant')) {
     if(!(ctype_digit($e)))
       $erreurs['montant'] = "Montant invalide";
     else {
-      $type_saisie = lire_config("souscription/${type}_type_saisie");
+      if($campagne['configuration_specifique'] !== 'on') {
+	$montant_type = lire_config("souscription/{$type}_type_saisie", 'input');
+	$montant_datas = lire_config("souscription/${type}_montants", array());
+      }
+      else {
+	$montant_type = $campagne['type_saisie'];
+	$montant_datas = montants_str2array($campagne['montants']);
+      }
 
       /* On ne vérifie strictement la valeur du montant que si on
        * n'utilise pas le type de saisie « entrée libre » (input) pour
        * le montant. */
-      if(($type_saisie != "input") AND !array_key_exists($e, lire_config("souscription/${type}_montants")))
-        $erreurs['montant'] = "Le montant spécifié est invalide";
+      if(($montant_type != "input") AND !array_key_exists($e, $montant_datas))
+        $erreurs['montant'] = "Le montant spécifié est invalide" . var_export($campagne, true);
     }
   }
 
@@ -270,15 +286,24 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne) {
   return $ret;
 }
 
-function verifier_campagne($id_souscription_campagne) {
+function verifier_campagne($id_souscription_campagne, $type_souscription=null) {
   /* FIXME: vérifier que la campagne a bien le bon statut (ouverte, fermée, terminée, etc.) */
 
-  /* Vérification de l'existance de la *campagne*, de son *statut* et de la *concordance du type* */
-  if(intval($id_souscription_campagne)
-     AND $t = sql_getfetsel('type_objectif', 'spip_souscription_campagnes', 'id_souscription_campagne='.intval($id_souscription_campagne)))
-    {
-      return true;
-    }
+  $campagne = sql_fetsel(array('type_objectif', 'objectif_initial', 'objectif', 'objectif_limiter'),
+			 'spip_souscription_campagnes', 'id_souscription_campagne='.sql_quote(intval($id_souscription_campagne)));
 
-  return false;
+  /* La campagne doit exister */
+  if(!count($campagne['type_objectif']))
+    return false;
+
+  elseif($type_souscription != null && $campagne['type_objectif'] != $type_souscription)
+    return false;
+
+  /* Si la campagne doit être fermée lorsque l'objectif est atteint,
+   * alors on bloque. */
+  elseif($campagne['objectif_limiter'] &&
+	 calcul_avancement_campagne($id_souscription_campagne, $campagne['type_objectif'], $campagne['objectif_initial']) >= $campagne['objectif'])
+    return false;
+
+  return true;
 }

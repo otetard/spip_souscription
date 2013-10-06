@@ -85,6 +85,9 @@ function souscription_declarer_tables_objets_sql($tables) {
                           "objectif_limiter"         => "varchar(3) NOT NULL DEFAULT ''",
                           "titre"                    => "text NOT NULL DEFAULT ''",
                           "texte"                    => "longtext NOT NULL DEFAULT ''",
+                          "configuration_specifique" => "varchar(3) NOT NULL DEFAULT ''",
+                          "type_saisie"              => "varchar(255) NOT NULL DEFAULT ''",
+                          "montants"                 => "text NOT NULL DEFAULT ''",
                           "statut"                   => "varchar(255) NOT NULL DEFAULT 0",
                           "date"                     => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
                           "maj"                      => "TIMESTAMP"
@@ -94,8 +97,8 @@ function souscription_declarer_tables_objets_sql($tables) {
                          ),
           'titre' => "titre AS titre, '' AS lang",
           'date' => "date",
-          'champs_editables'  => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif', 'objectif_limiter'),
-          'champs_versionnes' => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif', 'objectif_limiter'),
+          'champs_editables'  => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif', 'objectif_limiter', 'configuration_specifique', 'type_saisie', 'montants'),
+          'champs_versionnes' => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif', 'objectif_limiter', 'configuration_specifique', 'type_saisie', 'montants'),
           'rechercher_champs' => array(),
           );
 

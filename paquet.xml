@@ -5,7 +5,7 @@
         compatibilite="[3.0.5;3.0.*]"
         logo=""
         documentation=""
-        schema="0.4">
+        schema="0.5">
 
   <nom>Souscription</nom>
   <auteur lien='http://olivier.miskin.fr'>Olivier Tétard</auteur>

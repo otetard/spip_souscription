@@ -39,6 +39,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'explication_type_objectif' => 'Type de l\'objectif (influe le montant de l\'objectif)',
 	'explication_bloc_fiscal_adhesion' => "Les informations suivantes sont nécessaire pour nous permettre de réaliser l'adhésion&nbsp;:",
 	'explication_bloc_fiscal_don' => "Ces informations sont nécessaire en vue de l'établissement du reçu permettant une déduction fiscale qui vous sera envoyé",
+	'explication_configuration_specifique' => "Permet de configurer des niveaux spécifiques d'adhésion ou de dons pour cette campagne",
+	'explication_type_saisie' => "Mode d'affichage des différents montants possibles",
 
 // I
 	'icone_creer_souscription' => 'Créer une souscription',
@@ -108,6 +110,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_objectif_initial' => 'Niveau initial de la campagne',
 	'label_objectif_groupe' => 'Definition de l\'objectif de la campagne',
 	'label_objectif_limite' => 'Fermer la campagne si l\'objectif est atteint',
+	'label_configuration_specifique' => 'Activer une configuration spécifique',
 	'label_pays' => 'Pays',
 	'label_prenom' => 'Prénom',
 	'label_recu_fiscal' => 'Recevoir un reçu fiscal',

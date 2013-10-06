@@ -87,6 +87,33 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
 								     'label' => _T('souscription:label_objectif_limite')))
 					    ),
 			 ),
+		   array('saisie' => 'oui_non',
+			 'options' => array('nom' => 'configuration_specifique',
+					    'label' => _T('souscription:label_configuration_specifique'),
+					    'explication' => _T('souscription:explication_configuration_specifique'),
+					    'defaut' => $defaut_objectif)
+			 ),
+		   array('saisie' => 'fieldset',
+			 'options' => array('nom' => 'groupe_configuration_specifique',
+					    'label' => _T('souscription:label_objectif_groupe'),
+					    'afficher_si' => '@configuration_specifique@ == "on"'),
+			 'saisies' => array(array('saisie' => 'selection',
+						  'options' => array('nom' => 'type_saisie',
+								     'label' => _T('souscription:label_type_saisie'),
+								     'explication' => _T('souscription:explication_type_saisie'),
+								     'datas' => array("input" => _T("souscription:configurer_type_saisie_input"),
+										      "radio" => _T("souscription:configurer_type_saisie_radio"),
+										      "selection" => _T("souscription:configurer_type_saisie_selection")),
+								     'defaut' => 'input')
+						  ),
+					    array('saisie' => 'textarea',
+						  'options' => array('nom' => 'montants',
+								     'label' => _T('souscription:label_montants'),
+								     'explication' => _T('souscription:explication_montants'),
+								     'afficher_si' => '@type_saisie@ == "radio" || @type_saisie@ == "selection"',
+								     'rows' => 4))
+					    ),
+			 ),
 		   array('saisie' => 'textarea',
 			 'options' => array('nom' => 'texte',
 					    'label' => _T('souscription:label_description'),
@@ -142,6 +169,25 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
       $ret['limite'] = _T("souscription:message_nok_limite_valeur");
   }
 
+  /* Si une guration spécifique est demandée, alors on vérifie les
+   * valeurs 'type_saisie' et 'montants' (si on a demandé un bouton
+   * radio ou une selection). Autrement, les données sont supprimées
+   * dans la fonction traiter. */
+  if(_request('configuration_specifique')) {
+    $type_saisie = _request('type_saisie');
+    if(!$type_saisie || !in_array($type_saisie, array('radio', 'selection', 'input')))
+      $ret['type_saisie'] = _T('souscription:message_nok_type_saisie');
+
+    $montants = _request('montants');
+    if($type_saisie && in_array($type_saisie, array('radio', 'selection'))) {
+      if(!$montants || !is_string($montants))
+	$ret['montants'] = _T('souscription:message_nok_montants');
+
+      elseif(!montants_str2array($montants))
+	$ret['montants'] = _T('souscription:message_nok_montants');	
+    }
+  }
+
   return $ret;
 }
 
@@ -158,6 +204,11 @@ function formulaires_editer_souscription_campagne_traiter_dist($id_souscription_
     set_request('objectif', 0);
     set_request('objectif_initial', 0);
     set_request('objectif_limiter', '');
+  }
+
+  if(_request('configuration_specifique' != "on")) {
+    set_request('type_saisie', '');
+    set_request('montants', '');
   }
 
   $res = formulaires_editer_objet_traiter('souscription_campagne',
