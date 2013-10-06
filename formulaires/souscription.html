@@ -12,12 +12,7 @@
 
       #ACTION_FORMULAIRE{#ENV{action}}
       <ul>
-	[(#SAISIE{#ENV{montant_type},
-                  montant,
-                  obligatoire=oui,
-                  label=#ENV{montant_label},
-                  explication=#ENV{montant_explication},
-                  datas=#ENV{montant_datas}})]
+	[(#SAISIE{#ENV{montant_type}, montant, obligatoire=oui, label=#ENV{montant_label}, explication=#ENV{montant_explication}, datas=#ENV{montant_datas}})]
    	[(#SAISIE{explication, dispositions_fiscales_explications, texte=#CONFIG{souscription/dispositions_fiscales_explications}|nl2br})]
 	[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>})]
 	[(#SAISIE{oui_non, recu_fiscal, label=<:souscription:label_recu_fiscal:>})]
