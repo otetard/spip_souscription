@@ -33,18 +33,21 @@ function souscription_optimiser_base_disparus($flux){
  * @return array       Données du pipeline
  */
 function souscription_trig_bank_notifier_reglement($flux) {
-  $email = sql_getfetsel('courriel', 'spip_souscriptions', 'id_transaction='.intval($flux['args']['id_transaction']));
+  $souscription = sql_fetsel(array('courriel', 'id_souscription_campagne'), 'spip_souscriptions', 'id_transaction='.intval($flux['args']['id_transaction']));
+  $email = $souscription['courriel'];
+  $campagne = $souscription['id_souscription_campagne'];
+
   $sujet = '['.$GLOBALS['meta']['nom_site'].'] ';
 
   if ($flux['args']['succes']) {
     $sujet .= 'Confirmation de votre réglement';
-    $message = recuperer_fond('modeles/mail-souscription-succes',
-                              array('id_transaction' => $flux['args']['id_transaction']));
+    $message = recuperer_fond(_trouver_modele_courriel_reglement("succes", $campagne),
+			      array('id_transaction' => $flux['args']['id_transaction']));
   }
   else {
     $sujet .= 'Echec de votre réglement';
-    $message = recuperer_fond('modeles/mail-souscription-echec',
-                              array('id_transaction' => $flux['args']['id_transaction']));
+    $message = recuperer_fond(_trouver_modele_courriel_reglement("echec", $campagne),
+			      array('id_transaction' => $flux['args']['id_transaction']));
   }
 
   spip_log(sprintf("Envoi de notifiaction de confirmation de paiement à [%] pour la souscription [%s].", $email, $flux['args']['id_transaction']),
@@ -56,4 +59,12 @@ function souscription_trig_bank_notifier_reglement($flux) {
   return $flux;
 }
 
+function _trouver_modele_courriel_reglement($type, $id_souscription_campagne) {
+  $modele = "modeles/mail-souscription-${type}";
+
+  if(trouver_fond("${modele}-${id_souscription_campagne}"))
+    $modele = "${modele}-${id_souscription_campagne}";
+
+  return $modele;
+}
 ?>
