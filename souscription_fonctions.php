@@ -43,17 +43,6 @@ function balise_AVANCEMENT_CAMPAGNE_dist($p) {
   return $p;
 }
 
-function montants_array2str($array) {
-  include_spip('inc/saisies');
-
-  $montants = "";
-  foreach($array as $prix => $description) {
-    $montants .= $prix . "|" . $description . "\n";
-  }
-
-  return $montants;
-}
-
 function montants_str2array($str) {
   include_spip('inc/saisies');
 

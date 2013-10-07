@@ -40,8 +40,29 @@ function souscription_upgrade($nom_meta_base_version, $version_cible) {
 		      array('sql_alter', "TABLE spip_souscription_campagnes ADD type_saisie varchar(255) NOT NULL DEFAULT ''"),
 		      array('sql_alter', "TABLE spip_souscription_campagnes ADD montants text NOT NULL DEFAULT ''"));
 
+  $maj['0.6'] = array(array('maj_configuration_montants'));
+
   include_spip('base/upgrade');
   maj_plugin($nom_meta_base_version, $version_cible, $maj);
+}
+
+/* Fonction permettant de changer le format des montants globaux pour
+ * le plugin souscription. Les montants étaient stockés sous la forme
+ * d'un array() sérialisés. Il sont désormais stockés dans leur format
+ * chaine de caractères. */
+function maj_configuration_montants() {
+  foreach(array('adhesion_montants', 'don_montants') as $cfg) {
+    $cle_cfg = "souscription/${cfg}";
+
+    $montants_orig = lire_config($cle_cfg);
+
+    $montants = "";
+    foreach($montants_orig as $prix => $description) {
+      $montants .= $prix . "|" . $description . "\n";
+    }
+
+    ecrire_config($cle_cfg, $montants);
+  }
 }
 
 /**
