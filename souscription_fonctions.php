@@ -59,7 +59,7 @@ function montants_str2array($str) {
 
   /* Vérification du format de la chaine. Elle doit être sous la forme
    * « [montant] | [label] », par exemple « 10 | 10 € ». */
-  foreach(explode("\n", $str) as $l) {
+  foreach(explode("\n", trim($str)) as $l) {
     if(!preg_match('/^[0-9]+\|.*/', $l)) {
       return false;
     }
