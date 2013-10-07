@@ -13,29 +13,8 @@
 	<div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 
-                <h2><:souscription:titre_configuration_adhesions:></h2>
-
                 <ul>
-	          [(#SAISIE{case, adhesion_activer, label=<:souscription:label_activer_adhesion:>})]
-	          [(#SAISIE{selection, adhesion_type_saisie, label=<:souscription:label_type_saisie:>, cacher_option_intro=oui, datas=#GET{liste_saisies}})]
-	          [(#SAISIE{input, adhesion_montants_label, label=<:souscription:label_montants_label:>})]
-	          [(#SAISIE{textarea, adhesion_montants, rows=4, label=<:souscription:label_montants:>, explication=<:souscription:explication_montants:>})]
-	          [(#SAISIE{textarea, adhesion_montants_description, rows=4, label=<:souscription:label_montants_explication:>})]
-                </ul>
-
-                <h2><:souscription:titre_configuration_dons:></h2>
-                <ul>
-	          [(#SAISIE{case, don_activer, label=<:souscription:label_activer_don:>})]
-	          [(#SAISIE{selection, don_type_saisie, label=<:souscription:label_type_saisie:>, cacher_option_intro=oui, datas=#GET{liste_saisies}})]
-	          [(#SAISIE{input, don_montants_label, label=<:souscription:label_montants_label:>})]
-	          [(#SAISIE{textarea, don_montants, rows=4, label=<:souscription:label_montants:>, explication=<:souscription:explication_montants:>})]
-	          [(#SAISIE{textarea, don_montants_description, rows=4, label=<:souscription:label_montants_explication:>})]
-                </ul>
-
-                <h2><:souscription:titre_configuration_general:></h2>
-
-		<ul>
-	        [(#SAISIE{textarea, dispositions_fiscales_explications, rows=4, label=<:souscription:label_dispositions_fiscales_explications:>})]
+		  #GENERER_SAISIES{#ENV{_saisies}}
 		</ul>
 
 		<input type="hidden" name="_meta_casier" value="souscription" />

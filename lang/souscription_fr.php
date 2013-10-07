@@ -125,6 +125,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_avancement_campagne_adhesions' => "Avancement de la campagne&nbsp;: @nombre@ sur @objectif@&nbsp;!",
 	'label_avancement_campagne_dons' => "Avancement de la campagne&nbsp;: @montant@&nbsp;€ sur @objectif@&nbsp;€&nbsp;!",
 	'label_legende_bloc_fiscal' => "Informations complémentaires",
+	'label_adhesion_groupe' => 'Adhésions',
+	'label_don_groupe' => 'Dons',
+	'label_general_groupe' => 'Options générales',
 
 // M
 	'message_nok_champ_invalide' => "Le type de saisie pour le montant est invalide",
@@ -142,9 +145,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 // T
 	'texte_ajouter_souscription' => 'Ajouter une souscription',
 	'texte_changer_statut_souscription' => 'Cette souscription est :',
-	'titre_configuration_adhesions' => 'Adhésions',
-	'titre_configuration_dons' => 'Dons',
-	'titre_configuration_general' => 'Options générales',
 	'titre_configurer_souscriptions' => 'Souscriptions',
 	'titre_logo_souscription_campagne' => 'Logo de cette campagne',
 	'titre_page_configurer_souscriptions' => 'Configuration des souscriptions',
