@@ -6,15 +6,15 @@ Présentation du *plugin*
 ========================
 
 Souscription est un *plugin* permettant de mettre en place, sur un
-site fonctionnant sous `SPIP <http://www.spip.net/>`, des campagnes
+site fonctionnant sous `SPIP <http://www.spip.net/>`_, des campagnes
 d'adhésions ou de dons. Le paiement est délégué au *plugin* `Bank
-<https://github.com/nursit/bank>`, qui prend en charge différentes
+<https://github.com/nursit/bank>`_, qui prend en charge différentes
 plateforme de paiement en ligne (chèque, PayBox, PayPal, virement,
 etc.).
 
 Ce *plugin* a été développé pour les besoins d'`Attac France
-<http://www.france.attac.org/>` et de `Basta !
-<http://www.bastamag.net>`.
+<http://www.france.attac.org/>`_ et de `Basta !
+<http://www.bastamag.net>`_.
 
 Installation
 ============
@@ -25,13 +25,13 @@ depuis l'interface de gestion des *plugins* de SPIP.
 
 Pour installer le *plugin*, il faut récupérer l'archive de la
 `dernière version
-<https://github.com/otetard/spip_souscription/releases>` publiée sur
-GitHub ou dupliquer le dépôt Git :
+<https://github.com/otetard/spip_souscription/releases>`_ publiée sur
+GitHub ou dupliquer le dépôt Git ::
 
   $ git clone https://github.com/otetard/spip_souscription souscription
 
 Il faut aussi récupérer le *plugin* `Bank
-<https://github.com/nursit/bank>`, hébergé lui aussi sur GitHub :
+<https://github.com/nursit/bank>`_, hébergé lui aussi sur GitHub ::
 
   $ git clone https://github.com/nursit/bank
 
@@ -59,6 +59,6 @@ des objectifs et il est éventuellement possible de définir des
 montants spécifiques.
 
 Pour afficher le formulaire d'adhésion, il faut ensuite ajouter le
-code suivant dans un article (en adaptant le numéro de la campagne) :
+code suivant dans un article (en adaptant le numéro de la campagne) ::
 
   <souscription|campagne=1>
