@@ -1,6 +1,6 @@
 <paquet prefix="souscription"
         categorie="communication"
-        version="0.2.0"
+        version="0.20"
         etat="dev"
         compatibilite="[3.0.5;3.0.*]"
         logo=""
