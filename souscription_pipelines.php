@@ -33,8 +33,23 @@ function souscription_optimiser_base_disparus($flux){
  * @return array       Données du pipeline
  */
 function souscription_trig_bank_notifier_reglement($flux) {
-  $email = sql_getfetsel('courriel', 'spip_souscriptions', 'id_transaction='.intval($flux['args']['id_transaction']));
+  $souscription = sql_fetsel('id_souscription_campagne, courriel', 'spip_souscriptions', 'id_transaction='.intval($flux['args']['id_transaction']));
+  $email = $souscription['courriel'];
   $sujet = '['.$GLOBALS['meta']['nom_site'].'] ';
+
+  /* est-ce un abonnement ? */
+  $type_objectif = sql_getfetsel('type_objectif', 'spip_souscription_campagnes', 'id_souscription_campagne='.intval($souscription['id_souscription_campagne']));
+  if ($type_objectif == 'abonnement') {
+      /* si le compte SPIP n'existe pas, il faut le créer */
+	  /* faut-il mieux vérfier l'existence du compte avec l'email dans spip_auteurs ou sur id_auteur dans spip_transactions ? */
+	  $id_auteur = sql_getfetsel('id_auteur', 'spip_transactions', 'id_transaction='.intval($flux['args']['id_transaction']));
+	  if (!$id_auteur) {
+	      list($nom,) = explode('@', $email);
+	      $inscrire_auteur = charger_fonction('inscrire_auteur','action');
+	      $desc = $inscrire_auteur('6forum', $email, $nom);
+		  sql_updateq('spip_transactions', array('id_auteur' => $desc['id_auteur']), 'id_transaction='.intval($flux['args']['id_transaction']));
+	  }
+  }
 
   if ($flux['args']['succes']) {
     $sujet .= 'Confirmation de votre réglement';

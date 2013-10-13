@@ -77,9 +77,24 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
   $recu_fiscal = "";
   if($type == "adhesion")
     $recu_fiscal = "on";
+  
+  $courriel = "";
+  $id_auteur = "";
+  $desactiver_courriel = false;
+  /* Si une connexion est active, on récupère le courriel et l'id_auteur */
+  if (isset($GLOBALS['visiteur_session']['email']) && isset($GLOBALS['visiteur_session']['id_auteur'])) {
+      $courriel = $GLOBALS['visiteur_session']['email'];
+	  $id_auteur = $GLOBALS['visiteur_session']['id_auteur'];
+      /* Si abonnement nécessité d'avoir un compte. Là il existe déjà, on désactive le champs courriel */
+      if ($type == "abonnement") {
+          $desactiver_courriel = true;
+      }
+  }
 
   return array('montant' => '',
-               'courriel' => '',
+               'courriel' => $courriel,
+               'desactiver_courriel' => $desactiver_courriel,
+			   'id_auteur' => $id_auteur,
                'recu_fiscal' => $recu_fiscal,
                'envoyer_info' => 'on',
                'informer_comite_local' => 'on',
@@ -139,7 +154,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
                         "spip_souscription_campagnes",
                         "id_souscription_campagne=$id_souscription_campagne");
 
-  if(!$type || !in_array($type, array("don", "adhesion")))
+  if(!$type || !in_array($type, array("don", "adhesion", "abonnement")))
     $erreurs['message_erreur'] = "Type de souscription invalide";
 
   /* Le champ 'type' (hidden) doit être le même que celui défini dans
@@ -161,8 +176,29 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
     }
   }
 
-  if ($e = _request('courriel') AND !email_valide($e))
+  if ($e = _request('courriel') AND !email_valide($e)) {
     $erreurs['courriel'] = _T('form_prop_indiquer_email');
+  }
+  elseif ($type == 'abonnement' AND !$GLOBALS['visiteur_session']['email'] AND !$GLOBALS['visiteur_session']['id_auteur']) {
+    /* Existe-t-il déjà un compte avec cet email ? */
+    $email = sql_getfetsel('email', 'spip_auteurs', 'email='.sql_quote(_request('courriel')));
+    /* si c'est le cas on demande le mot de passe */
+    if ($email) {
+        if (!_request('password')) {
+            $erreurs['password'] = "Il existe un compte lié à votre courriel, vous devez vous identifier";   
+        }
+        else {
+            include_spip('inc/auth');
+            $auteur = auth_identifier_login($email, _request('password'));
+            if (!is_array($auteur)) {
+                $erreurs['password'] = "Mauvais mot de passe";
+            }
+			else {
+				set_request('id_auteur', $auteur['id_auteur']);
+			}
+        }
+    }
+  }
 
   if($e = _request('pays')) {
     $ret = sql_select('nom', 'spip_pays', "code='${e}'");
@@ -231,6 +267,13 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne) {
   $config_fonc='';
   $row=array();
   $hidden='';
+  
+  /* est-ce un abonnement ? */
+  $type_objectif = sql_getfetsel('type_objectif', 'spip_souscription_campagnes', 'id_souscription_campagne='.intval($id_souscription_campagne));
+  if ($type_objectif == 'abonnement' AND _request('id_auteur')) {
+      /* Si abonnement et compte SPIP existe déjà on passe id_auteur pour insertion dans spip_transactions */
+      set_request('id_auteur', _request('id_auteur'));
+  }
 
   $ret = formulaires_editer_objet_traiter('souscription',
                                           'new',
@@ -254,7 +297,13 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne) {
     spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
     $hash = $row['transaction_hash'];
     $id_transaction = $row['id_transaction'];
-    $redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
+    
+    if ($type_objectif == 'abonnement') {
+        $redirect = generer_url_public("payer-abonnement", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);    
+    }
+    else {
+        $redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
+    }
     $ret['redirect'] = $redirect;
   }
 
@@ -273,3 +322,4 @@ function verifier_campagne($id_souscription_campagne) {
 
   return false;
 }
+

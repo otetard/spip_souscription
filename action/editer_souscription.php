@@ -71,7 +71,8 @@ function souscription_modifier($id_souscription, $set=false) {
                                 'ville',
                                 'telephone',
                                 'id_souscription_campagne',
-                                'type_souscription'),
+                                'type_souscription',
+                                'id_auteur'),
                           // black list
                           array('statut', 'date'),
                           // donnees eventuellement fournies
@@ -82,7 +83,7 @@ function souscription_modifier($id_souscription, $set=false) {
   $inserer_transaction = charger_fonction('inserer_transaction', 'bank');
   $id_transaction = $inserer_transaction(_request('montant'),
                                          '', /* montant_ht */
-                                         '', /* id_auteur */
+                                         $c['id_auteur'], /* id_auteur */
                                          $id_souscription, /* auteur_id => id_souscription */
                                          _request('courriel'));
 
