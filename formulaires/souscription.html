@@ -3,7 +3,7 @@
   [(#SET{liste_pays, #GET{liste_pays}|array_merge{#ARRAY{#CODE, #NOM}}})]
 </BOUCLE_p>
 
-<div class="formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id_souscription,nouveau}[ formulaire_souscription_(#ENV{type_souscription})]">
+<div class="formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id_souscription,nouveau}[ formulaire_souscription_(#ENV{type_souscription})][ formulaire_souscription_(#ENV{id_souscription_campagne})]">
   [<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
   [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
 
