@@ -27,7 +27,7 @@
 					<label for="#GET{name}_#GET{val}"><:souscription:label_activer_adhesion:></label>
 				</div>
 			</li>
-			<li class="suite fieldset[(#ENV{adhesion_activer,off}|=={on}|non)none]">
+			<li class="suite fieldset adhesion[(#ENV{adhesion_activer,off}|=={on}|non)none]">
 				<fieldset>
 					<legend><:souscription:label_adhesion_groupe:></legend>
 					<ul>
@@ -81,7 +81,7 @@
 					<label for="#GET{name}_#GET{val}"><:souscription:label_activer_don:></label>
 				</div>
 			</li>
-			<li class="suite fieldset[(#ENV{don_activer,off}|=={on}|non)none]">
+			<li class="suite fieldset don[(#ENV{don_activer,off}|=={on}|non)none]">
 				<fieldset>
 					<legend><:souscription:label_don_groupe:></legend>
 					<ul>
@@ -158,4 +158,6 @@
 </script>
 <style>
 input.checkbox:checked+label {font-weight: bold;}
+li.fieldset.adhesion {margin-bottom: 1em}
+li.suite {margin-left: 40px;}
 </style>
