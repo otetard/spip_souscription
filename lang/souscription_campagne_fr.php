@@ -22,5 +22,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_souscription_campagne' => 'Campagne',
 	'titre_souscription_campagnes' => 'Campagnes',
 
+	'label_type_objectif_dons' => 'Dons',
+	'label_type_objectif_adhesions' => 'Adhésions',
+
 );
 ?>

@@ -40,88 +40,14 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
 					      $row,
 					      $hidden);
 
-  $valeurs['objectif_oui_non'] = _request('objectif_oui_non');
-
   /* Si la valeur du champ 'objectif' est 0, alors, c'est que
    * l'objectif n'est pas activé. */
-  $defaut_objectif = "";
-  if($valeurs['objectif'] && $valeurs['objectif'] > 0)
-    $defaut_objectif = "on";
+	$valeurs['_defaut_objectif'] = "";
+  if($valeurs['objectif'] AND $valeurs['objectif'] > 0)
+	  $valeurs['_defaut_objectif'] = "on";
 
-  $saisies = array(array('saisie' => 'input',
-			 'options' => array('nom' => 'titre',
-					    'label' => _T('souscription:label_titre'),
-					    'obligatoire' => 'oui')
-			 ),
-		   array('saisie' => 'selection',
-			 'options' => array('nom' => 'type_objectif',
-					    'obligatoire' => 'oui',
-					    'label' => _T('souscription:label_type_objectif'),
-					    'explication' => _T('souscription:explication_type_objectif'),
-					    'datas' => array('don' => 'Dons',
-							     'adhesion' => 'Adhésions'))
-			 ),
-		   array('saisie' => 'oui_non',
-			 'options' => array('nom' => 'objectif_oui_non',
-					    'label' => _T('souscription:label_objectif_oui_non'),
-					    'defaut' => $defaut_objectif)
-			 ),
-		   array('saisie' => 'fieldset',
-			 'options' => array('nom' => 'groupe_limite',
-					    'label' => _T('souscription:label_objectif_groupe'),
-					    'afficher_si' => '@objectif_oui_non@ == "on"'),
-			 'saisies' => array(array('saisie' => 'input',
-						  'options' => array('nom' => 'objectif',
-								     'obligatoire' => 'oui',
-								     'label' => _T('souscription:label_objectif'),
-								     'explication' => _T('souscription:explication_campagne_objectif')),
-						  ),
-					    array('saisie' => 'input',
-						  'options' => array('nom' => 'objectif_initial',
-								     'label' => _T('souscription:label_objectif_initial'),
-								     'explication' => _T('souscription:explication_campagne_objectif_initial'))
-					    ),
-					    array('saisie' => 'oui_non',
-						  'options' => array('nom' => 'objectif_limiter',
-								     'explication' => _T('souscription:explication_campagne_objectif_limite'),
-								     'label' => _T('souscription:label_objectif_limite')))
-					    ),
-			 ),
-		   array('saisie' => 'oui_non',
-			 'options' => array('nom' => 'configuration_specifique',
-					    'label' => _T('souscription:label_configuration_specifique'),
-					    'explication' => _T('souscription:explication_configuration_specifique'),
-					    'defaut' => $defaut_objectif)
-			 ),
-		   array('saisie' => 'fieldset',
-			 'options' => array('nom' => 'groupe_configuration_specifique',
-					    'label' => _T('souscription:label_objectif_groupe'),
-					    'afficher_si' => '@configuration_specifique@ == "on"'),
-			 'saisies' => array(array('saisie' => 'selection',
-						  'options' => array('nom' => 'type_saisie',
-								     'label' => _T('souscription:label_type_saisie'),
-								     'explication' => _T('souscription:explication_type_saisie'),
-								     'datas' => array("input" => _T("souscription:configurer_type_saisie_input"),
-										      "radio" => _T("souscription:configurer_type_saisie_radio"),
-										      "selection" => _T("souscription:configurer_type_saisie_selection")),
-								     'defaut' => 'input')
-						  ),
-					    array('saisie' => 'textarea',
-						  'options' => array('nom' => 'montants',
-								     'label' => _T('souscription:label_montants'),
-								     'explication' => _T('souscription:explication_montants'),
-								     'afficher_si' => '@type_saisie@ == "radio" || @type_saisie@ == "selection"',
-								     'rows' => 4))
-					    ),
-			 ),
-		   array('saisie' => 'textarea',
-			 'options' => array('nom' => 'texte',
-					    'label' => _T('souscription:label_description'),
-					    'inserer_barre' => 'edition',
-					    'rows' => '10'))
-		   );
-
-  $valeurs['_saisies'] = $saisies;
+	// pour la saisie uniquement, pas en base
+	$valeurs['objectif_oui_non'] = "";
 
   return $valeurs;
 }
