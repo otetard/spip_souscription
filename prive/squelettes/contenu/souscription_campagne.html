@@ -3,7 +3,7 @@
 [(#BOITE_OUVRIR{[
 	[(#AUTORISER{modifier,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE})
 		[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|non)
-			[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
+			[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription_campagne:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
 		]
 		[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|oui)
 			[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne},warning-24,'',right edition_deja ajax preload})]
@@ -24,7 +24,7 @@
 
 [(#AUTORISER{modifier,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE})
 	[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|non)
-		[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
+		[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription_campagne:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
 	]
 	[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|oui)
 		[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne},warning-24,'',right edition_deja ajax preload})]

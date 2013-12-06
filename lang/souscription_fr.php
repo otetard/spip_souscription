@@ -44,16 +44,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 // I
 	'icone_creer_souscription' => 'Créer une souscription',
-	'icone_creer_souscription_campagne' => 'Créer une campagne',
 	'icone_modifier_souscription' => 'Modifier cette souscription',
-	'icone_modifier_souscription_campagne' => 'Modifier cette campagne',
 	'info_1_souscription' => 'Une souscription',
-	'info_1_souscription_campagne' => 'Une campagne',
-	'info_1_souscription_campagnes' => 'Une campagne',
 	'info_aucun_souscription' => 'Aucune souscription',
-	'info_aucun_souscription_campagne' => 'Aucune campagne',
-	'info_aucun_souscription_campagnes' => 'Aucune campagne',
-	'info_nb_souscription_campagnes' => '@nb@ campagnes',
 	'info_nb_souscriptions' => '@nb@ souscriptions',
 	'info_souscriptions_auteur' => 'Les souscriptions de cet auteur',
 
@@ -146,12 +139,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_ajouter_souscription' => 'Ajouter une souscription',
 	'texte_changer_statut_souscription' => 'Cette souscription est :',
 	'titre_configurer_souscriptions' => 'Souscriptions',
-	'titre_logo_souscription_campagne' => 'Logo de cette campagne',
 	'titre_page_configurer_souscriptions' => 'Configuration des souscriptions',
 	'titre_page_souscriptions_tous' => 'Liste des souscriptions',
 	'titre_souscription' => 'Souscription',
-	'titre_souscription_campagne' => 'Campagne',
-	'titre_souscription_campagnes' => 'Campagnes',
 	'titre_souscriptions' => 'Souscriptions',
 	'titre_types_souscriptions' => 'Types de souscriptions',
 
