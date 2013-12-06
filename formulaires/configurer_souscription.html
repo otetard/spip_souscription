@@ -13,12 +13,151 @@
 	<div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 
-                <ul>
-		  #GENERER_SAISIES{#ENV{_saisies}}
+		#SET{fl,souscription}
+		<ul>
+			#SET{name,adhesion_activer}#SET{obli,''}#SET{defaut,'off'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]
+				#SET{val,off}
+				<input type="hidden" name="#GET{name}" value="#GET{val}" />
+				#SET{val,on}
+				<div class="choix">
+					<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+					<label for="#GET{name}_#GET{val}"><:souscription:label_activer_adhesion:></label>
+				</div>
+			</li>
+			<li class="suite fieldset adhesion[(#ENV{adhesion_activer,off}|=={on}|non)none]">
+				<fieldset>
+					<legend><:souscription:label_adhesion_groupe:></legend>
+					<ul>
+						#SET{name,adhesion_type_saisie}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_type_saisie:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<select name="#GET{name}" class="select" id="#GET{name}">
+								#SET{val,input}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_input:></option>
+								#SET{val,radio}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radio:></option>
+								#SET{val,selection}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_selection:></option>
+							</select>
+						</li>
+						#SET{name,adhesion_montants_label}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_montants_label:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+						</li>
+						#SET{name,adhesion_montants}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_montants:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<textarea name="#GET{name}" class="textarea" rows="4">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+							<p class="explication"><:souscription:explication_montants:></p>
+						</li>
+						#SET{name,adhesion_montants_description}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_montants_explication:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<textarea name="#GET{name}" class="textarea" rows="4">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+						</li>
+					</ul>
+				</fieldset>
+			</li>
+
+			#SET{name,don_activer}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]
+				#SET{val,off}
+				<input type="hidden" name="#GET{name}" value="#GET{val}" />
+				#SET{val,on}
+				<div class="choix">
+					<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+					<label for="#GET{name}_#GET{val}"><:souscription:label_activer_don:></label>
+				</div>
+			</li>
+			<li class="suite fieldset don[(#ENV{don_activer,off}|=={on}|non)none]">
+				<fieldset>
+					<legend><:souscription:label_don_groupe:></legend>
+					<ul>
+						#SET{name,don_type_saisie}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_type_saisie:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<select name="#GET{name}" class="select" id="#GET{name}">
+								#SET{val,input}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_input:></option>
+								#SET{val,radio}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radio:></option>
+								#SET{val,selection}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_selection:></option>
+							</select>
+						</li>
+						#SET{name,don_montants_label}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_montants_label:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+						</li>
+						#SET{name,don_montants}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_montants:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<textarea name="#GET{name}" class="textarea" rows="4">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+							<p class="explication"><:souscription:explication_montants:></p>
+						</li>
+						#SET{name,don_montants_description}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_montants_explication:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<textarea name="#GET{name}" class="textarea" rows="4">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+						</li>
+					</ul>
+				</fieldset>
+			</li>
+
+
 		</ul>
+		<fieldset>
+			<legend><:souscription:label_general_groupe:></legend>
+			<ul>
+				#SET{name,dispositions_fiscales_explications}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+					<label for="#GET{name}"><:souscription:label_dispositions_fiscales_explications:></label>[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					]<textarea name="#GET{name}" class="textarea" rows="4">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+				</li>
+			</ul>
+		</fieldset>
 
 		<input type="hidden" name="_meta_casier" value="souscription" />
 		<p class="boutons"><span class="image_loading">&nbsp;</span><input type="submit" class="submit" value="<:bouton_enregistrer:>" /></p>
 	</div>
 	</form>
 </div>
+<script type="text/javascript">
+	jQuery(function(){
+		jQuery(".suite.fieldset").each(function(){
+			var me=this;
+			jQuery(me).prev(".editer").find("input.checkbox").click(function(){
+				if (jQuery(this).prop("checked"))
+					jQuery(me).show('fast');
+				else
+					jQuery(me).hide('fast');
+			})
+		})
+	})
+</script>
+<style>
+input.checkbox:checked+label {font-weight: bold;}
+li.fieldset.adhesion {margin-bottom: 1em}
+li.suite {margin-left: 40px;}
+</style>
