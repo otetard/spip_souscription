@@ -1,11 +1,11 @@
 <paquet prefix="souscription"
         categorie="communication"
-        version="0.10"
+        version="0.20.3"
         etat="dev"
         compatibilite="[3.0.5;3.0.*]"
-        logo=""
+        logo="souscription-32.png"
         documentation=""
-        schema="0.3">
+        schema="0.6.0">
 
   <nom>Souscription</nom>
   <auteur lien='http://olivier.miskin.fr'>Olivier Tétard</auteur>
@@ -30,11 +30,11 @@
   <menu nom="souscription"
         titre="souscription:titre_souscriptions"
         parent="menu_activite"
-        icone="images/souscription_don-16.png"
+        icone="images/souscription-16.png"
         action="souscriptions"/>
   <menu nom="souscriptions"
         titre="souscription:titre_configurer_souscriptions"
         parent="menu_configuration"
-        icone="images/souscriptions-16.png"
+        icone="images/souscription-16.png"
         action="configurer_souscriptions"/>
 </paquet>
