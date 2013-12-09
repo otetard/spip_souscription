@@ -45,6 +45,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_souscriptions' => '@nb@ souscriptions',
 	'info_souscriptions_auteur' => 'Les souscriptions de cet auteur',
 	'info_objectif_limite' => 'La campagne sera fermée lorsque l\'objectif sera atteint.',
+	'info_choisissez_montant' => 'Choisissez un montant…',
 
 // L
 	"label_exporter_entete_adresse" => "Adresse",
@@ -86,6 +87,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_exporter_type_souscription' => "Type de souscription",
 	'label_id_transaction' => 'Identifiant de la transaction',
 	'label_informer_comite_local' => 'Me faire connaître auprès du comité local le plus proche',
+	'label_proposer_informer_comite_local' => 'Proposer d\'informer le comité local lors de l\'adhésion',
 	'label_montant' => 'Montant',
 	'label_montant_actuel' => 'Niveau actuel de la campagne',
 	'label_montant_liste' => 'Montant',
@@ -95,6 +97,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_nom' => 'Nom',
 	'label_pays' => 'Pays',
 	'label_prenom' => 'Prénom',
+	'label_proposer_infolettre' => 'Proposer l\'inscription à la lettre d\'information',
 	'label_recu_fiscal' => 'Recevoir un reçu fiscal',
 	'label_statut' => 'Statut',
 	'label_telephone' => 'Téléphone',
