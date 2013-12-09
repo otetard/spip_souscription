@@ -53,3 +53,7 @@ function montants_str2array($str) {
 
   return saisies_chaine2tableau(saisies_aplatir_chaine($str));
 }
+
+function campagne_afficher_objectif($nombre,$type_objectif){
+	return $nombre.($type_objectif == "don" ? " EUR" : "");
+}
