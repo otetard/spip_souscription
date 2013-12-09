@@ -45,6 +45,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_souscriptions' => '@nb@ souscriptions',
 	'info_souscriptions_auteur' => 'Les souscriptions de cet auteur',
 	'info_objectif_limite' => 'La campagne sera fermée lorsque l\'objectif sera atteint.',
+	'info_choisissez_montant' => 'Choisissez un montant…',
 
 // L
 	"label_exporter_entete_adresse" => "Adresse",

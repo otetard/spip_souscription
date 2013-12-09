@@ -106,7 +106,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
                'telephone' => '',
                'id_souscription_campagne' => $id_souscription_campagne,
                'type_souscription' => $type,
-               'montant_datas' => montants_str2array($montant_datas),
+               '_montant_datas' => montants_str2array($montant_datas),
                'montant_type' => $montant_type,
                'montant_label' => $montant_label,
                'montant_explication' => $montant_explication
