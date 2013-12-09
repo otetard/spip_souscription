@@ -15,32 +15,6 @@ include_spip('inc/actions');
 include_spip('inc/editer');
 include_spip('inc/config');
 
-/**
- * Identifier le formulaire en faisant abstraction des paramètres qui ne représentent pas l'objet edité
- *
- * @param int|string $id_souscription
- *     Identifiant du souscription. 'new' pour un nouveau souscription.
- * @param string $retour
- *     URL de redirection après le traitement
- * @param int $lier_trad
- *     Identifiant éventuel d'un souscription source d'une traduction
- * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
- * @param array $row
- *     Valeurs de la ligne SQL du souscription, si connu
- * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
- * @return string
- *     Hash du formulaire
- */
-function formulaires_souscription_identifier_dist($id_souscription = 'new',
-                                                  $retour = '',
-                                                  $lier_trad = 0,
-                                                  $config_fonc = '',
-                                                  $row = array(),
-                                                  $hidden = ''){
-	return serialize(array(intval($id_souscription)));
-}
 
 /**
  * Chargement du formulaire d'édition de souscription
@@ -49,18 +23,8 @@ function formulaires_souscription_identifier_dist($id_souscription = 'new',
  *
  * @uses formulaires_editer_objet_charger()
  *
- * @param int|string $id_souscription
- *     Identifiant du souscription. 'new' pour un nouveau souscription.
- * @param string $retour
- *     URL de redirection après le traitement
- * @param int $lier_trad
- *     Identifiant éventuel d'un souscription source d'une traduction
- * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
- * @param array $row
- *     Valeurs de la ligne SQL du souscription, si connu
- * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @param int$id_souscription_campagne
+ *     Identifiant de la campagne de souscription
  * @return array
  *     Environnement du formulaire
  */
@@ -112,25 +76,16 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 	);
 }
 
+
 /**
- * Vérifications du formulaire d'édition de souscription
+ * Chargement du formulaire d'édition de souscription
  *
- * Vérifier les champs postés et signaler d'éventuelles erreurs
+ * Déclarer les champs postés et y intégrer les valeurs par défaut
  *
- * @uses formulaires_editer_objet_verifier()
+ * @uses formulaires_editer_objet_charger()
  *
- * @param int|string $id_souscription
- *     Identifiant du souscription. 'new' pour un nouveau souscription.
- * @param string $retour
- *     URL de redirection après le traitement
- * @param int $lier_trad
- *     Identifiant éventuel d'un souscription source d'une traduction
- * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
- * @param array $row
- *     Valeurs de la ligne SQL du souscription, si connu
- * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @param int$id_souscription_campagne
+ *     Identifiant de la campagne de souscription
  * @return array
  *     Tableau des erreurs
  */
@@ -204,8 +159,8 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 			$erreurs['montant'] = "Montant invalide";
 		else {
 			if ($campagne['configuration_specifique']!=='on'){
-				$montant_type = lire_config("souscription/{$type}_type_saisie", 'input');
-				$montant_datas = lire_config("souscription/${type}_montants", array());
+				$montant_type = lire_config("souscription/{$type_campagne}_type_saisie", 'input');
+				$montant_datas = lire_config("souscription/${$type_campagne}_montants", array());
 			} else {
 				$montant_type = $campagne['type_saisie'];
 				$montant_datas = montants_str2array($campagne['montants']);
@@ -227,24 +182,14 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 }
 
 /**
- * Traitement du formulaire d'édition de souscription
+ * Chargement du formulaire d'édition de souscription
  *
- * Traiter les champs postés
+ * Déclarer les champs postés et y intégrer les valeurs par défaut
  *
- * @uses formulaires_editer_objet_traiter()
+ * @uses formulaires_editer_objet_charger()
  *
- * @param int|string $id_souscription
- *     Identifiant du souscription. 'new' pour un nouveau souscription.
- * @param string $retour
- *     URL de redirection après le traitement
- * @param int $lier_trad
- *     Identifiant éventuel d'un souscription source d'une traduction
- * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
- * @param array $row
- *     Valeurs de la ligne SQL du souscription, si connu
- * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @param int$id_souscription_campagne
+ *     Identifiant de la campagne de souscription
  * @return array
  *     Retours des traitements
  */
@@ -253,6 +198,9 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	$config_fonc = '';
 	$row = array();
 	$hidden = '';
+	$retour = '';
+
+	set_request("id_souscription_campagne",$id_souscription_campagne);
 
 	$ret = formulaires_editer_objet_traiter('souscription',
 		'new',
