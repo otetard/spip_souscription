@@ -122,6 +122,59 @@
 				</fieldset>
 			</li>
 
+			#SET{name,abonnement_activer}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]
+				#SET{val,off}
+				<input type="hidden" name="#GET{name}" value="#GET{val}" />
+				#SET{val,on}
+				<div class="choix">
+					<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+					<label for="#GET{name}_#GET{val}"><:souscription:label_activer_abonnement:></label>
+				</div>
+			</li>
+			<li class="suite fieldset abonnement[(#ENV{abonnement_activer,off}|=={on}|non)none]">
+				<fieldset>
+					<legend><:souscription:label_abonnement_groupe:></legend>
+					<ul>
+						#SET{name,abonnement_type_saisie}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_type_saisie:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<select name="#GET{name}" class="select" id="#GET{name}">
+								#SET{val,input}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_input:></option>
+								#SET{val,radio}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radio:></option>
+								#SET{val,selection}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_selection:></option>
+							</select>
+						</li>
+						#SET{name,abonnement_montants_label}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_montants_label:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+						</li>
+						#SET{name,abonnement_montants}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_montants:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<textarea name="#GET{name}" class="textarea" rows="4">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+							<p class="explication"><:souscription:explication_montants:></p>
+						</li>
+						#SET{name,abonnement_montants_description}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}"><:souscription:label_montants_explication:></label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<textarea name="#GET{name}" class="textarea" rows="4">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+						</li>
+					</ul>
+				</fieldset>
+			</li>
 
 		</ul>
 		<fieldset>
