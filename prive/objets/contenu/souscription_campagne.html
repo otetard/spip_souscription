@@ -17,8 +17,14 @@
 
 <div class="champ contenu_montant_actuel">
 	<div class='label'><:souscription:label_montant_actuel:> : </div>
-	<span class='montant_actuel'>#AVANCEMENT_CAMPAGNE</span>
+	<span class='montant_actuel'>#AVANCEMENT_CAMPAGNE[ ((#AVANCEMENT_CAMPAGNE|mult{100}|div{#OBJECTIF}|round{1})%)]</span>
 </div>
+[ (#OBJECTIF_LIMITER*|=={on}|oui)
+<div class="champ contenu_objectif_limiter">
+	<div class='label'><:souscription:info_objectif_limite:></div>
+</div>
+]
+
 
 [<div class="champ contenu_texte contenu_ps[ (#TEXTE*|strlen|?{'',vide})]">
 	<div class='label'><:info_descriptif:></div>
