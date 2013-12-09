@@ -13,7 +13,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	'icone_creer_souscription_campagne' => 'Créer une campagne',
 	'icone_modifier_souscription_campagne' => 'Modifier cette campagne',
-	'info_1_souscription_campagne' => 'Une campagne',
+	'info_1_souscription_campagne' => '1 campagne',
 	'info_aucun_souscription_campagne' => 'Aucune campagne',
 	'info_nb_souscription_campagnes' => '@nb@ campagnes',
 
@@ -24,6 +24,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	'label_type_objectif_dons' => 'Dons',
 	'label_type_objectif_adhesions' => 'Adhésions',
+	'info_objectif' => 'Objectif',
+	'info_avancement' => 'Avancement',
 
 );
 ?>

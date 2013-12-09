@@ -10,15 +10,19 @@
 		<tr class="first_row">
 			<th class="id" scope="col">[(#TRI{id_souscription_campagne,<:info_numero_abbreviation:>,ajax})]</th>
 			<th class="titre" scope="col">[(#TRI{titre,<:souscription:label_titre:>,ajax})]</th>
+			<th class="objectif" scope="col"><:souscription_campagne:info_objectif:></th>
+			<th class="avancement" scope="col"><:souscription_campagne:info_avancement:></th>
 		</tr>
 	</thead>
 	<tbody>
 	<BOUCLE_liste_souscription_campagnes(SOUSCRIPTION_CAMPAGNES){id_mot?}{id_auteur?}{where?}{recherche?}{tri #ENV{par,id_souscription_campagne},#GET{defaut_tri}}{pagination #ENV{nb,10}}>
 		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]">
 			<td class="id">#ID_SOUSCRIPTION_CAMPAGNE</td>
-			<td class="titre secondaire">[(#AUTORISER{voir,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE}|?{
+			<td class="titre principale">[(#AUTORISER{voir,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE}|?{
 				<a href="[(#URL_ECRIRE{souscription_campagne,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE})]">#TITRE</a>,
 			})]</td>
+			<td class="objectif">#OBJECTIF</td>
+			<td class="objectif">#AVANCEMENT_CAMPAGNE[ ((#AVANCEMENT_CAMPAGNE|mult{100}|div{#OBJECTIF}|round{1})%)]</td>
 		</tr>
 	</BOUCLE_liste_souscription_campagnes>
 	</tbody>

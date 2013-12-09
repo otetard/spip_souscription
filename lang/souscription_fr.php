@@ -45,7 +45,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 // I
 	'icone_creer_souscription' => 'Créer une souscription',
 	'icone_modifier_souscription' => 'Modifier cette souscription',
-	'info_1_souscription' => 'Une souscription',
+	'info_1_souscription' => '1 souscription',
 	'info_aucun_souscription' => 'Aucune souscription',
 	'info_nb_souscriptions' => '@nb@ souscriptions',
 	'info_souscriptions_auteur' => 'Les souscriptions de cet auteur',
