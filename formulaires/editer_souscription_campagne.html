@@ -7,7 +7,122 @@
       #ACTION_FORMULAIRE{#ENV{action}}
 
       <ul>
-      #GENERER_SAISIES{#ENV{_saisies}}
+	      #SET{name,titre}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+          <label for="#GET{name}"><:souscription_campagne:label_titre_campagne:> <:info_obligatoire_02:></label>[
+          <span class='erreur_message'>(#GET{erreurs})</span>
+          ]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+        </li>
+	      #SET{name,type_objectif}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+          <label for="#GET{name}"><:souscription_campagne:label_type_objectif:></label>[
+          <span class='erreur_message'>(#GET{erreurs})</span>
+          ]<select name="#GET{name}" class="select" id="#GET{name}">
+            #SET{val,don}
+		        [(#CONFIG{souscription/don_activer,'off'}|=={on}|ou{[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)]})
+            <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription_campagne:label_type_objectif_dons:> <:souscription_campagne:info_type_objectif_dons:></option>
+		        ]
+            #SET{val,adhesion}
+		        [(#CONFIG{souscription/adhesion_activer,'off'}|=={on}|ou{[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)]})
+            <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription_campagne:label_type_objectif_adhesions:> <:souscription_campagne:info_type_objectif_adhesions:></option>
+		        ]
+          </select>
+        </li>
+	      #SET{name,texte}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+					<label for="#GET{name}"><:souscription_campagne:label_description:></label>[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					]<textarea name="#GET{name}" class="textarea" rows="10">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+				</li>
+	      #SET{name,objectif_oui_non}#SET{obli,''}#SET{defaut,#ENV{_defaut_objectif,''}}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+	      <li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+	     		<span class='erreur_message'>(#GET{erreurs})</span>
+	     		]
+	     		#SET{val,'off'}
+	     		<input type="hidden" name="#GET{name}" value="#GET{val}" />
+	     		#SET{val,on}
+	     		<div class="choix">
+	     			<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+	     			<label for="#GET{name}_#GET{val}"><:souscription_campagne:label_objectif_oui_non:></label>
+	     		</div>
+	     	</li>
+	      <li class="suite fieldset limite[(#ENV{#GET{name},#GET{defaut}}|=={on}|non)none]">
+	     		<fieldset>
+	     			<legend><:souscription_campagne:label_objectif_groupe:></legend>
+	     			<ul>
+				      #SET{name,objectif}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+			          <label for="#GET{name}"><:souscription_campagne:label_objectif:> <:info_obligatoire_02:></label>[
+			          <span class='erreur_message'>(#GET{erreurs})</span>
+			          ]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}"/>
+				        <p class="explication"><:souscription_campagne:explication_campagne_objectif:></p>
+			        </li>
+				      #SET{name,objectif_initial}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+			          <label for="#GET{name}"><:souscription_campagne:label_objectif_initial:></label>[
+			          <span class='erreur_message'>(#GET{erreurs})</span>
+			          ]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+				        <p class="explication"><:souscription_campagne:explication_campagne_objectif_initial:></p>
+			        </li>
+				      #SET{name,objectif_limiter}#SET{obli,''}#SET{defaut,#ENV{_defaut_objectif,''}}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+				      <li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+				     		<span class='erreur_message'>(#GET{erreurs})</span>
+				     		]
+				     		#SET{val,'off'}
+				     		<input type="hidden" name="#GET{name}" value="#GET{val}" />
+				     		#SET{val,on}
+				     		<div class="choix">
+				     			<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+				     			<label for="#GET{name}_#GET{val}"><:souscription_campagne:label_objectif_limite:></label>
+				     		</div>
+					      <p class="explication"><:souscription_campagne:explication_campagne_objectif_limite:></p>
+				     	</li>
+			      </ul>
+		      </fieldset>
+	      </li>
+	      #SET{name,configuration_specifique}#SET{obli,''}#SET{defaut,#ENV{_defaut_objectif,''}}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+	      <li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+	     		<span class='erreur_message'>(#GET{erreurs})</span>
+	     		]
+	     		#SET{val,'off'}
+	     		<input type="hidden" name="#GET{name}" value="#GET{val}" />
+	     		#SET{val,on}
+	     		<div class="choix">
+	     			<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+	     			<label for="#GET{name}_#GET{val}"><:souscription_campagne:label_configuration_specifique:></label>
+	     		</div>
+		      <p class="explication"><:souscription_campagne:explication_configuration_specifique:></p>
+	     	</li>
+	      <li class="suite fieldset configuration_specifique[(#ENV{#GET{name},#GET{defaut}}|=={on}|non)none]">
+	     		<fieldset>
+	     			<legend><:souscription_campagne:label_objectif_groupe:></legend>
+	     			<ul>
+				      #SET{name,type_saisie}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+		          <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+		            <label for="#GET{name}"><:souscription:label_type_saisie:></label>[
+		            <span class='erreur_message'>(#GET{erreurs})</span>
+		            ]<select name="#GET{name}" class="select" id="#GET{name}">
+		              #SET{val,input}
+		              <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_input:></option>
+		              #SET{val,radio}
+		              <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radio:></option>
+		              #SET{val,selection}
+		              <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_selection:></option>
+		            </select>
+			          <p class="explication"><:souscription:explication_type_saisie:></p>
+		          </li>
+				      #SET{name,montants}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+		          <li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+		            <label for="#GET{name}"><:souscription:label_montants:></label>[
+		            <span class='erreur_message'>(#GET{erreurs})</span>
+		            ]<textarea name="#GET{name}" class="textarea" rows="4">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+		            <p class="explication"><:souscription:explication_montants:></p>
+		          </li>
+			      </ul>
+		      </fieldset>
+	      </li>
       </ul>
 
       <p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer_creation_campagne:>" /></p>
@@ -15,3 +130,18 @@
   </form>
   ]
 </div>
+<INCLURE{fond=formulaires/inc-formulaires-suite} />
+<script type="application/javascript">
+function up_visibility_montants(){
+	var val = jQuery('select[name="type_saisie"]').val();
+	console.log(val);
+	if (val=="input")
+		jQuery(".editer_montants").hide('fast');
+	else
+		jQuery(".editer_montants").show('fast');
+}
+jQuery(function(){
+	up_visibility_montants();
+	jQuery('select[name="type_saisie"],input.checkbox[name="configuration_specifique"]').change(up_visibility_montants);
+});
+</script>
