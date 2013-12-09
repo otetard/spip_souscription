@@ -143,21 +143,4 @@
 	</div>
 	</form>
 </div>
-<script type="text/javascript">
-	jQuery(function(){
-		jQuery(".suite.fieldset").each(function(){
-			var me=this;
-			jQuery(me).prev(".editer").find("input.checkbox").click(function(){
-				if (jQuery(this).prop("checked"))
-					jQuery(me).show('fast');
-				else
-					jQuery(me).hide('fast');
-			})
-		})
-	})
-</script>
-<style>
-input.checkbox:checked+label {font-weight: bold;}
-li.fieldset.adhesion {margin-bottom: 1em}
-li.suite {margin-left: 40px;}
-</style>
+<INCLURE{fond=formulaires/inc-formulaires-suite} />

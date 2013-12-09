@@ -1,26 +1,33 @@
 <BOUCLE_souscription_campagne(SOUSCRIPTION_CAMPAGNES){id_souscription_campagne}>
 
 [<div class="champ contenu_type_objectif[ (#TYPE_OBJECTIF*|strlen|?{'',vide})]">
-	<label><:souscription:label_type_objectif:> : </label>
+	<div class='label'><:souscription_campagne:label_type_objectif:> : </div>
 	<span dir='#LANG_DIR' class='#EDIT{type_objectif} type_objectif'>(#TYPE_OBJECTIF)</span>
 </div>]
 
-[<div class="champ contenu_objectif_initial[ (#OBJECTIF_INITIAL*|strlen|?{'',vide})]">
-	<label><:souscription:label_objectif_initial:> : </label>
-	<span dir='#LANG_DIR' class='#EDIT{objectif_initial} objectif_initial'>(#OBJECTIF_INITIAL)</span>
+[<div class="champ contenu_objectif_initial[ (#OBJECTIF_INITIAL*|intval|?{'',vide})]">
+	<div class='label'><:souscription_campagne:label_objectif_initial:> : </div>
+	<span dir='#LANG_DIR' class='#EDIT{objectif_initial} objectif_initial'>(#OBJECTIF_INITIAL|campagne_afficher_objectif{#TYPE_OBJECTIF})</span>
 </div>]
 
-[<div class="champ contenu_objectif[ (#OBJECTIF*|strlen|?{'',vide})]">
-	<label><:souscription:label_objectif:> : </label>
-	<span dir='#LANG_DIR' class='#EDIT{objectif} objectif'>(#OBJECTIF)</span>
+[<div class="champ contenu_objectif[ (#OBJECTIF*|intval|?{'',vide})]">
+	<div class='label'><:souscription_campagne:label_objectif:> : </div>
+	<span dir='#LANG_DIR' class='#EDIT{objectif} objectif'>(#OBJECTIF|campagne_afficher_objectif{#TYPE_OBJECTIF})</span>
 </div>]
 
-<div class="champ contenu_objectif">
-	<label><:souscription:label_montant_actuel:> : </label>
-	<span class='montant_actuel'>#AVANCEMENT_CAMPAGNE</span>
+<div class="champ contenu_montant_actuel">
+	<div class='label'><:souscription:label_montant_actuel:> : </div>
+	<span class='montant_actuel'>[(#AVANCEMENT_CAMPAGNE|campagne_afficher_objectif{#TYPE_OBJECTIF})][(#OBJECTIF|intval|oui)[ ((#AVANCEMENT_CAMPAGNE|mult{100}|div{#OBJECTIF}|round{1})%)]]</span>
 </div>
+[ (#OBJECTIF_LIMITER*|=={on}|oui)
+<div class="champ contenu_objectif_limiter">
+	<div class='label'><:souscription:info_objectif_limite:></div>
+</div>
+]
 
-[<div class="champ contenu_texte[ (#TEXTE*|strlen|?{'',vide})]">
+
+[<div class="champ contenu_texte contenu_ps[ (#TEXTE*|strlen|?{'',vide})]">
+	<div class='label'><:info_descriptif:></div>
 	<span dir='#LANG_DIR' class='#EDIT{texte} texte'>(#TEXTE)</span>
 </div>]
 
