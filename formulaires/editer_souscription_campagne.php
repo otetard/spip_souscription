@@ -57,7 +57,7 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
                                                                 $row = array(),
                                                                 $hidden = ''){
 
-	$ret = formulaires_editer_objet_verifier('souscription_campagne',
+	$erreurs = formulaires_editer_objet_verifier('souscription_campagne',
 		$id_souscription_campagne,
 		array('titre',
 			'type_objectif',
@@ -65,21 +65,25 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
 
 	$type = _request("type_objectif");
 	if (!in_array($type, array('don', 'adhesion')))
-		$ret['type_objectif'] = _T("souscription:message_nok_objectif_invalide");
+		$erreurs['type_objectif'] = _T("souscription_campagne:erreur_objectif_invalide");
+	elseif ($type=="don" AND lire_config("souscription/don_activer","off")!=="on")
+		$erreurs['type_objectif'] = _T("souscription_campagne:erreur_objectif_don_inactif");
+	elseif ($type=="adhesion" AND lire_config("souscription/adhesion_activer","off")!=="on")
+		$erreurs['type_objectif'] = _T("souscription_campagne:erreur_objectif_adhesion_inactif");
 
 	/* Si un objectif est demandé, alors on vérifie que les champs sont
 	 * bien des entiers. */
 	if (_request('objectif_oui_non')=='on'){
 		$objectif = _request('objectif');
 		if (!ctype_digit($objectif) || intval($objectif)<0)
-			$ret['objectif'] = _T("souscription:message_nok_objectif_invalide");
+			$erreurs['objectif'] = _T("souscription_campagne:erreur_objectif_invalide");
 
 		$objectif_initial = _request('objectif_initial');
 		if ($objectif_initial!=''){
 			if (!ctype_digit($objectif_initial) || intval($objectif_initial<0))
-				$ret['objectif_initial'] = _T("souscription:message_nok_objectif_initial_valeur");
+				$erreurs['objectif_initial'] = _T("souscription_campagne:erreur_objectif_initial_valeur");
 			elseif (intval($objectif_initial)>$objectif)
-				$ret['objectif_initial'] = _T("souscription:message_nok_objectif_initial_supperieur_objectif");
+				$erreurs['objectif_initial'] = _T("souscription_campagne:erreur_objectif_initial_supperieur_objectif");
 		}
 	}
 
@@ -89,7 +93,7 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
 	if ($limite_oui_non=="on"){
 		$limite = _request('limite');
 		if (!ctype_digit($objectif))
-			$ret['limite'] = _T("souscription:message_nok_limite_valeur");
+			$erreurs['limite'] = _T("souscription_campagne:erreur_limite_valeur");
 	}
 
 	/* Si une guration spécifique est demandée, alors on vérifie les
@@ -99,19 +103,19 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
 	if (_request('configuration_specifique')){
 		$type_saisie = _request('type_saisie');
 		if (!$type_saisie || !in_array($type_saisie, array('radio', 'selection', 'input')))
-			$ret['type_saisie'] = _T('souscription:message_nok_type_saisie');
+			$erreurs['type_saisie'] = _T('souscription:erreur_type_saisie');
 
 		$montants = _request('montants');
 		if ($type_saisie && in_array($type_saisie, array('radio', 'selection'))){
 			if (!$montants || !is_string($montants))
-				$ret['montants'] = _T('souscription:message_nok_montants');
+				$erreurs['montants'] = _T('souscription:erreur_montants');
 
 			elseif (!montants_str2array($montants))
-				$ret['montants'] = _T('souscription:message_nok_montants');
+				$erreurs['montants'] = _T('souscription:erreur_montants');
 		}
 	}
 
-	return $ret;
+	return $erreurs;
 }
 
 function formulaires_editer_souscription_campagne_traiter_dist($id_souscription_campagne = 'new',

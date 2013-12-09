@@ -43,6 +43,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	'info_objectif' => 'Objectif',
 	'info_avancement' => 'Avancement',
+	
+	'erreur_objectif_initial_invalide' => "Valeur de l'objectif initial invalide",
+	'erreur_objectif_initial_valeur' => "Valeur de l'objectif initial invalide",
+	'erreur_objectif_initial_supperieur_objectif' => "Valeur de l'objectif initial suppérieur à l'objectif",
+	'erreur_objectif_invalide' => "Type d'objectif invalide",
+	'erreur_objectif_don_inactif' => "Les objectifs de type Dons ne sont pas activés dans la configuration.",
+	'erreur_objectif_adhesion_inactif' => "Les objectifs de type Adhésions ne sont pas activés dans la configuration.",
 
 );
 ?>

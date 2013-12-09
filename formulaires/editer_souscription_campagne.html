@@ -19,9 +19,13 @@
           <span class='erreur_message'>(#GET{erreurs})</span>
           ]<select name="#GET{name}" class="select" id="#GET{name}">
             #SET{val,don}
+		        [(#CONFIG{souscription/don_activer,'off'}|=={on}|ou{[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)]})
             <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription_campagne:label_type_objectif_dons:> <:souscription_campagne:info_type_objectif_dons:></option>
+		        ]
             #SET{val,adhesion}
+		        [(#CONFIG{souscription/adhesion_activer,'off'}|=={on}|ou{[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)]})
             <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription_campagne:label_type_objectif_adhesions:> <:souscription_campagne:info_type_objectif_adhesions:></option>
+		        ]
           </select>
         </li>
 	      #SET{name,texte}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
