@@ -12,6 +12,7 @@
 			<th class="titre" scope="col">[(#TRI{titre,<:souscription_campagne:label_titre_campagne:>,ajax})]</th>
 			<th class="objectif" scope="col"><:souscription_campagne:info_objectif:></th>
 			<th class="avancement" scope="col"><:souscription_campagne:info_avancement:></th>
+			<th class="type" scope="col"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,8 +22,9 @@
 			<td class="titre principale">[(#AUTORISER{voir,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE}|?{
 				<a href="[(#URL_ECRIRE{souscription_campagne,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE})]">#TITRE</a>,
 			})]</td>
-			<td class="objectif">[(#OBJECTIF|campagne_afficher_objectif{#TYPE_OBJECTIF})]</td>
-			<td class="objectif">[(#AVANCEMENT_CAMPAGNE|campagne_afficher_objectif{#TYPE_OBJECTIF})][ ((#AVANCEMENT_CAMPAGNE|mult{100}|div{#OBJECTIF}|round{1})%)]</td>
+			<td class="objectif">[(#OBJECTIF|intval|oui)[(#OBJECTIF|campagne_afficher_objectif{#TYPE_OBJECTIF})]]</td>
+			<td class="avancement">[(#AVANCEMENT_CAMPAGNE|campagne_afficher_objectif{#TYPE_OBJECTIF})][(#OBJECTIF|intval|oui)[ ((#AVANCEMENT_CAMPAGNE|mult{100}|div{#OBJECTIF}|round{1})%)]]</td>
+			<td class="type">[(#TYPE_OBJECTIF|=={don}|?{<:souscription_campagne:label_type_objectif_dons:>,<:souscription_campagne:label_type_objectif_adhesions:>})]</td>
 		</tr>
 	</BOUCLE_liste_souscription_campagnes>
 	</tbody>

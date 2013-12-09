@@ -10,14 +10,14 @@
 	<span dir='#LANG_DIR' class='#EDIT{objectif_initial} objectif_initial'>(#OBJECTIF_INITIAL|campagne_afficher_objectif{#TYPE_OBJECTIF})</span>
 </div>]
 
-[<div class="champ contenu_objectif[ (#OBJECTIF*|strlen|?{'',vide})]">
+[<div class="champ contenu_objectif[ (#OBJECTIF*|intval|?{'',vide})]">
 	<div class='label'><:souscription_campagne:label_objectif:> : </div>
 	<span dir='#LANG_DIR' class='#EDIT{objectif} objectif'>(#OBJECTIF|campagne_afficher_objectif{#TYPE_OBJECTIF})</span>
 </div>]
 
 <div class="champ contenu_montant_actuel">
 	<div class='label'><:souscription:label_montant_actuel:> : </div>
-	<span class='montant_actuel'>[(#AVANCEMENT_CAMPAGNE|campagne_afficher_objectif{#TYPE_OBJECTIF})][ ((#AVANCEMENT_CAMPAGNE|mult{100}|div{#OBJECTIF}|round{1})%)]</span>
+	<span class='montant_actuel'>[(#AVANCEMENT_CAMPAGNE|campagne_afficher_objectif{#TYPE_OBJECTIF})][(#OBJECTIF|intval|oui)[ ((#AVANCEMENT_CAMPAGNE|mult{100}|div{#OBJECTIF}|round{1})%)]]</span>
 </div>
 [ (#OBJECTIF_LIMITER*|=={on}|oui)
 <div class="champ contenu_objectif_limiter">

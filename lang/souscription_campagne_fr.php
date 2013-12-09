@@ -16,7 +16,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'explication_type_objectif' => 'Type de l\'objectif (influe le montant de l\'objectif)',
 	'explication_configuration_specifique' => "Permet de configurer des niveaux spécifiques d'adhésion ou de dons pour cette campagne",
 
-	'icone_creer_souscription_campagne' => 'Créer une campagne',
+	'icone_creer_souscription_campagne' => 'Créer une campagne de souscription',
 	'icone_modifier_souscription_campagne' => 'Modifier cette campagne',
 	'info_1_souscription_campagne' => '1 campagne',
 	'info_aucun_souscription_campagne' => 'Aucune campagne',
