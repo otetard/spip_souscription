@@ -40,7 +40,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 
 	$type = $campagne['type_objectif'];
 
-	$recu_fiscal = "";
+	$recu_fiscal = "off";
 	if ($type=="adhesion")
 		$recu_fiscal = "on";
 
@@ -90,33 +90,20 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
  *     Tableau des erreurs
  */
 function formulaires_souscription_verifier_dist($id_souscription_campagne){
-	$campagne = _request('id_souscription_campagne');
 
-	$erreurs = formulaires_editer_objet_verifier('souscription', 'new',
-		array('courriel',
-			'montant',
-			'id_souscription_campagne'));
-
-	if (!$id_souscription_campagne || intval($id_souscription_campagne)!=intval($campagne)){
-		$erreurs['message_erreur'] = "Campagne invalide";
-	}
+	$erreurs = formulaires_editer_objet_verifier('souscription', 'new', array('courriel','montant'));
 
 	$campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
-		"spip_souscription_campagnes", "id_souscription_campagne=$id_souscription_campagne");
+		"spip_souscription_campagnes", "id_souscription_campagne=".intval($id_souscription_campagne));
 
 	$type_campagne = $campagne['type_objectif'];
-
-	/* Le champ 'type' (hidden) doit être le même que celui défini dans
-	 * la campagne. */
-	if (_request('type_souscription')!=$type_campagne)
-		$erreurs['message_erreur'] = "Type de souscription invalide : " . _request('type_souscription');
 
 	if (!verifier_campagne($id_souscription_campagne, $type_campagne)){
 		$erreurs['message_erreur'] = "La campagne à laquelle est associée cette souscription est invalide";
 	}
 
 
-	if (_request('recu_fiscal') || $type_campagne=="adhesion"){
+	if (_request('recu_fiscal')==="on" || $type_campagne=="adhesion"){
 		foreach (array('prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire){
 			if (!_request($obligatoire)){
 				if ($type_campagne=="adhesion"){
@@ -160,7 +147,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 		else {
 			if ($campagne['configuration_specifique']!=='on'){
 				$montant_type = lire_config("souscription/{$type_campagne}_type_saisie", 'input');
-				$montant_datas = lire_config("souscription/${$type_campagne}_montants", array());
+				$montant_datas = lire_config("souscription/{$type_campagne}_montants", array());
 			} else {
 				$montant_type = $campagne['type_saisie'];
 				$montant_datas = montants_str2array($campagne['montants']);
@@ -199,34 +186,55 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	$row = array();
 	$hidden = '';
 	$retour = '';
+	$ret = array();
 
+	$campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
+		"spip_souscription_campagnes", "id_souscription_campagne=".intval($id_souscription_campagne));
 	set_request("id_souscription_campagne",$id_souscription_campagne);
+	set_request('type_souscription',$campagne['type_objectif']);
 
-	$ret = formulaires_editer_objet_traiter('souscription',
-		'new',
-		'',
-		$lier_trad,
-		$retour,
-		$config_fonc,
-		$row,
-		$hidden);
+	// generer la transaction et l'associer a la souscription
+	$inserer_transaction = charger_fonction('inserer_transaction', 'bank');
+	$montant = _request('montant');
+	$id_auteur = (isset($GLOBALS['visiteur_session']['id_auteur'])?$GLOBALS['visiteur_session']['id_auteur']:0);
+	$id_transaction = $inserer_transaction($montant,
+		$montant, /* montant_ht */
+		$id_auteur, /* id_auteur */
+		'', /* auteur_id */
+		_request('courriel'));
 
-	$redirect = "";
-	$row = sql_fetsel("transaction_hash,id_transaction",
-		"spip_transactions LEFT JOIN spip_souscriptions USING(id_transaction)",
-		"id_souscription=" . $ret['id_souscription']);
-
-	if (!$row){
-		spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
-		$ret['message_erreur'] = "Echec creation de la transaction";
-	} else {
-		spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
-		$hash = $row['transaction_hash'];
-		$id_transaction = $row['id_transaction'];
-		$redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
-		$ret['redirect'] = $redirect;
+	if (!$id_transaction){
+		$ret['message_erreur'] = "Erreur technique : impossible de preparer la transaction..."; /* FIXME: à rendre traduisible. */
 	}
+	else {
 
+		set_request("id_transaction",$id_transaction);
+
+		$ret = formulaires_editer_objet_traiter('souscription',
+			'new',
+			'',
+			$lier_trad,
+			$retour,
+			$config_fonc,
+			$row,
+			$hidden);
+
+		$redirect = "";
+		$row = sql_fetsel("transaction_hash,id_transaction",
+			"spip_transactions LEFT JOIN spip_souscriptions USING(id_transaction)",
+			"id_souscription=" . $ret['id_souscription']);
+
+		if (!$row){
+			spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
+			$ret['message_erreur'] = "Echec creation de la transaction";
+		} else {
+			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
+			$hash = $row['transaction_hash'];
+			$id_transaction = $row['id_transaction'];
+			$redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
+			$ret['redirect'] = $redirect;
+		}
+	}
 	return $ret;
 }
 
