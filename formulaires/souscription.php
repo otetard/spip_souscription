@@ -186,37 +186,55 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	$row = array();
 	$hidden = '';
 	$retour = '';
+	$ret = array();
 
 	$campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
 		"spip_souscription_campagnes", "id_souscription_campagne=".intval($id_souscription_campagne));
 	set_request("id_souscription_campagne",$id_souscription_campagne);
 	set_request('type_souscription',$campagne['type_objectif']);
 
-	$ret = formulaires_editer_objet_traiter('souscription',
-		'new',
-		'',
-		$lier_trad,
-		$retour,
-		$config_fonc,
-		$row,
-		$hidden);
+	// generer la transaction et l'associer a la souscription
+	$inserer_transaction = charger_fonction('inserer_transaction', 'bank');
+	$montant = _request('montant');
+	$id_auteur = (isset($GLOBALS['visiteur_session']['id_auteur'])?$GLOBALS['visiteur_session']['id_auteur']:0);
+	$id_transaction = $inserer_transaction($montant,
+		$montant, /* montant_ht */
+		$id_auteur, /* id_auteur */
+		'', /* auteur_id */
+		_request('courriel'));
 
-	$redirect = "";
-	$row = sql_fetsel("transaction_hash,id_transaction",
-		"spip_transactions LEFT JOIN spip_souscriptions USING(id_transaction)",
-		"id_souscription=" . $ret['id_souscription']);
-
-	if (!$row){
-		spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
-		$ret['message_erreur'] = "Echec creation de la transaction";
-	} else {
-		spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
-		$hash = $row['transaction_hash'];
-		$id_transaction = $row['id_transaction'];
-		$redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
-		$ret['redirect'] = $redirect;
+	if (!$id_transaction){
+		$ret['message_erreur'] = "Erreur technique : impossible de preparer la transaction..."; /* FIXME: à rendre traduisible. */
 	}
+	else {
 
+		set_request("id_transaction",$id_transaction);
+
+		$ret = formulaires_editer_objet_traiter('souscription',
+			'new',
+			'',
+			$lier_trad,
+			$retour,
+			$config_fonc,
+			$row,
+			$hidden);
+
+		$redirect = "";
+		$row = sql_fetsel("transaction_hash,id_transaction",
+			"spip_transactions LEFT JOIN spip_souscriptions USING(id_transaction)",
+			"id_souscription=" . $ret['id_souscription']);
+
+		if (!$row){
+			spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
+			$ret['message_erreur'] = "Echec creation de la transaction";
+		} else {
+			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
+			$hash = $row['transaction_hash'];
+			$id_transaction = $row['id_transaction'];
+			$redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
+			$ret['redirect'] = $redirect;
+		}
+	}
 	return $ret;
 }
 
