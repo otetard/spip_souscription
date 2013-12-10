@@ -109,10 +109,19 @@
 				</li>
 				]
 
-				[(#ENV{type_souscription}|=={adhesion}|oui)
-		      [(#CONFIG{souscription/proposer_informer_comite_local,off}|=={on}|oui)
-						[(#SAISIE{oui_non, informer_comite_local, label=<:souscription:label_informer_comite_local:> })]
-		      ]
+	      [(#ENV{type_souscription}|=={adhesion}|et{#CONFIG{souscription/proposer_informer_comite_local,off}|=={on}}|oui)
+	      #SET{name,informer_comite_local}#SET{obli,''}#SET{defaut,'non'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+	      <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					]
+					#SET{val,off}
+					<input type="hidden" name="#GET{name}" value="#GET{val}" />
+					#SET{val,on}
+					<div class="choix">
+						<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+						<label for="#GET{name}_#GET{val}"><:souscription:label_informer_comite_local:></label>
+					</div>
+				</li>
 				]
       </ul>
 
