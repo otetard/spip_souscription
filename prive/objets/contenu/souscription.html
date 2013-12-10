@@ -1,26 +1,28 @@
 <BOUCLE_souscription(SOUSCRIPTIONS transactions souscription_campagnes){id_souscription}>
 
 [<div class="champ contenu_type_souscription[ (#TYPE_SOUSCRIPTION*|strlen|?{'',vide})]">
-	<label><:souscription:label_type_souscription:> : </label>
+	<div class='label'><:souscription:label_type_souscription:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{type_souscription} type_souscription">(#TYPE_SOUSCRIPTION)</span>
 </div>]
 
 [<div class="champ contenu_courriel[ (#COURRIEL*|strlen|?{'',vide})]">
-	<label><:souscription:label_courriel:> : </label>
-	<span dir="#LANG_DIR" class="#EDIT{courriel} courriel">(#COURRIEL)</span>
+	<div class='label'><:souscription:label_courriel:> : </div>
+	<span dir="#LANG_DIR" class="#EDIT{courriel} courriel"><a href="mailto:#COURRIEL">(#COURRIEL)</a></span>
 </div>]
 
 [<div class="champ contenu_titre_campagne[ (#TITRE*|strlen|?{'',vide})]">
-	<label><:souscription:label_titre_campagne:> : </label>
-	<span dir="#LANG_DIR" class="#EDIT{titre} titre">(#TITRE)</span>
+	<div class='label'><:souscription_campagne:label_titre_campagne:> : </div>
+	<span dir="#LANG_DIR" class="#EDIT{titre} titre"><a href="[(#ID_SOUSCRIPTION_CAMPAGNE|generer_url_entite{souscription_campagne})]">(#TITRE)</a></span>
 </div>]
 
 [<div class="champ contenu_montant[ (#MONTANT*|strlen|?{'',vide})]">
-	<label><:souscription:label_montant_liste:> : </label>
+	<div class='label'><:souscription:label_montant_liste:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{montant} montant">(#MONTANT) €</span>
 </div>]
 
+<hr />
 <div>
+	<h3>Transaction :</h3>
   <ul>
     [<li><strong>Identifiant de la transaction</strong> : <span dir="#LANG_DIR" class="#EDIT{id_transaction} id_transaction"><a href="[(#URL_ECRIRE{transactions}|parametre_url{id_transaction,#ID_TRANSACTION})]">(#ID_TRANSACTION)</a></li>]
     [<li><strong>Statut</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#STATUT)</span></li>]
@@ -30,58 +32,55 @@
   </ul>
 </div>
 
-<div style="border: 1px solid black ; margin: 1em; padding: 1em;">
-
+<hr />
 [<div class="champ contenu_nom[ (#NOM*|strlen|?{'',vide})]">
-	<label><:souscription:label_nom:> : </label>
+	<div class='label'><:souscription:label_nom:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{nom} nom">(#NOM)</span>
 </div>]
 
 [<div class="champ contenu_prenom[ (#PRENOM*|strlen|?{'',vide})]">
-	<label><:souscription:label_prenom:> : </label>
+	<div class='label'><:souscription:label_prenom:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{prenom} prenom">(#PRENOM)</span>
 </div>]
 
 [<div class="champ contenu_adresse[ (#ADRESSE*|strlen|?{'',vide})]">
-	<label><:souscription:label_adresse:> : </label>
+	<div class='label'><:souscription:label_adresse:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{adresse} adresse">(#ADRESSE)</span>
 </div>]
 
 [<div class="champ contenu_code_postal[ (#CODE_POSTAL*|strlen|?{'',vide})]">
-	<label><:souscription:label_code_postal:> : </label>
+	<div class='label'><:souscription:label_code_postal:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{code_postal} code_postal">(#CODE_POSTAL)</span>
 </div>]
 
 [<div class="champ contenu_ville[ (#VILLE*|strlen|?{'',vide})]">
-	<label><:souscription:label_ville:> : </label>
+	<div class='label'><:souscription:label_ville:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{ville} ville">(#VILLE)</span>
 </div>]
 
 [<div class="champ contenu_pays[ (#PAYS*|strlen|?{'',vide})]">
-	<label><:souscription:label_pays:> : </label>
+	<div class='label'><:souscription:label_pays:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{pays} pays">(#PAYS)</span>
 </div>]
 
 [<div class="champ contenu_telephone[ (#TELEPHONE*|strlen|?{'',vide})]">
-	<label><:souscription:label_telephone:> : </label>
+	<div class='label'><:souscription:label_telephone:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{telephone} telephone">(#TELEPHONE)</span>
 </div>]
 
 [<div class="champ contenu_recu_fiscal">
-	<label><:souscription:label_recu_fiscal:> : </label>
+	<div class='label'><:souscription:label_recu_fiscal:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{recu_fiscal} recu_fiscal">(#RECU_FISCAL|?{"oui","non"})</span>
 </div>]
 
 [<div class="champ contenu_envoyer_info">
-	<label><:souscription:label_envoyer_info:> : </label>
+	<div class='label'><:souscription:label_envoyer_info:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{envoyer_info} envoyer_info">(#ENVOYER_INFO|?{"oui","non"})</span>
 </div>]
 
 [<div class="champ contenu_informer_comite_local">
-	<label><:souscription:label_informer_comite_local:> : </label>
+	<div class='label'><:souscription:label_informer_comite_local:> : </div>
 	<span dir="#LANG_DIR" class="#EDIT{informer_comite_local} informer_comite_local">(#INFORMER_COMITE_LOCAL|?{"oui","non"})</span>
 </div>]
-
-</div>
 
 </BOUCLE_souscription>

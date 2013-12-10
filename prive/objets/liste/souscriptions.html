@@ -26,7 +26,7 @@
 	</thead>
 	<tbody>
 	<BOUCLE_liste_souscriptions(SOUSCRIPTIONS transactions){id_transaction?}{id_mot?}{id_auteur?}{where?}{recherche?}{type_souscription==#ENV{type_souscription,'.'}}{statut==#ENV{statut_transaction,'.'}}{tri #ENV{par,id_souscription},#GET{defaut_tri}}{pagination #ENV{nb,10}}>
-		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]">
+		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})] #STATUT">
 			<td class="id"><a href="[(#ID_SOUSCRIPTION|generer_url_entite{souscription})]"
 			                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">#ID_SOUSCRIPTION</a></td>
 			<td class="type_souscription"><a href="[(#ID_SOUSCRIPTION|generer_url_entite{souscription})]"
