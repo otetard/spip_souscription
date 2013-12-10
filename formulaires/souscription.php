@@ -150,14 +150,14 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 				$montant_datas = lire_config("souscription/{$type_campagne}_montants", array());
 			} else {
 				$montant_type = $campagne['type_saisie'];
-				$montant_datas = montants_str2array($campagne['montants']);
+				$montant_datas = $campagne['montants'];
 			}
 
 			/* On ne vérifie strictement la valeur du montant que si on
 			 * n'utilise pas le type de saisie « entrée libre » (input) pour
 			 * le montant. */
-			if (($montant_type!="input") AND !array_key_exists($e, $montant_datas))
-				$erreurs['montant'] = "Le montant spécifié est invalide" . var_export($campagne, true);
+			if (($montant_type!="input") AND !array_key_exists($e, montants_str2array($montant_datas)))
+                          $erreurs['montant'] = "Le montant spécifié est invalide";
 		}
 	}
 
