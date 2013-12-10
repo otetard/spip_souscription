@@ -67,4 +67,10 @@ function _trouver_modele_courriel_reglement($type, $id_souscription_campagne) {
 
   return $modele;
 }
+
+
+function souscription_bank_traiter_reglement($flux){
+	$flux['data'].=" <br />Vous allez recevoir un email de confirmation.";
+	return $flux;
+}
 ?>

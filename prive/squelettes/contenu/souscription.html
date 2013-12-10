@@ -1,9 +1,10 @@
 [(#AUTORISER{voir,souscription,#ID_SOUSCRIPTION}|sinon_interdire_acces)]
-<BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{si #ENV{exec}|=={souscription}}>
+<BOUCLE_souscription(SOUSCRIPTIONS spip_transactions){id_souscription}{si #ENV{exec}|=={souscription}}>
 
 [(#BOITE_OUVRIR{[
-	<h1>(#ID_SOUSCRIPTION)[ &mdash; #PRENOM (#NOM)]</h1>
-],simple fiche_objet})]
+	<h1>[(#TYPE_SOUSCRIPTION|ucfirst) ]#(#ID_SOUSCRIPTION)</h1>
+	[<strong>#PRENOM (#NOM)</strong>]
+],simple fiche_objet #STATUT})]
 
 <!--affiche_milieu-->
 
