@@ -9,10 +9,7 @@ function calcul_avancement_campagne($id_campagne, $type_objectif, $objectif_init
 		    array("S.id_souscription_campagne=".sql_quote($id_campagne),
 			  "T.reglee = 'oui'"));
 
-  $nombre = $res['nombre'];
-  $somme = $objectif_initial;
-
-  return ($type_souscription == "don" ? $somme : $nombre) + $objectif_initial;
+  return ($type_objectif == "don" ? $res['somme'] : $res['nombre']) + $objectif_initial;
 }
 
 /*
@@ -55,4 +52,8 @@ function montants_str2array($str) {
   }
 
   return saisies_chaine2tableau(saisies_aplatir_chaine($str));
+}
+
+function campagne_afficher_objectif($nombre,$type_objectif){
+	return $nombre.($type_objectif == "don" ? " EUR" : "");
 }

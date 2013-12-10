@@ -65,6 +65,18 @@
 							]<textarea name="#GET{name}" class="textarea" rows="4">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
 						</li>
+						#SET{name,proposer_informer_comite_local}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]
+							#SET{val,off}
+							<input type="hidden" name="#GET{name}" value="#GET{val}" />
+							#SET{val,on}
+							<div class="choix">
+								<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+								<label for="#GET{name}_#GET{val}"><:souscription:label_proposer_informer_comite_local:></label>
+							</div>
+						</li>
 					</ul>
 				</fieldset>
 			</li>
@@ -135,6 +147,18 @@
 					]<textarea name="#GET{name}" class="textarea" rows="4">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
 				</li>
+				#SET{name,proposer_infolettre}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					]
+					#SET{val,off}
+					<input type="hidden" name="#GET{name}" value="#GET{val}" />
+					#SET{val,on}
+					<div class="choix">
+						<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+						<label for="#GET{name}_#GET{val}"><:souscription:label_proposer_infolettre:></label>
+					</div>
+				</li>
 			</ul>
 		</fieldset>
 
@@ -143,21 +167,4 @@
 	</div>
 	</form>
 </div>
-<script type="text/javascript">
-	jQuery(function(){
-		jQuery(".suite.fieldset").each(function(){
-			var me=this;
-			jQuery(me).prev(".editer").find("input.checkbox").click(function(){
-				if (jQuery(this).prop("checked"))
-					jQuery(me).show('fast');
-				else
-					jQuery(me).hide('fast');
-			})
-		})
-	})
-</script>
-<style>
-input.checkbox:checked+label {font-weight: bold;}
-li.fieldset.adhesion {margin-bottom: 1em}
-li.suite {margin-left: 40px;}
-</style>
+<INCLURE{fond=formulaires/inc-formulaires-suite} />
