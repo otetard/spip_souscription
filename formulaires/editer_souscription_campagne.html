@@ -26,6 +26,14 @@
 		        [(#CONFIG{souscription/adhesion_activer,'off'}|=={on}|ou{[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)]})
             <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription_campagne:label_type_objectif_adhesions:> <:souscription_campagne:info_type_objectif_adhesions:></option>
 		        ]
+			#SET{val,abonnement}
+			[(#CONFIG{souscription/abonnement_activer,'off'}|=={on}|ou{[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)]})
+			 <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription_campagne:label_type_objectif_abonnements:> <:souscription_campagne:info_type_objectif_abonnements:></option>
+			 	]
+			#SET{val,don_ou_abonnement}
+			[(#CONFIG{souscription/don_activer,'off'}|=={on}|et{#CONFIG{souscription/abonnement_activer,'off'}|=={on}}|ou{[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)]})
+			<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription_campagne:label_type_objectif_dons_ou_abonnements:> <:souscription_campagne:info_type_objectif_dons_ou_abonnements:></option>
+				]
           </select>
         </li>
 	      #SET{name,texte}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}

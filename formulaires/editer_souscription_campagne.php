@@ -64,12 +64,26 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
 		));
 
 	$type = _request("type_objectif");
-	if (!in_array($type, array('don', 'adhesion')))
+	if (!in_array($type, array('don', 'adhesion', 'abonnement', 'don_ou_abonnement')))
 		$erreurs['type_objectif'] = _T("souscription_campagne:erreur_objectif_invalide");
 	elseif ($type=="don" AND lire_config("souscription/don_activer","off")!=="on")
 		$erreurs['type_objectif'] = _T("souscription_campagne:erreur_objectif_don_inactif");
 	elseif ($type=="adhesion" AND lire_config("souscription/adhesion_activer","off")!=="on")
 		$erreurs['type_objectif'] = _T("souscription_campagne:erreur_objectif_adhesion_inactif");
+	elseif ($type=="abonnement" AND lire_config("souscription/abonnement_activer","off")!=="on")
+		$erreurs['type_objectif'] = _T("souscription_campagne:erreur_objectif_adhesion_inactif");
+
+	/* Si le type d'objectif est don_ou_abonnement, c'est une campagne d'abonnement 
+	 * et ne doit pas avoir d'objectif, ni de configuration spécifique. */
+	if ($type == 'don_ou_abonnement' && (_request('objectif_oui_non') == 'on' || _request('configuration_specifique') == 'on')) {
+		if (_request('objectif_oui_non') == 'on') {
+			$erreurs['objectif_oui_non'] = _T("souscription_campagne:erreur_objectif_non_activable");
+		}
+		if (_request('configuration_specifique') == 'on') {
+			$erreurs['configuration_specifique'] = _T("souscription_campagne:erreur_configuration_non_activable");
+		}
+		return $erreurs;
+	}
 
 	/* Si un objectif est demandé, alors on vérifie que les champs sont
 	 * bien des entiers. */

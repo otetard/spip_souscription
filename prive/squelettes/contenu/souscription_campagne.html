@@ -11,7 +11,7 @@
 	]
 
 	<h1>(#TITRE)[(#VAL{souscription_campagne}|objet_icone|inserer_attribut{class,cadre-icone})]</h1>
-	<strong>[(#TYPE_OBJECTIF|=={don}|?{<:souscription:sous_titre_type_dons:>,<:souscription:sous_titre_type_adhesions:>})]</strong>
+	<strong>[(#TYPE_OBJECTIF|=={don}|oui)<:souscription_campagne:label_type_objectif_dons:>][(#TYPE_OBJECTIF|=={adhesion}|oui)<:souscription_campagne:label_type_objectif_adhesions:>][(#TYPE_OBJECTIF|=={abonnement}|oui)<:souscription_campagne:label_type_objectif_abonnements:>][(#TYPE_OBJECTIF|=={don_ou_abonnement}|oui)<:souscription_campagne:label_type_objectif_dons_ou_abonnements:>]</strong>
 
 ],simple fiche_objet})]
 

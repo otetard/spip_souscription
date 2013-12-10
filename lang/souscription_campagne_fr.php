@@ -23,7 +23,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_souscription_campagnes' => '@nb@ campagnes',
 	'info_type_objectif_dons' => '(objectif en Euros)',
 	'info_type_objectif_adhesions' => '(objectif en nombre d\'adhésions)',
-
+	'info_type_objectif_abonnements' => '(objectif en nombre d\'adonnements)',
+	'info_type_objectif_dons_ou_abonnements' => '(campagne permanente sans objectif)',
 
 	'titre_logo_souscription_campagne' => 'Logo de cette campagne',
 	'titre_souscription_campagne' => 'Campagne',
@@ -34,6 +35,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_type_objectif' => 'Type d\'objectif',
 	'label_type_objectif_dons' => 'Dons',
 	'label_type_objectif_adhesions' => 'Adhésions',
+	'label_type_objectif_abonnements' => 'Abonnements',
+	'label_type_objectif_dons_ou_abonnements' => 'Dons ou abonnements',
 	'label_objectif_oui_non' => 'Fixer un objectif à cette campagne',
 	'label_objectif' => 'Niveau de l\'objectif',
 	'label_objectif_initial' => 'Niveau initial de la campagne',
@@ -44,12 +47,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_objectif' => 'Objectif',
 	'info_avancement' => 'Avancement',
 	
+	'erreur_objectif_non_activable' => "Pour le type d'objectif \"dons ou abonnements\", il n'est pas possible de fixer un objectif",
 	'erreur_objectif_initial_invalide' => "Valeur de l'objectif initial invalide",
 	'erreur_objectif_initial_valeur' => "Valeur de l'objectif initial invalide",
 	'erreur_objectif_initial_supperieur_objectif' => "Valeur de l'objectif initial suppérieur à l'objectif",
 	'erreur_objectif_invalide' => "Type d'objectif invalide",
 	'erreur_objectif_don_inactif' => "Les objectifs de type Dons ne sont pas activés dans la configuration.",
 	'erreur_objectif_adhesion_inactif' => "Les objectifs de type Adhésions ne sont pas activés dans la configuration.",
-
+	'erreur_configuration_non_activable' => "Pour le type d'objectif \"dons ou abonnements\", il n'est pas possible d'activer la configuration spécifique",
 );
 ?>
