@@ -40,7 +40,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 
 	$type = $campagne['type_objectif'];
 
-	$recu_fiscal = "";
+	$recu_fiscal = "off";
 	if ($type=="adhesion")
 		$recu_fiscal = "on";
 
@@ -90,33 +90,20 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
  *     Tableau des erreurs
  */
 function formulaires_souscription_verifier_dist($id_souscription_campagne){
-	$campagne = _request('id_souscription_campagne');
 
-	$erreurs = formulaires_editer_objet_verifier('souscription', 'new',
-		array('courriel',
-			'montant',
-			'id_souscription_campagne'));
-
-	if (!$id_souscription_campagne || intval($id_souscription_campagne)!=intval($campagne)){
-		$erreurs['message_erreur'] = "Campagne invalide";
-	}
+	$erreurs = formulaires_editer_objet_verifier('souscription', 'new', array('courriel','montant'));
 
 	$campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
-		"spip_souscription_campagnes", "id_souscription_campagne=$id_souscription_campagne");
+		"spip_souscription_campagnes", "id_souscription_campagne=".intval($id_souscription_campagne));
 
 	$type_campagne = $campagne['type_objectif'];
-
-	/* Le champ 'type' (hidden) doit être le même que celui défini dans
-	 * la campagne. */
-	if (_request('type_souscription')!=$type_campagne)
-		$erreurs['message_erreur'] = "Type de souscription invalide : " . _request('type_souscription');
 
 	if (!verifier_campagne($id_souscription_campagne, $type_campagne)){
 		$erreurs['message_erreur'] = "La campagne à laquelle est associée cette souscription est invalide";
 	}
 
 
-	if (_request('recu_fiscal') || $type_campagne=="adhesion"){
+	if (_request('recu_fiscal')==="on" || $type_campagne=="adhesion"){
 		foreach (array('prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire){
 			if (!_request($obligatoire)){
 				if ($type_campagne=="adhesion"){
@@ -160,7 +147,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 		else {
 			if ($campagne['configuration_specifique']!=='on'){
 				$montant_type = lire_config("souscription/{$type_campagne}_type_saisie", 'input');
-				$montant_datas = lire_config("souscription/${$type_campagne}_montants", array());
+				$montant_datas = lire_config("souscription/{$type_campagne}_montants", array());
 			} else {
 				$montant_type = $campagne['type_saisie'];
 				$montant_datas = montants_str2array($campagne['montants']);
@@ -200,7 +187,10 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	$hidden = '';
 	$retour = '';
 
+	$campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
+		"spip_souscription_campagnes", "id_souscription_campagne=".intval($id_souscription_campagne));
 	set_request("id_souscription_campagne",$id_souscription_campagne);
+	set_request('type_souscription',$campagne['type_objectif']);
 
 	$ret = formulaires_editer_objet_traiter('souscription',
 		'new',
