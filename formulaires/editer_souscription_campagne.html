@@ -107,6 +107,8 @@
 		              <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_input:></option>
 		              #SET{val,radio}
 		              <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radio:></option>
+				          #SET{val,radioinput}
+                  <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radioinput:></option>
 		              #SET{val,selection}
 		              <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_selection:></option>
 		            </select>
