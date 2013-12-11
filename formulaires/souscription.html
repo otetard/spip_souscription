@@ -45,7 +45,7 @@
 	      <li class="fieldset suite souscription_bloc_fiscal[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|non)none]">
 		      <fieldset>
 			      <legend><:souscription:label_legende_bloc_fiscal:></legend>
-			      [(#INCLURE{fond=inclure/souscription_bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
+			      [(#INCLURE{fond=inclure/souscription/bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
 			      <ul>
 				      #SET{name1,prenom}#SET{obli1,'obligatoire'}#SET{defaut1,''}#SET{erreurs1,#ENV**{erreurs}|table_valeur{#GET{name1}}}
 				      #SET{name2,nom}#SET{obli2,'obligatoire'}#SET{defaut2,''}#SET{erreurs2,#ENV**{erreurs}|table_valeur{#GET{name2}}}
