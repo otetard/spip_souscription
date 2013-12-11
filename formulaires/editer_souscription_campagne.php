@@ -102,16 +102,18 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
 	 * dans la fonction traiter. */
 	if (_request('configuration_specifique')){
 		$type_saisie = _request('type_saisie');
-		if (!$type_saisie || !in_array($type_saisie, array('radio', 'selection', 'input')))
-			$erreurs['type_saisie'] = _T('souscription:erreur_type_saisie');
+		$saisies = array("input", "radio", "radioinput", "selection");
+		if (!$type_saisie || !in_array($type_saisie, $saisies))
+			$erreurs['type_saisie'] = _T('souscription:erreur_champ_invalide');
+		else {
+			$montants = _request('montants');
+			if ($type_saisie && $type_saisie!=="input"){
+				if (!$montants || !is_string($montants))
+					$erreurs['montants'] = _T('souscription:erreur_montants');
 
-		$montants = _request('montants');
-		if ($type_saisie && in_array($type_saisie, array('radio', 'selection'))){
-			if (!$montants || !is_string($montants))
-				$erreurs['montants'] = _T('souscription:erreur_montants');
-
-			elseif (!montants_str2array($montants))
-				$erreurs['montants'] = _T('souscription:erreur_montants');
+				elseif (!montants_str2array($montants))
+					$erreurs['montants'] = _T('souscription:erreur_montants');
+			}
 		}
 	}
 

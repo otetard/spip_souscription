@@ -21,7 +21,7 @@
         <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
           <label for="#GET{name}">#ENV{montant_label}</label>[
           <span class='erreur_message'>(#GET{erreurs})</span>
-          ][<span class="input">(#INCLURE{fond=formulaires/inc-souscription-#ENV{montant_type},name=#GET{name},valeur=#ENV*{#GET{name},#GET{defaut}},obli=#GET{obli},montants=#ENV{_montant_datas}})</span>]
+          ][<span class="input">(#INCLURE{fond=formulaires/inc-souscription-#ENV{montant_type},name=#GET{name},valeur=#ENV*{#GET{name},#GET{defaut}},obli=#GET{obli},montants=#ENV{_montant_datas},montant_libre})</span>]
 	        [<p class="explication">(#ENV{montant_explication})</p>]
         </li>
 	      #SET{name,courriel}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}

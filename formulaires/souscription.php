@@ -56,6 +56,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 	$montant_explication = nl2br(lire_config("souscription/${type}_montants_description"));
 
 	return array('montant' => '',
+		'montant_libre' => '',
 		'courriel' => '',
 		'recu_fiscal' => $recu_fiscal,
 		'envoyer_info' => 'on',
@@ -142,6 +143,11 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 	 * paramètres globaux.
 	 */
 	if ($e = _request('montant')){
+		$libre = false;
+		if ($e=="libre"){
+			$e = _request('montant_libre');
+			$libre = true;
+		}
 		if (!(ctype_digit($e)))
 			$erreurs['montant'] = "Montant invalide";
 		else {
@@ -156,8 +162,10 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 			/* On ne vérifie strictement la valeur du montant que si on
 			 * n'utilise pas le type de saisie « entrée libre » (input) pour
 			 * le montant. */
-			if (($montant_type!="input") AND !array_key_exists($e, montants_str2array($montant_datas)))
-                          $erreurs['montant'] = "Le montant spécifié est invalide";
+			if (($montant_type!=="input")
+			  AND !$libre
+			  AND !array_key_exists($e, montants_str2array($montant_datas)))
+				$erreurs['montant'] = "Le montant spécifié est invalide";
 		}
 	}
 
@@ -196,6 +204,9 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	// generer la transaction et l'associer a la souscription
 	$inserer_transaction = charger_fonction('inserer_transaction', 'bank');
 	$montant = _request('montant');
+	if ($montant=="libre")
+		$montant = _request('montant_libre');
+
 	$id_auteur = (isset($GLOBALS['visiteur_session']['id_auteur'])?$GLOBALS['visiteur_session']['id_auteur']:0);
 	$id_transaction = $inserer_transaction($montant,
 		$montant, /* montant_ht */
