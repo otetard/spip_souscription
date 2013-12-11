@@ -24,8 +24,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'config_info_enregistree' => 'La nouvelle configuration a été enregistrée',
 	'confirmer' => 'Valider',
 	'confirmer_creation_campagne' => 'Enregistrer',
-	'configurer_type_saisie_input' => 'Entrée libre',
-	'configurer_type_saisie_radio' => 'Boutons radio',
+	'configurer_type_saisie_input' => 'Montant libre',
+	'configurer_type_saisie_radio' => 'Case à cocher',
+	'configurer_type_saisie_radioinput' => 'Case à cocher + Montant libre',
 	'configurer_type_saisie_selection' => 'Liste déroulante',
 
 // E
@@ -89,6 +90,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_informer_comite_local' => 'Me faire connaître auprès du comité local le plus proche',
 	'label_proposer_informer_comite_local' => 'Proposer d\'informer le comité local lors de l\'adhésion',
 	'label_montant' => 'Montant',
+	'label_montant_libre' => 'Montant libre : ',
 	'label_montant_actuel' => 'Niveau actuel de la campagne',
 	'label_montant_liste' => 'Montant',
 	'label_montants' => 'Montants',
@@ -102,7 +104,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_statut' => 'Statut',
 	'label_telephone' => 'Téléphone',
 	'label_titre' => 'Titre',
-	'label_type_saisie' => 'Types de saisies',
+	'label_type_saisie' => 'Mode de choix du montant',
 	'label_type_souscription' => 'Type de souscription',
 	'label_ville' => 'Ville',
 	'label_avancement_campagne_adhesions' => "Avancement de la campagne&nbsp;: @nombre@ sur @objectif@&nbsp;!",
@@ -113,9 +115,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_general_groupe' => 'Options générales',
 
 // M
-	'message_nok_champ_invalide' => "Le type de saisie pour le montant est invalide",
-	'message_nok_champ_obligatoire' => 'Ce champ est obligatoire',
-	'message_nok_montants' => 'Erreur dans le format',
+	'erreur_champ_invalide' => "Le type de saisie pour le montant est invalide",
+	'erreur_champ_obligatoire' => 'Ce champ est obligatoire',
+	'erreur_montants' => 'Erreur dans le format',
 
 // S
 	'souscription_titre' => 'Souscription',
