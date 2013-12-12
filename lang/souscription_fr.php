@@ -34,8 +34,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'explication_montant_don' => ' ',
 	'explication_montants' => 'Le montants divent être au format suivant: <code>[montant]|[description]</code> à raison d\'une entrée par ligne.',
 	'explication_recu_fiscal' => ' ',
-	'explication_bloc_fiscal_adhesion' => "Les informations suivantes sont nécessaire pour nous permettre de réaliser l'adhésion&nbsp;:",
-	'explication_bloc_fiscal_don' => "Ces informations sont nécessaire en vue de l'établissement du reçu permettant une déduction fiscale qui vous sera envoyé",
+	'explication_bloc_fiscal_adhesion' => "Les informations suivantes sont nécessaires pour nous permettre de réaliser l'adhésion&nbsp;:",
+	'explication_bloc_fiscal_don' => "Ces informations sont nécessaires en vue de l'établissement du reçu permettant une déduction fiscale qui vous sera envoyé",
 	'explication_type_saisie' => "Mode d'affichage des différents montants possibles",
 
 // I
@@ -90,7 +90,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_informer_comite_local' => 'Me faire connaître auprès du comité local le plus proche',
 	'label_proposer_informer_comite_local' => 'Proposer d\'informer le comité local lors de l\'adhésion',
 	'label_montant' => 'Montant',
-	'label_montant_libre' => 'Montant libre : ',
+	'label_montant_libre' => 'Autre montant : ',
 	'label_montant_actuel' => 'Niveau actuel de la campagne',
 	'label_montant_liste' => 'Montant',
 	'label_montants' => 'Montants',
