@@ -4,43 +4,69 @@
 </BOUCLE_p>
 
 <div class="formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id_souscription,nouveau}[ formulaire_souscription_(#ENV{type_souscription})][ formulaire_souscription_(#ENV{id_souscription_campagne})]">
-  [<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
-  [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
 
-  [(#ENV{editable})
-  <form method="post" action="#ENV{action}"><div>
+[(#ENV{editable})
+<form method="post" action="#ENV{action}"><div>
 
-      #ACTION_FORMULAIRE{#ENV{action}}
-      <ul>
-	[(#SAISIE{#ENV{montant_type}, montant, obligatoire=oui, label=#ENV{montant_label}, explication=#ENV{montant_explication}, datas=#ENV{montant_datas}})]
-   	[(#SAISIE{explication, dispositions_fiscales_explications, texte=#CONFIG{souscription/dispositions_fiscales_explications}|nl2br})]
-	[(#ENV{desactiver_courriel}|oui)[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>, disable_avec_post=oui})]]
-        [(#ENV{desactiver_courriel}|non)[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>})]]
-        [(#ENV**{erreurs}|table_valeur{password}|oui)[(#SAISIE{input, password, type=password, obligatoire=oui, label=<:souscription:label_password:>})]]
-        [(#SAISIE{hidden, id_auteur})]
-        [(#SAISIE{oui_non, recu_fiscal, label=<:souscription:label_recu_fiscal:>})]
-        [(#SAISIE{oui_non, envoyer_info, label=<:souscription:label_envoyer_info:> })]
-        [(#ENV{type_souscription}|=={adhesion}|oui) [(#SAISIE{oui_non, informer_comite_local, label=<:souscription:label_informer_comite_local:> })]]
-        [(#SAISIE{hidden, id_souscription_campagne})]
-        [(#SAISIE{hidden, type_souscription})]
-      </ul>
+	#ACTION_FORMULAIRE{#ENV{action}}
+	<ul>
+		
+		[(#ENV{type_souscription}|=={don_ou_abonnement}|oui)
+		<li>
+			<ul>
+				<li class="editer editer_precision_type_souscription saisie_radio[ (#ENV**{erreurs}|table_valeur{precision_type_souscription}|oui)erreur]">[
+					<span class='erreur_message'>(#ENV**{erreurs}|table_valeur{precision_type_souscription})</span>
+					]<div class="choix">
+						<input type="radio" name="precision_type_souscription" class="radio" id='champ_precision_type_souscription_don' value='don'[ (#ENV{precision_type_souscription}|=={don}|oui)checked="checked"] />
+						<label for="champ_precision_type_souscription_don">Don</label>
+					</div>
+				</li>				
+				[(#SAISIE{#ENV{montant_type_don}, montant_don, label=#ENV{montant_label_don}, datas=#ENV{montant_datas_don}})]
+				<li class="editer editer_precision_type_souscription saisie_radio[ (#ENV**{erreurs}|table_valeur{precision_type_souscription}|oui)erreur]">
+					<div class="choix">
+						<input type="radio" name="precision_type_souscription" class="radio" id='champ_precision_type_souscription_abonnement' value='abonnement'[ (#ENV{precision_type_souscription}|=={abonnement}|oui)checked="checked"] />
+						<label for="champ_precision_type_souscription_abonnement">Abonnement</label>
+					</div>
+				</li>
+				[(#SAISIE{#ENV{montant_type_abonnement}, montant_abonnement, label=#ENV{montant_label_abonnement}, datas=#ENV{montant_datas_abonnement}})]
+			</ul>
+		</li>
+		]
 
-      <fieldset class="souscription_bloc_fiscal">
-        <legend><:souscription:label_legende_bloc_fiscal:></legend>
-        [(#INCLURE{fond=inclure/souscription_bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
-        <ul>
-	  [(#SAISIE{input, prenom, label=<:souscription:label_prenom:>})]
-          [(#SAISIE{input, nom, label=<:souscription:label_nom:>})]
-	  [(#SAISIE{textarea, adresse, label=<:souscription:label_adresse:>, rows=3})]
-	  [(#SAISIE{input, code_postal, label=<:souscription:label_code_postal:>})]
-	  [(#SAISIE{input, ville, label=<:souscription:label_ville:>})]
-	  [(#SAISIE{selection, pays, label=<:souscription:label_pays:>, datas=#GET{liste_pays}})]
-	  [(#SAISIE{input, telephone, label=<:souscription:label_telephone:>})]
+		[(#ENV{type_souscription}|=={don_ou_abonnement}|non)
+		[(#SAISIE{#ENV{montant_type}, montant, obligatoire=oui, label=#ENV{montant_label}, explication=#ENV{montant_explication}, datas=#ENV{montant_datas}})]
+		]
+		
+		[(#SAISIE{explication, dispositions_fiscales_explications, texte=#CONFIG{souscription/dispositions_fiscales_explications}|nl2br})]
+		[(#ENV{desactiver_courriel}|oui)[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>, disable_avec_post=oui})]]
+		[(#ENV{desactiver_courriel}|non)[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>})]]
+		[(#ENV**{erreurs}|table_valeur{password}|oui)[(#SAISIE{input, password, type=password, obligatoire=oui, label=<:souscription:label_password:>})]]
+		[(#SAISIE{hidden, id_auteur})]
+		[(#SAISIE{oui_non, recu_fiscal, label=<:souscription:label_recu_fiscal:>})]
+		[(#SAISIE{oui_non, envoyer_info, label=<:souscription:label_envoyer_info:> })]
+		[(#ENV{type_souscription}|=={adhesion}|oui) [(#SAISIE{oui_non, informer_comite_local, label=<:souscription:label_informer_comite_local:> })]]
+		[(#SAISIE{hidden, id_souscription_campagne})]
+[(#SAISIE{hidden, type_souscription})]
 	</ul>
-      </fieldset>
 
-      <p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer:>" /></p>
-    </div>
-  </form>
-  ]
+	<fieldset class="souscription_bloc_fiscal">
+		<legend><:souscription:label_legende_bloc_fiscal:></legend>
+		[(#INCLURE{fond=inclure/souscription_bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
+		<ul>
+			[(#SAISIE{input, prenom, label=<:souscription:label_prenom:>})]
+			[(#SAISIE{input, nom, label=<:souscription:label_nom:>})]
+			[(#SAISIE{textarea, adresse, label=<:souscription:label_adresse:>, rows=3})]
+			[(#SAISIE{input, code_postal, label=<:souscription:label_code_postal:>})]
+			[(#SAISIE{input, ville, label=<:souscription:label_ville:>})]
+			[(#SAISIE{selection, pays, label=<:souscription:label_pays:>, datas=#GET{liste_pays}})]
+			[(#SAISIE{input, telephone, label=<:souscription:label_telephone:>})]
+		</ul>
+	</fieldset>
+
+	<p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer:>" /></p>
+</div>
+</form>
+]
 </div>

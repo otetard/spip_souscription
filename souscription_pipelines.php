@@ -33,15 +33,14 @@ function souscription_optimiser_base_disparus($flux){
  * @return array       Données du pipeline
  */
 function souscription_trig_bank_notifier_reglement($flux) {
-  $souscription = sql_fetsel(array('courriel', 'id_souscription_campagne'), 'spip_souscriptions', 'id_transaction='.intval($flux['args']['id_transaction']));
+  $souscription = sql_fetsel(array('courriel', 'id_souscription_campagne', 'type_souscription'), 'spip_souscriptions', 'id_transaction='.intval($flux['args']['id_transaction']));
   $email = $souscription['courriel'];
   $campagne = $souscription['id_souscription_campagne'];
 
   $sujet = '['.$GLOBALS['meta']['nom_site'].'] ';
 
   /* est-ce un abonnement ? */
-  $type_objectif = sql_getfetsel('type_objectif', 'spip_souscription_campagnes', 'id_souscription_campagne='.intval($souscription['id_souscription_campagne']));
-  if ($type_objectif == 'abonnement') {
+  if ($souscription['type_souscription'] == 'abonnement') {
       /* si le compte SPIP n'existe pas, il faut le créer */
 	  /* faut-il mieux vérfier l'existence du compte avec l'email dans spip_auteurs ou sur id_auteur dans spip_transactions ? */
 	  $id_auteur = sql_getfetsel('id_auteur', 'spip_transactions', 'id_transaction='.intval($flux['args']['id_transaction']));

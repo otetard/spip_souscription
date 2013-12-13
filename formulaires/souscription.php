@@ -94,8 +94,18 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
   }
 
   if($campagne['configuration_specifique'] !== 'on') {
-    $montant_type = lire_config("souscription/{$type}_type_saisie", 'input');
-    $montant_datas = lire_config("souscription/${type}_montants", array());
+	if ($type == 'don_ou_abonnement') {
+	    $montant_type_don = lire_config("souscription/don_type_saisie", 'input');
+	    $montant_datas_don = lire_config("souscription/don_montants", array());
+	    $montant_label_don = lire_config("souscription/don_montants_label", _T('souscription:label_montant'));
+	    $montant_type_abonnement = lire_config("souscription/abonnement_type_saisie", 'input');
+	    $montant_datas_abonnement = lire_config("souscription/abonnement_montants", array());
+	    $montant_label_abonnement = lire_config("souscription/abonnement_montants_label", _T('souscription:label_montant'));
+	}
+	else {
+	    $montant_type = lire_config("souscription/{$type}_type_saisie", 'input');
+	    $montant_datas = lire_config("souscription/${type}_montants", array());
+	}
   }
   else {
     $montant_type = $campagne['type_saisie'];
@@ -105,7 +115,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
   $montant_label = lire_config("souscription/${type}_montants_label", _T('souscription:label_montant'));
   $montant_explication = nl2br(lire_config("souscription/${type}_montants_description"));
 
-  return array('montant' => '',
+  $valeurs =  array('montant' => '',
                'courriel' => $courriel,
                'desactiver_courriel' => $desactiver_courriel,
 			   'id_auteur' => $id_auteur,
@@ -126,6 +136,20 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
                'montant_label' => $montant_label,
                'montant_explication' => $montant_explication
                );
+			   
+   if ($type == 'don_ou_abonnement') {
+	   $valeurs['precision_type_souscription'] = '';
+	   $valeurs['montant_don'] = '';
+	   $valeurs['montant_abonnement'] = '';
+	   $valeurs['montant_type_don'] = $montant_type_don;
+	   $valeurs['montant_datas_don'] = $montant_datas_don;
+	   $valeurs['montant_label_don'] = $montant_label_don;
+	   $valeurs['montant_type_abonnement'] = $montant_type_abonnement;
+	   $valeurs['montant_datas_abonnement'] = $montant_datas_abonnement;
+	   $valeurs['montant_label_abonnement'] = $montant_label_abonnement;
+   }
+   
+   return $valeurs;
 }
 
 /**
@@ -153,10 +177,38 @@ function formulaires_souscription_charger_dist($id_souscription_campagne) {
 function formulaires_souscription_verifier_dist($id_souscription_campagne) {
   $campagne = _request('id_souscription_campagne');
 
-  $erreurs = formulaires_editer_objet_verifier('souscription', 'new',
-                                               array('courriel',
-                                                     'montant',
-                                                     'id_souscription_campagne'));
+  if (_request('type_souscription') != 'don_ou_abonnement') {
+	  $erreurs = formulaires_editer_objet_verifier('souscription', 'new',
+	                                               array('courriel',
+	                                                     'montant',
+	                                                     'id_souscription_campagne'));
+	  $champ_montant = 'montant';
+	  $montant = _request('montant');
+  }
+  else {
+	  $erreurs = formulaires_editer_objet_verifier('souscription', 'new',
+	                                               array('courriel',
+												   		 'precision_type_souscription',
+	                                                     'id_souscription_campagne'));
+	  if (_request('precision_type_souscription') == 'don') {
+		  if (!_request('montant_don')) {
+		  		  $erreurs['montant_don'] = _T('info_obligatoire');
+		  }
+		  else {
+			  $champ_montant = 'montant_don';
+			  $montant = _request('montant_don');
+		  }
+	  } 
+	  if (_request('precision_type_souscription') == 'abonnement') {
+		  if (!_request('montant_abonnement')) {
+		  		  $erreurs['montant_abonnement'] = _T('info_obligatoire');
+		  }
+		  else {
+			  $champ_montant = 'montant_abonnement';
+			  $montant = _request('montant_abonnement');
+		  }
+	  }
+  }
 
   if(!$id_souscription_campagne || intval($id_souscription_campagne) != intval($campagne)) {
       $erreurs['message_erreur'] = "Campagne invalide";
@@ -193,7 +245,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
   if ($e = _request('courriel') AND !email_valide($e)) {
     $erreurs['courriel'] = _T('form_prop_indiquer_email');
   }
-  elseif ($type == 'abonnement' AND !$GLOBALS['visiteur_session']['email'] AND !$GLOBALS['visiteur_session']['id_auteur']) {
+  elseif (($type_campagne == 'abonnement' || ($type_campagne == 'don_ou_abonnement') && (_request('precision_type_souscription') == 'abonnement')) AND !$GLOBALS['visiteur_session']['email'] AND !$GLOBALS['visiteur_session']['id_auteur']) {
     /* Existe-t-il déjà un compte avec cet email ? */
     $email = sql_getfetsel('email', 'spip_auteurs', 'email='.sql_quote(_request('courriel')));
     /* si c'est le cas on demande le mot de passe */
@@ -237,24 +289,27 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne) {
    * avec les montants de la campagne. Autrement, il faut utiliser les
    * paramètres globaux.
    */
-  if ($e = _request('montant')) {
-    if(!(ctype_digit($e)))
-      $erreurs['montant'] = "Montant invalide";
+  if ($montant) {
+    if(!(ctype_digit($montant)))
+      $erreurs[$champ_montant] = "Montant invalide";
     else {
       if($campagne['configuration_specifique'] !== 'on') {
-	$montant_type = lire_config("souscription/{$type}_type_saisie", 'input');
-	$montant_datas = lire_config("souscription/${type}_montants", array());
+		  if ($type_campagne == 'don_ou_abonnement') {
+			  $type_campagne = _request('precision_type_souscription');
+		  }
+		  $montant_type = lire_config("souscription/{$type_campagne}_type_saisie", 'input');
+		  $montant_datas = lire_config("souscription/{$type_campagne}_montants", array());
       }
       else {
-	$montant_type = $campagne['type_saisie'];
-	$montant_datas = montants_str2array($campagne['montants']);
+		  $montant_type = $campagne['type_saisie'];
+		  $montant_datas = montants_str2array($campagne['montants']);
       }
 
       /* On ne vérifie strictement la valeur du montant que si on
        * n'utilise pas le type de saisie « entrée libre » (input) pour
        * le montant. */
-      if(($montant_type != "input") AND !array_key_exists($e, $montant_datas))
-        $erreurs['montant'] = "Le montant spécifié est invalide" . var_export($campagne, true);
+      if(($montant_type != "input") AND !array_key_exists($montant, montants_str2array($montant_datas)))
+        $erreurs[$champ_montant] = "Le montant spécifié est invalide";
     }
   }
 
@@ -293,9 +348,22 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne) {
   $row=array();
   $hidden='';
   
-  /* est-ce un abonnement ? */
-  $type_objectif = sql_getfetsel('type_objectif', 'spip_souscription_campagnes', 'id_souscription_campagne='.intval($id_souscription_campagne));
-  if ($type_objectif == 'abonnement' AND _request('id_auteur')) {
+  $type_souscription = _request('type_souscription');
+  $precision_type_souscription = _request('precision_type_souscription');
+  
+  if ($type_souscription == 'don_ou_abonnement') {
+	  if ($precision_type_souscription == 'don') {
+		  set_request('type_souscription', 'don');
+		  set_request('montant', _request('montant_don'));
+		  $type_souscription = 'don';
+	  }
+	  else {
+		  set_request('type_souscription', 'abonnement');
+		  set_request('montant', _request('montant_abonnement'));
+		  $type_souscription = 'abonnement';
+	  }
+  }
+  if ($type_souscription == 'abonnement' && _request('id_auteur')) {
       /* Si abonnement et compte SPIP existe déjà on passe id_auteur pour insertion dans spip_transactions */
       set_request('id_auteur', _request('id_auteur'));
   }
@@ -323,7 +391,7 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne) {
     $hash = $row['transaction_hash'];
     $id_transaction = $row['id_transaction'];
     
-    if ($type_objectif == 'abonnement') {
+    if ($type_souscription == 'abonnement') {
         $redirect = generer_url_public("payer-abonnement", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);    
     }
     else {
