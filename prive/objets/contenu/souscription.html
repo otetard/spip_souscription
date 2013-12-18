@@ -70,17 +70,17 @@
 
 [<div class="champ contenu_recu_fiscal">
 	<div class='label'><:souscription:label_recu_fiscal:> : </div>
-	<span dir="#LANG_DIR" class="#EDIT{recu_fiscal} recu_fiscal">(#RECU_FISCAL|?{"oui","non"})</span>
+	<span dir="#LANG_DIR" class="#EDIT{recu_fiscal} recu_fiscal">(#RECU_FISCAL|=={on}|?{"oui","non"})</span>
 </div>]
 
 [<div class="champ contenu_envoyer_info">
 	<div class='label'><:souscription:label_envoyer_info:> : </div>
-	<span dir="#LANG_DIR" class="#EDIT{envoyer_info} envoyer_info">(#ENVOYER_INFO|?{"oui","non"})</span>
+	<span dir="#LANG_DIR" class="#EDIT{envoyer_info} envoyer_info">(#ENVOYER_INFO|=={on}|?{"oui","non"})</span>
 </div>]
 
 [<div class="champ contenu_informer_comite_local">
 	<div class='label'><:souscription:label_informer_comite_local:> : </div>
-	<span dir="#LANG_DIR" class="#EDIT{informer_comite_local} informer_comite_local">(#INFORMER_COMITE_LOCAL|?{"oui","non"})</span>
+	<span dir="#LANG_DIR" class="#EDIT{informer_comite_local} informer_comite_local">(#INFORMER_COMITE_LOCAL|=={on}|?{"oui","non"})</span>
 </div>]
 
 </BOUCLE_souscription>
