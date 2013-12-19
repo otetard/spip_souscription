@@ -131,7 +131,7 @@ function formulaires_editer_souscription_campagne_traiter_dist($id_souscription_
 	if (_request('objectif_oui_non')!="on"){
 		set_request('objectif', 0);
 		set_request('objectif_initial', 0);
-		set_request('objectif_limiter', '');
+		set_request('objectif_limiter', 'off');
 	}
 
 	if (_request('configuration_specifique'!="on")){

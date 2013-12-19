@@ -264,7 +264,7 @@ function verifier_campagne($id_souscription_campagne, $type_souscription = null)
 
 	/* Si la campagne doit être fermée lorsque l'objectif est atteint,
 	 * alors on bloque. */
-	elseif ($campagne['objectif_limiter'] &&
+	elseif ($campagne['objectif_limiter'] == 'on' &&
 		calcul_avancement_campagne($id_souscription_campagne, $campagne['type_objectif'], $campagne['objectif_initial'])>=$campagne['objectif']
 	)
 		return false;
