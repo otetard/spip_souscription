@@ -72,7 +72,7 @@ function action_exporter_souscriptions_dist($arg=null) {
 
   if($statut) {
     if($statut == "paye")
-      $where[] = "reglee='oui'";
+      $where[] = "spip_transactions.statut='ok' and reglee='oui'";
     elseif($statut == "commande")
       $where[] = "spip_transactions.statut='commande'";
     elseif($statut == "erreur")
