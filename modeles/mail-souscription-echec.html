@@ -1,7 +1,10 @@
 [(#HTTP_HEADER{Content-type: text/plain[; charset=(#CHARSET)]})]
+[#NOM_SITE_SPIP] Echec de votre règlement
+
 <BOUCLE_infos_souscription(SOUSCRIPTIONS spip_transactions){id_transaction}>
 Bonjour[ (#PRENOM)][ (#NOM)],
 
 Votre règlement de #MONTANT euros n'a pu être pris en compte.
 
+Référence : Transaction ##ID_TRANSACTION du [(#DATE_TRANSACTION|affdate{Y-m-d H:i:s})]
 </BOUCLE_infos_souscription>

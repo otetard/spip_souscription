@@ -1,0 +1,8 @@
+#CACHE{0}
+<BOUCLE_p(POUR){tableau #ENV{montants}}>
+	#SET{val,#CLE}
+	<div class="choix">
+		<input type="radio" name="#ENV{name}" class="radio" id="#ENV{name}_#GET{val}" value="#GET{val}"[(#ENV{valeur}|=={#GET{val}}|oui)checked="checked"] />
+		<label for="#ENV{name}_#GET{val}">#VALEUR</label>
+	</div>
+</BOUCLE_p>

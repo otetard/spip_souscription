@@ -1,10 +1,14 @@
 <BOUCLE_campagne(SOUSCRIPTION_CAMPAGNES){id_souscription_campagne=#ENV{campagne}}>
+<div class="souscription">
 <h3>#TITRE</h3>
-
-[(#INCLURE{fond=#VAL{inclure/presentation_type},type_objectif=#TYPE_OBJECTIF})]
-
-[(#TEXTE)]
-
-[(#ENV{avancement}|!={non}|?{#MODELE{avancement-campagne,campagne=#ENV{campagne}}})]
+[<span class="souscription_type">(#INCLURE{fond=#VAL{inclure/souscription/presentation_type},type_objectif=#TYPE_OBJECTIF})</span>]
+[<div class="souscription_presentation">(#TEXTE)</div>]
+[<div class="souscription_avancement">(#ENV{avancement}|!={non}|?{#INCLURE{fond=inclure/souscription/avancement-campagne,campagne=#ENV{campagne}}})</div>]
+[(#OBJECTIF_LIMITER|non|ou{#OBJECTIF_LIMITER|=={on}|oui|et{#AVANCEMENT_CAMPAGNE|<{#OBJECTIF}|oui}})
 #FORMULAIRE_SOUSCRIPTION{#ENV{campagne}}
+]
+[(#OBJECTIF_LIMITER|=={on}|oui|et{#AVANCEMENT_CAMPAGNE|<{#OBJECTIF}|non})
+[(#INCLURE{fond=inclure/souscription/objectif_atteint,env})]
+]
+</div>
 </BOUCLE_campagne>

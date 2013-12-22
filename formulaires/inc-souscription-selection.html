@@ -1,0 +1,8 @@
+#CACHE{0}
+<select name="#ENV{name}" class="select" id="#ENV{name}">
+	<option value=""><:souscription:info_choisissez_montant:></option>
+	<BOUCLE_p(POUR){tableau #ENV{montants}}>
+		#SET{val,#CLE}
+		<option value="#GET{val}"[(#ENV{valeur}|=={#GET{val}}|oui)selected="selected"]>#VALEUR</option>
+	</BOUCLE_p>
+</select>

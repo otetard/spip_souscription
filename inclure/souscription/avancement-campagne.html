@@ -1,0 +1,10 @@
+<BOUCLE_campagne(SOUSCRIPTION_CAMPAGNES){id_souscription_campagne=#ENV{campagne}}{objectif>0}>
+  [(#SET{pourcentage_objectif,#AVANCEMENT_CAMPAGNE|div{#OBJECTIF}|mult{100}|round{2}})]
+  <p class="avancement_texte">
+    [(#TYPE_OBJECTIF|=={don}|oui) <:souscription:label_avancement_campagne_dons{montant=#AVANCEMENT_CAMPAGNE,objectif=#OBJECTIF}:>]
+    [(#TYPE_OBJECTIF|=={adhesion}|oui) <:souscription:label_avancement_campagne_adhesions{nombre=#AVANCEMENT_CAMPAGNE,objectif=#OBJECTIF}:>]
+  </p>
+  <div class="avancement_progress progress progress-striped active">
+    <div class="bar" style="width: #GET{pourcentage_objectif}%;">#GET{pourcentage_objectif} %</div>
+  </div>
+</BOUCLE_campagne>

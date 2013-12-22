@@ -34,8 +34,35 @@ function souscription_upgrade($nom_meta_base_version, $version_cible) {
 
   $maj['0.3'] = array(array('sql_alter', "TABLE spip_souscriptions ADD telephone text NOT NULL DEFAULT ''"));
 
+  $maj['0.4'] = array(array('sql_alter', "TABLE spip_souscription_campagnes ADD objectif_limiter varchar(3) NOT NULL DEFAULT ''"));
+
+  $maj['0.5'] = array(array('sql_alter', "TABLE spip_souscription_campagnes ADD configuration_specifique varchar(3) NOT NULL DEFAULT ''"),
+		      array('sql_alter', "TABLE spip_souscription_campagnes ADD type_saisie varchar(255) NOT NULL DEFAULT ''"),
+		      array('sql_alter', "TABLE spip_souscription_campagnes ADD montants text NOT NULL DEFAULT ''"));
+
+  $maj['0.6'] = array(array('maj_configuration_montants'));
+
   include_spip('base/upgrade');
   maj_plugin($nom_meta_base_version, $version_cible, $maj);
+}
+
+/* Fonction permettant de changer le format des montants globaux pour
+ * le plugin souscription. Les montants étaient stockés sous la forme
+ * d'un array() sérialisés. Il sont désormais stockés dans leur format
+ * chaine de caractères. */
+function maj_configuration_montants() {
+  foreach(array('adhesion_montants', 'don_montants') as $cfg) {
+    $cle_cfg = "souscription/${cfg}";
+
+    $montants_orig = lire_config($cle_cfg);
+
+    $montants = "";
+    foreach($montants_orig as $prix => $description) {
+      $montants .= $prix . "|" . $description . "\n";
+    }
+
+    ecrire_config($cle_cfg, $montants);
+  }
 }
 
 /**

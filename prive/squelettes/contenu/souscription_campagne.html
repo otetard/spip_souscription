@@ -3,14 +3,15 @@
 [(#BOITE_OUVRIR{[
 	[(#AUTORISER{modifier,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE})
 		[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|non)
-			[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
+			[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription_campagne:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
 		]
 		[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|oui)
 			[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne},warning-24,'',right edition_deja ajax preload})]
 		]
 	]
 
-	<h1>#PRENOM (#NOM)</h1>
+	<h1>(#TITRE)[(#VAL{souscription_campagne}|objet_icone|inserer_attribut{class,cadre-icone})]</h1>
+	<strong>[(#TYPE_OBJECTIF|=={don}|oui)<:souscription_campagne:label_type_objectif_dons:>][(#TYPE_OBJECTIF|=={adhesion}|oui)<:souscription_campagne:label_type_objectif_adhesions:>][(#TYPE_OBJECTIF|=={abonnement}|oui)<:souscription_campagne:label_type_objectif_abonnements:>][(#TYPE_OBJECTIF|=={don_ou_abonnement}|oui)<:souscription_campagne:label_type_objectif_dons_ou_abonnements:>]</strong>
 
 ],simple fiche_objet})]
 
@@ -24,7 +25,7 @@
 
 [(#AUTORISER{modifier,souscription_campagne,#ID_SOUSCRIPTION_CAMPAGNE})
 	[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|non)
-		[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
+		[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{<:souscription_campagne:icone_modifier_souscription_campagne:>,souscription_campagne,edit,right ajax preload})]
 	]
 	[(#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne}|oui)
 		[(#URL_ECRIRE{souscription_campagne_edit,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|icone_verticale{#ID_SOUSCRIPTION_CAMPAGNE|afficher_qui_edite{souscription_campagne},warning-24,'',right edition_deja ajax preload})]
