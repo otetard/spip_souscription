@@ -39,6 +39,8 @@
 								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_input:></option>
 								#SET{val,radio}
 								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radio:></option>
+								#SET{val,radioinput}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radioinput:></option>
 								#SET{val,selection}
 								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_selection:></option>
 							</select>
@@ -63,6 +65,18 @@
 							<span class='erreur_message'>(#GET{erreurs})</span>
 							]<textarea name="#GET{name}" class="textarea" rows="4">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
+						</li>
+						#SET{name,proposer_informer_comite_local}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]
+							#SET{val,off}
+							<input type="hidden" name="#GET{name}" value="#GET{val}" />
+							#SET{val,on}
+							<div class="choix">
+								<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+								<label for="#GET{name}_#GET{val}"><:souscription:label_proposer_informer_comite_local:></label>
+							</div>
 						</li>
 					</ul>
 				</fieldset>
@@ -93,6 +107,8 @@
 								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_input:></option>
 								#SET{val,radio}
 								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radio:></option>
+								#SET{val,radioinput}
+								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radioinput:></option>
 								#SET{val,selection}
 								<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_selection:></option>
 							</select>
@@ -187,6 +203,18 @@
 					]<textarea name="#GET{name}" class="textarea" rows="4">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
 				</li>
+				#SET{name,proposer_infolettre}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					]
+					#SET{val,off}
+					<input type="hidden" name="#GET{name}" value="#GET{val}" />
+					#SET{val,on}
+					<div class="choix">
+						<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+						<label for="#GET{name}_#GET{val}"><:souscription:label_proposer_infolettre:></label>
+					</div>
+				</li>
 			</ul>
 		</fieldset>
 
@@ -195,4 +223,4 @@
 	</div>
 	</form>
 </div>
-<INCLURE{fond=formulaires/inc-formulaires-suite} />
+<INCLURE{fond=formulaires/inc-souscription-suites} />

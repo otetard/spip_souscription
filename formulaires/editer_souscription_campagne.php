@@ -73,7 +73,7 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
 	elseif ($type=="abonnement" AND lire_config("souscription/abonnement_activer","off")!=="on")
 		$erreurs['type_objectif'] = _T("souscription_campagne:erreur_objectif_adhesion_inactif");
 
-	/* Si le type d'objectif est don_ou_abonnement, c'est une campagne d'abonnement 
+	/* Si le type d'objectif est don_ou_abonnement, c'est une campagne permanente 
 	 * et ne doit pas avoir d'objectif, ni de configuration spécifique. */
 	if ($type == 'don_ou_abonnement' && (_request('objectif_oui_non') == 'on' || _request('configuration_specifique') == 'on')) {
 		if (_request('objectif_oui_non') == 'on') {
@@ -116,16 +116,18 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
 	 * dans la fonction traiter. */
 	if (_request('configuration_specifique')){
 		$type_saisie = _request('type_saisie');
-		if (!$type_saisie || !in_array($type_saisie, array('radio', 'selection', 'input')))
-			$erreurs['type_saisie'] = _T('souscription:erreur_type_saisie');
+		$saisies = array("input", "radio", "radioinput", "selection");
+		if (!$type_saisie || !in_array($type_saisie, $saisies))
+			$erreurs['type_saisie'] = _T('souscription:erreur_champ_invalide');
+		else {
+			$montants = _request('montants');
+			if ($type_saisie && $type_saisie!=="input"){
+				if (!$montants || !is_string($montants))
+					$erreurs['montants'] = _T('souscription:erreur_montants');
 
-		$montants = _request('montants');
-		if ($type_saisie && in_array($type_saisie, array('radio', 'selection'))){
-			if (!$montants || !is_string($montants))
-				$erreurs['montants'] = _T('souscription:erreur_montants');
-
-			elseif (!montants_str2array($montants))
-				$erreurs['montants'] = _T('souscription:erreur_montants');
+				elseif (!montants_str2array($montants))
+					$erreurs['montants'] = _T('souscription:erreur_montants');
+			}
 		}
 	}
 

@@ -24,8 +24,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'config_info_enregistree' => 'La nouvelle configuration a été enregistrée',
 	'confirmer' => 'Valider',
 	'confirmer_creation_campagne' => 'Enregistrer',
-	'configurer_type_saisie_input' => 'Entrée libre',
-	'configurer_type_saisie_radio' => 'Boutons radio',
+	'configurer_type_saisie_input' => 'Montant libre',
+	'configurer_type_saisie_radio' => 'Case à cocher',
+	'configurer_type_saisie_radioinput' => 'Case à cocher + Montant libre',
 	'configurer_type_saisie_selection' => 'Liste déroulante',
 
 // E
@@ -33,8 +34,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'explication_montant_don' => ' ',
 	'explication_montants' => 'Le montants divent être au format suivant: <code>[montant]|[description]</code> à raison d\'une entrée par ligne.',
 	'explication_recu_fiscal' => ' ',
-	'explication_bloc_fiscal_adhesion' => "Les informations suivantes sont nécessaire pour nous permettre de réaliser l'adhésion&nbsp;:",
-	'explication_bloc_fiscal_don' => "Ces informations sont nécessaire en vue de l'établissement du reçu permettant une déduction fiscale qui vous sera envoyé",
+	'explication_bloc_fiscal_adhesion' => "Les informations suivantes sont nécessaires pour nous permettre de réaliser l'adhésion&nbsp;:",
+	'explication_bloc_fiscal_don' => "Ces informations sont nécessaires en vue de l'établissement du reçu permettant une déduction fiscale qui vous sera envoyé",
 	'explication_type_saisie' => "Mode d'affichage des différents montants possibles",
 
 // I
@@ -45,6 +46,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_souscriptions' => '@nb@ souscriptions',
 	'info_souscriptions_auteur' => 'Les souscriptions de cet auteur',
 	'info_objectif_limite' => 'La campagne sera fermée lorsque l\'objectif sera atteint.',
+	'info_choisissez_montant' => 'Choisissez un montant…',
 
 // L
 	"label_exporter_entete_adresse" => "Adresse",
@@ -87,7 +89,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_exporter_type_souscription' => "Type de souscription",
 	'label_id_transaction' => 'Identifiant de la transaction',
 	'label_informer_comite_local' => 'Me faire connaître auprès du comité local le plus proche',
+	'label_proposer_informer_comite_local' => 'Proposer d\'informer le comité local lors de l\'adhésion',
 	'label_montant' => 'Montant',
+	'label_montant_libre' => 'Autre montant : ',
 	'label_montant_actuel' => 'Niveau actuel de la campagne',
 	'label_montant_liste' => 'Montant',
 	'label_montants' => 'Montants',
@@ -96,11 +100,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_nom' => 'Nom',
 	'label_pays' => 'Pays',
 	'label_prenom' => 'Prénom',
+	'label_proposer_infolettre' => 'Proposer l\'inscription à la lettre d\'information',
 	'label_recu_fiscal' => 'Recevoir un reçu fiscal',
 	'label_statut' => 'Statut',
 	'label_telephone' => 'Téléphone',
 	'label_titre' => 'Titre',
-	'label_type_saisie' => 'Types de saisies',
+	'label_type_saisie' => 'Mode de choix du montant',
 	'label_type_souscription' => 'Type de souscription',
 	'label_ville' => 'Ville',
 	'label_avancement_campagne_adhesions' => "Avancement de la campagne&nbsp;: @nombre@ sur @objectif@&nbsp;!",
@@ -111,9 +116,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_general_groupe' => 'Options générales',
 
 // M
-	'message_nok_champ_invalide' => "Le type de saisie pour le montant est invalide",
-	'message_nok_champ_obligatoire' => 'Ce champ est obligatoire',
-	'message_nok_montants' => 'Erreur dans le format',
+	'erreur_champ_invalide' => "Le type de saisie pour le montant est invalide",
+	'erreur_champ_obligatoire' => 'Ce champ est obligatoire',
+	'erreur_montants' => 'Erreur dans le format',
 
 // S
 	'souscription_titre' => 'Souscription',

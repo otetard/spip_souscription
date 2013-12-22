@@ -4,15 +4,20 @@
 </BOUCLE_p>
 
 <div class="formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id_souscription,nouveau}[ formulaire_souscription_(#ENV{type_souscription})][ formulaire_souscription_(#ENV{id_souscription_campagne})]">
-[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
-[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+  [<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+  [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
 
-[(#ENV{editable})
-<form method="post" action="#ENV{action}"><div>
+  [(#ENV{editable})
+  <form method="post" action="#ENV{action}"><div>
 
-	#ACTION_FORMULAIRE{#ENV{action}}
-	<ul>
-		
+      #ACTION_FORMULAIRE{#ENV{action}}
+
+	    [<p class="explication dispositions_fiscales">
+		    (#CONFIG{souscription/dispositions_fiscales_explications}|nl2br)
+	    </p>]
+
+      <ul>
+      
 		[(#ENV{type_souscription}|=={don_ou_abonnement}|oui)
 		<li>
 			<ul>
@@ -22,51 +27,171 @@
 						<input type="radio" name="precision_type_souscription" class="radio" id='champ_precision_type_souscription_don' value='don'[ (#ENV{precision_type_souscription}|=={don}|oui)checked="checked"] />
 						<label for="champ_precision_type_souscription_don">Don</label>
 					</div>
-				</li>				
-				[(#SAISIE{#ENV{montant_type_don}, montant_don, label=#ENV{montant_label_don}, datas=#ENV{montant_datas_don}})]
+				</li>
+				 #SET{name,montant_don}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+					<label for="#GET{name}">#ENV{montant_label}</label>[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					][<span class="input">(#INCLURE{fond=formulaires/inc-souscription-#ENV{montant_type_don},name=#GET{name},valeur=#ENV*{#GET{name},#GET{defaut}},obli=#GET{obli},montants=#ENV{_montant_datas_don},montant_libre})</span>]
+					[<p class="explication">(#ENV{montant_explication})</p>]
+				</li>
 				<li class="editer editer_precision_type_souscription saisie_radio[ (#ENV**{erreurs}|table_valeur{precision_type_souscription}|oui)erreur]">
 					<div class="choix">
 						<input type="radio" name="precision_type_souscription" class="radio" id='champ_precision_type_souscription_abonnement' value='abonnement'[ (#ENV{precision_type_souscription}|=={abonnement}|oui)checked="checked"] />
 						<label for="champ_precision_type_souscription_abonnement">Abonnement</label>
 					</div>
 				</li>
-				[(#SAISIE{#ENV{montant_type_abonnement}, montant_abonnement, label=#ENV{montant_label_abonnement}, datas=#ENV{montant_datas_abonnement}})]
+				 #SET{name,montant_abonnement}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+					<label for="#GET{name}">#ENV{montant_label}</label>[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					][<span class="input">(#INCLURE{fond=formulaires/inc-souscription-#ENV{montant_type_abonnement},name=#GET{name},valeur=#ENV*{#GET{name},#GET{defaut}},obli=#GET{obli},montants=#ENV{_montant_datas_abonnement},montant_libre})</span>]
+					[<p class="explication">(#ENV{montant_explication})</p>]
+				</li>
 			</ul>
 		</li>
 		]
+      
+		[(#ENV{type_souscription}|=={don_ou_abonnement}|non)      
+	      #SET{name,montant}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+          <label for="#GET{name}">#ENV{montant_label}</label>[
+          <span class='erreur_message'>(#GET{erreurs})</span>
+          ][<span class="input">(#INCLURE{fond=formulaires/inc-souscription-#ENV{montant_type},name=#GET{name},valeur=#ENV*{#GET{name},#GET{defaut}},obli=#GET{obli},montants=#ENV{_montant_datas},montant_libre})</span>]
+	        [<p class="explication">(#ENV{montant_explication})</p>]
+        </li>
+        ]
+        
+	      #SET{name,courriel}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+          <label for="#GET{name}"><:souscription:label_courriel:></label>[
+          <span class='erreur_message'>(#GET{erreurs})</span>
+          ]<input type="email" name="#GET{name}" class="text email" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+        </li>
+        
+		[(#ENV**{erreurs}|table_valeur{password}|oui)
+	      #SET{name,password}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+          <label for="#GET{name}"><:login_pass2:></label>[
+          <span class='erreur_message'>(#GET{erreurs})</span>
+          ]<input type="password" name="#GET{name}" class="text password" value="" id="#GET{name}" />
+        </li>]
+        
+	      #SET{name,recu_fiscal}#SET{obli,''}#SET{defaut,'non'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+          <span class='erreur_message'>(#GET{erreurs})</span>
+          ]
+          #SET{val,off}
+          <input type="hidden" name="#GET{name}" value="#GET{val}" />
+          #SET{val,on}
+          <div class="choix">
+            <input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+            <label for="#GET{name}_#GET{val}"><:souscription:label_recu_fiscal:></label>
+          </div>
+        </li>
+	      <li class="fieldset suite souscription_bloc_fiscal[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|non)none]">
+		      <fieldset>
+			      <legend><:souscription:label_legende_bloc_fiscal:></legend>
+			      [(#INCLURE{fond=inclure/souscription/bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
+			      <ul>
+				      #SET{name1,prenom}#SET{obli1,'obligatoire'}#SET{defaut1,''}#SET{erreurs1,#ENV**{erreurs}|table_valeur{#GET{name1}}}
+				      #SET{name2,nom}#SET{obli2,'obligatoire'}#SET{defaut2,''}#SET{erreurs2,#ENV**{erreurs}|table_valeur{#GET{name2}}}
+		          <li class="editer [ (#GET{obli1})][ (#GET{erreurs1}|oui)erreur][ (#GET{erreurs2}|oui)erreur]">
+			          <div class="demi left editer_[(#GET{name1})]">
+				          <label for="#GET{name1}"><:souscription:label_prenom:></label>[
+			            <span class='erreur_message'>(#GET{erreurs1})</span>
+			            ]<input type="text" name="#GET{name1}" class="text" value="#ENV*{#GET{name1},#GET{defaut1}}" id="#GET{name1}"/>
+			          </div>
+			          <div class="demi right editer_[(#GET{name2})]">
+				          <label for="#GET{name2}"><:souscription:label_nom:></label>[
+			            <span class='erreur_message'>(#GET{erreurs2})</span>
+			            ]<input type="text" name="#GET{name2}" class="text" value="#ENV*{#GET{name2},#GET{defaut2}}" id="#GET{name2}"/>
+			          </div>
+		          </li>
+				      #SET{name,adresse}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+		          <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+		            <label for="#GET{name}"><:souscription:label_adresse:></label>[
+		            <span class='erreur_message'>(#GET{erreurs})</span>
+		            ]<textarea name="#GET{name}" class="textarea" rows="3">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+		          </li>
+				      #SET{name1,code_postal}#SET{obli1,'obligatoire'}#SET{defaut1,''}#SET{erreurs1,#ENV**{erreurs}|table_valeur{#GET{name1}}}
+				      #SET{name2,ville}#SET{obli2,'obligatoire'}#SET{defaut2,''}#SET{erreurs2,#ENV**{erreurs}|table_valeur{#GET{name2}}}
+		          <li class="editer [ (#GET{obli1})][ (#GET{erreurs1}|oui)erreur][ (#GET{erreurs2}|oui)erreur]">
+			          <div class="demi left editer_[(#GET{name1})]">
+				          <label for="#GET{name1}"><:souscription:label_code_postal:></label>[
+			            <span class='erreur_message'>(#GET{erreurs1})</span>
+			            ]<input type="text" name="#GET{name1}" class="text" value="#ENV*{#GET{name1},#GET{defaut1}}" id="#GET{name1}"/>
+			          </div>
+			          <div class="demi right editer_[(#GET{name2})]">
+				          <label for="#GET{name2}"><:souscription:label_ville:></label>[
+			            <span class='erreur_message'>(#GET{erreurs2})</span>
+			            ]<input type="text" name="#GET{name2}" class="text" value="#ENV*{#GET{name2},#GET{defaut2}}" id="#GET{name2}"/>
+			          </div>
+		          </li>
+				      [(#SAISIE{selection, pays, label=<:souscription:label_pays:>, datas=#GET{liste_pays}})]
+				      #SET{name,telephone}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+		          <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+		            <label for="#GET{name}"><:souscription:label_telephone:></label>[
+		            <span class='erreur_message'>(#GET{erreurs})</span>
+		            ]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}"/>
+		          </li>
+			      </ul>
+		      </fieldset>
+	      </li>
 
-		[(#ENV{type_souscription}|=={don_ou_abonnement}|non)
-		[(#SAISIE{#ENV{montant_type}, montant, obligatoire=oui, label=#ENV{montant_label}, explication=#ENV{montant_explication}, datas=#ENV{montant_datas}})]
-		]
-		
-		[(#SAISIE{explication, dispositions_fiscales_explications, texte=#CONFIG{souscription/dispositions_fiscales_explications}|nl2br})]
-		[(#ENV{desactiver_courriel}|oui)[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>, disable_avec_post=oui})]]
-		[(#ENV{desactiver_courriel}|non)[(#SAISIE{input, courriel, obligatoire=oui, label=<:souscription:label_courriel:>})]]
-		[(#ENV**{erreurs}|table_valeur{password}|oui)[(#SAISIE{input, password, type=password, obligatoire=oui, label=<:souscription:label_password:>})]]
-		[(#SAISIE{hidden, id_auteur})]
-		[(#SAISIE{oui_non, recu_fiscal, label=<:souscription:label_recu_fiscal:>})]
-		[(#SAISIE{oui_non, envoyer_info, label=<:souscription:label_envoyer_info:> })]
-		[(#ENV{type_souscription}|=={adhesion}|oui) [(#SAISIE{oui_non, informer_comite_local, label=<:souscription:label_informer_comite_local:> })]]
-		[(#SAISIE{hidden, id_souscription_campagne})]
-[(#SAISIE{hidden, type_souscription})]
-	</ul>
 
-	<fieldset class="souscription_bloc_fiscal">
-		<legend><:souscription:label_legende_bloc_fiscal:></legend>
-		[(#INCLURE{fond=inclure/souscription_bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
-		<ul>
-			[(#SAISIE{input, prenom, label=<:souscription:label_prenom:>})]
-			[(#SAISIE{input, nom, label=<:souscription:label_nom:>})]
-			[(#SAISIE{textarea, adresse, label=<:souscription:label_adresse:>, rows=3})]
-			[(#SAISIE{input, code_postal, label=<:souscription:label_code_postal:>})]
-			[(#SAISIE{input, ville, label=<:souscription:label_ville:>})]
-			[(#SAISIE{selection, pays, label=<:souscription:label_pays:>, datas=#GET{liste_pays}})]
-			[(#SAISIE{input, telephone, label=<:souscription:label_telephone:>})]
-		</ul>
-	</fieldset>
+	      [(#CONFIG{souscription/proposer_infolettre,off}|=={on}|oui)
+	      #SET{name,envoyer_info}#SET{obli,''}#SET{defaut,'non'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+	      <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					]
+					#SET{val,off}
+					<input type="hidden" name="#GET{name}" value="#GET{val}" />
+					#SET{val,on}
+					<div class="choix">
+						<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+						<label for="#GET{name}_#GET{val}"><:souscription:label_envoyer_info:></label>
+					</div>
+				</li>
+				]
 
-	<p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer:>" /></p>
+	      [(#ENV{type_souscription}|=={adhesion}|et{#CONFIG{souscription/proposer_informer_comite_local,off}|=={on}}|oui)
+	      #SET{name,informer_comite_local}#SET{obli,''}#SET{defaut,'non'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+	      <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					]
+					#SET{val,off}
+					<input type="hidden" name="#GET{name}" value="#GET{val}" />
+					#SET{val,on}
+					<div class="choix">
+						<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+						<label for="#GET{name}_#GET{val}"><:souscription:label_informer_comite_local:></label>
+					</div>
+				</li>
+				]
+      </ul>
+
+      <p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer:>" /></p>
+    </div>
+  </form>
+  ]
 </div>
-</form>
-]
-</div>
+<script type="text/javascript">
+	jQuery(function(){
+		jQuery(".formulaire_souscription_don .suite.fieldset, .formulaire_souscription_abonnement .suite.fieldset, .formulaire_souscription_don_ou_abonnement .suite.fieldset").each(function(){
+			var me=this;
+			jQuery(me).prev(".editer").find("input.checkbox").click(function(){
+				if (jQuery(this).prop("checked"))
+					jQuery(me).show('fast');
+				else
+					jQuery(me).hide('fast');
+			})
+		})
+	})
+</script>
+<style>
+input.checkbox:checked+label {font-weight: bold;}
+li.suite {margin-left: 40px;}
+li.suite.none {display: none;}
+</style>

@@ -1,6 +1,6 @@
 <paquet prefix="souscription"
         categorie="communication"
-        version="0.20.3"
+        version="1.0.0"
         etat="dev"
         compatibilite="[3.0.5;3.0.*]"
         logo="souscription-32.png"
@@ -23,6 +23,8 @@
   <pipeline nom="declarer_tables_interfaces"
             inclure="base/souscription.php"/>
   <pipeline nom="optimiser_base_disparus"
+            inclure="souscription_pipelines.php"/>
+  <pipeline nom="bank_traiter_reglement"
             inclure="souscription_pipelines.php"/>
   <pipeline nom="trig_bank_notifier_reglement"
             inclure="souscription_pipelines.php"/>

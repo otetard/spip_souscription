@@ -1,23 +1,23 @@
 <?php
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-function action_editer_souscription_dist($arg=null) {
+function action_editer_souscription_dist($arg = null){
 
-  if (is_null($arg)) {
-    $securiser_action = charger_fonction('securiser_action', 'inc');
-    $arg = $securiser_action();
-  }
+	if (is_null($arg)){
+		$securiser_action = charger_fonction('securiser_action', 'inc');
+		$arg = $securiser_action();
+	}
 
-  if (!$id_souscription = intval($arg)) {
-    $id_souscription = souscription_inserer();
-  }
+	if (!$id_souscription = intval($arg)){
+		$id_souscription = souscription_inserer();
+	}
 
-  if (!$id_souscription)
-    return array(0, '');
+	if (!$id_souscription)
+		return array(0, '');
 
-  $err = souscription_modifier($id_souscription);
+	$err = souscription_modifier($id_souscription);
 
-  return array($id_souscription, $err);
+	return array($id_souscription, $err);
 }
 
 /**
@@ -25,25 +25,25 @@ function action_editer_souscription_dist($arg=null) {
  *
  * @return bool
  */
-function souscription_inserer() {
+function souscription_inserer(){
 
-  $champs = array('date_souscription' => date('Y-m-d H:i:s'));
+	$champs = array('date_souscription' => date('Y-m-d H:i:s'));
 
-  // Envoyer aux plugins
-  $champs = pipeline('pre_insertion',
-                     array('args' => array('table' => 'spip_souscriptions'),
-                           'data' => $champs)
-                     );
+	// Envoyer aux plugins
+	$champs = pipeline('pre_insertion',
+		array('args' => array('table' => 'spip_souscriptions'),
+			'data' => $champs)
+	);
 
-  $id_souscription = sql_insertq("spip_souscriptions", $champs);
+	$id_souscription = sql_insertq("spip_souscriptions", $champs);
 
-  pipeline('post_insertion',
-           array('args' => array('table' => 'spip_souscriptions',
-                                 'id_objet' => $id_souscription),
-                 'data' => $champs)
-           );
+	pipeline('post_insertion',
+		array('args' => array('table' => 'spip_souscriptions',
+			'id_objet' => $id_souscription),
+			'data' => $champs)
+	);
 
-  return $id_souscription;
+	return $id_souscription;
 }
 
 /**
@@ -55,50 +55,38 @@ function souscription_inserer() {
  * @param array|bool $set
  * @return string
  */
-function souscription_modifier($id_souscription, $set=false) {
-  include_spip('inc/modifier');
+function souscription_modifier($id_souscription, $set = false){
+	include_spip('inc/modifier');
 
-  $c = collecter_requests(
-                          // white list
-                          array('courriel',
-                                'recu_fiscal',
-                                'envoyer_info',
-                                'informer_comite_local',
-                                'prenom',
-                                'nom',
-                                'adresse',
-                                'code_postal',
-                                'ville',
-                                'telephone',
-                                'id_souscription_campagne',
-                                'type_souscription',
-                                'id_auteur'),
-                          // black list
-                          array('statut', 'date'),
-                          // donnees eventuellement fournies
-                          $set
-                          );
+	$c = collecter_requests(
+	// white list
+		array('courriel',
+			'recu_fiscal',
+			'envoyer_info',
+			'informer_comite_local',
+			'prenom',
+			'nom',
+			'adresse',
+			'code_postal',
+			'ville',
+			'telephone',
+			'id_souscription_campagne',
+			'id_transaction',
+			'type_souscription',
+			'id_auteur'),
+		// black list
+		array('statut', 'date'),
+		// donnees eventuellement fournies
+		$set
+	);
 
 
-  $inserer_transaction = charger_fonction('inserer_transaction', 'bank');
-  $id_transaction = $inserer_transaction(_request('montant'),
-                                         '', /* montant_ht */
-                                         $c['id_auteur'], /* id_auteur */
-                                         $id_souscription, /* auteur_id => id_souscription */
-                                         _request('courriel'));
+	/* Récupération du nom du pays */
+	$code_pays = _request('pays');
+	$pays = sql_getfetsel(sql_multi("nom", $GLOBALS['spip_lang']), 'spip_pays', "code='$code_pays'");
 
-  if(!$id_transaction) {
-    return "Identifiant de transaction introuvable..."; /* FIXME: à rendre traduisible. */
-  }
+	$c = array_merge($c,array("pays" => $pays));
 
-  /* Récupération du nom du pays */
-  $code_pays = _request('pays');
-  $pays = sql_getfetsel(sql_multi("nom", $GLOBALS['spip_lang']), 'spip_pays', "code='$code_pays'");
-
-  $c = array_merge($c,
-                   array("id_transaction" => $id_transaction,
-                         "pays" => $pays));
-
-  if($err = objet_modifier_champs('souscription', $id_souscription, array(), $c))
-    return $err;
+	if ($err = objet_modifier_champs('souscription', $id_souscription, array(), $c))
+		return $err;
 }
