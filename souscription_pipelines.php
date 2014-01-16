@@ -70,3 +70,18 @@ function souscription_bank_traiter_reglement($flux){
 	$flux['data'].=" <br />Vous allez recevoir un email de confirmation.";
 	return $flux;
 }
+
+
+function souscription_rechercher_liste_des_champs($flux){
+
+	$flux['souscription'] = array("id_souscription" => 1,
+				      "courriel" => 1,
+				      "nom" => 1,
+				      "prenom" => 1,
+				      "adresse" => 1,
+				      "ville" => 1,
+				      "code_postal" => 1,
+				      );
+
+	return $flux;
+}
