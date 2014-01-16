@@ -28,8 +28,6 @@
             inclure="souscription_pipelines.php"/>
   <pipeline nom="trig_bank_notifier_reglement"
             inclure="souscription_pipelines.php"/>
-  <pipeline nom="rechercher_liste_des_champs"
-            inclure="souscription_pipelines.php"/>
 
   <menu nom="souscription"
         titre="souscription:titre_souscriptions"

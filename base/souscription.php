@@ -69,7 +69,14 @@ function souscription_declarer_tables_objets_sql($tables) {
           'date' => "date_souscription",
           'champs_editables'  => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'recu_fiscal', 'envoyer_info'),
           'champs_versionnes' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'recu_fiscal', 'envoyer_info'),
-          'rechercher_champs' => array(),
+          'rechercher_champs' => array("id_souscription" => 1,
+				       "courriel" => 1,
+				       "nom" => 1,
+				       "prenom" => 1,
+				       "adresse" => 1,
+				       "ville" => 1,
+				       "code_postal" => 1
+				       ),
           'join' => array("id_transaction" => "id_transaction"),
           'tables_jointures'  => array('spip_transactions'),
           );
