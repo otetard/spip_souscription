@@ -100,7 +100,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 	$type_campagne = $campagne['type_objectif'];
 
 	if (!verifier_campagne($id_souscription_campagne, $type_campagne)){
-		$erreurs['message_erreur'] = "La campagne à laquelle est associée cette souscription est invalide";
+		$erreurs['message_erreur'] = _T('souscription:erreur_souscription_campagne_invalide');
 	}
 
 
@@ -108,9 +108,9 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 		foreach (array('prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire){
 			if (!_request($obligatoire)){
 				if ($type_campagne=="adhesion"){
-					$erreurs[$obligatoire] = "Ce champ est obligatoire pour les adhésions";
+					$erreurs[$obligatoire] = _T('souscription:erreur_adhesion_champ_obligatoire');
 				} else {
-					$erreurs[$obligatoire] = 'Ce champ est obligatoire (reçu fiscal demandé)';
+					$erreurs[$obligatoire] = _T('souscription:erreur_recu_fiscal_champ_obligatoire');
 				}
 			}
 		}
@@ -123,18 +123,18 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 		$ret = sql_select('nom', 'spip_pays', "code='${e}'");
 
 		if (sql_count($ret)!=1)
-			$erreurs['pays'] = "Pays invalide";
+			$erreurs['pays'] = _T('souscription:erreur_pays_invalide');
 
 		/* Le code postal n'est vérifié que si on est dans le cas de la France */
 		elseif ($e = _request('pays') AND $e=="FR") {
 			if ($e = _request('code_postal') AND !preg_match("/^(2[ABab]|0[1-9]|[1-9][0-9])[0-9]{3}$/", $e)){
-				$erreurs['code_postal'] = "Code postal invalide";
+				$erreurs['code_postal'] = _T('souscription:erreur_code_postal_invalide');
 			}
 		}
 	}
 
 	if ($e = _request('telephone') AND !preg_match("/^[0-9\+ \.]+$/", $e)){
-		$erreurs['telephone'] = "Numéro de téléphone incorrect";
+		$erreurs['telephone'] = _T('souscription:erreur_telephone_invalide');
 	}
 
 	/* Vérification du montant. Si la campagne est configurée pour
@@ -149,7 +149,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 			$libre = true;
 		}
 		if (!(ctype_digit($e)))
-			$erreurs['montant'] = "Montant invalide";
+			$erreurs['montant'] = _T("souscription:erreur_montant_invalide");
 		else {
 			if ($campagne['configuration_specifique']!=='on'){
 				$montant_type = lire_config("souscription/{$type_campagne}_type_saisie", 'input');
@@ -165,12 +165,12 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 			if (($montant_type!=="input")
 			  AND !$libre
 			  AND !array_key_exists($e, montants_str2array($montant_datas)))
-				$erreurs['montant'] = "Le montant spécifié est invalide";
+				$erreurs['montant'] = _T('souscription:erreur_montant_specifie_invalide');
 		}
 	}
 
 	if (count($erreurs)>0){
-		$erreurs['message_erreur'] = "Le formulaire contient des erreurs";
+		$erreurs['message_erreur'] = _T('souscription:erreur_formulaire');
 	}
 
 	return $erreurs;
@@ -215,7 +215,7 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 		_request('courriel'));
 
 	if (!$id_transaction){
-		$ret['message_erreur'] = "Erreur technique : impossible de preparer la transaction..."; /* FIXME: à rendre traduisible. */
+		$ret['message_erreur'] = _T('souscription:erreur_technique_formulaire');
 	}
 	else {
 
@@ -237,7 +237,7 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 
 		if (!$row){
 			spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
-			$ret['message_erreur'] = "Echec creation de la transaction";
+			$ret['message_erreur'] = _T('souscription:erreur_echec_creation_transaction');
 		} else {
 			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
 			$hash = $row['transaction_hash'];

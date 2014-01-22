@@ -37,6 +37,17 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'explication_bloc_fiscal_adhesion' => "Les informations suivantes sont nécessaires pour nous permettre de réaliser l'adhésion&nbsp;:",
 	'explication_bloc_fiscal_don' => "Ces informations sont nécessaires en vue de l'établissement du reçu permettant une déduction fiscale qui vous sera envoyé",
 	'explication_type_saisie' => "Mode d'affichage des différents montants possibles",
+	'erreur_adhesion_champ_obligatoire' => 'Ce champ est obligatoire pour les adhésions',
+	'erreur_code_postal_invalide' => 'Code postal invalide',
+	'erreur_echec_creation_transaction' => 'Echec creation de la transaction',
+	'erreur_formulaire' => 'Le formulaire contient des erreurs',
+	'erreur_montant_invalide' => "Montant invalide",
+	'erreur_montant_specifie_invalide' => 'Le montant spécifié est invalide',
+	'erreur_pays_invalide' => 'Pays invalide',
+	'erreur_recu_fiscal_champ_obligatoire' => 'Ce champ est obligatoire (reçu fiscal demandé)',
+	'erreur_souscription_campagne_invalide' => 'La campagne à laquelle est associée cette souscription est invalide',
+	'erreur_technique_formulaire' => 'Erreur technique : impossible de preparer la transaction…,',
+	'erreur_telephone_invalide' => 'Numéro de téléphone incorrect',
 
 // I
 	'icone_creer_souscription' => 'Créer une souscription',
