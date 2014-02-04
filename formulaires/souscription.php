@@ -245,6 +245,16 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 			$redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
 			$ret['redirect'] = $redirect;
 		}
+
+		// si API newsletter est dispo ET que case inscription est cochee, inscrire a la newsletter
+		if (_request("envoyer_info")==="on"
+		  AND $subscribe = charger_fonction("subscribe","newsletter",true)){
+			$email = _request("courriel");
+			$nom = array(_request("prenom"),_request("nom"));
+			$nom = array_filter($nom);
+			$nom = implode(" ",$nom);
+			$subscribe($email,array('nom'=>$nom));
+		}
 	}
 	return $ret;
 }
