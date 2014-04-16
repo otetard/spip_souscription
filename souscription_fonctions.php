@@ -1,4 +1,14 @@
 <?php
+/**
+ * filtres et balises specifiques
+ *
+ * @plugin     Souscription
+ * @copyright  2013
+ * @author     Olivier Tétard
+ * @licence    GNU/GPL
+ * @package    SPIP\Souscription\Fonctions
+ */
+
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 function calcul_avancement_campagne($id_campagne, $type_objectif, $objectif_initial) {
