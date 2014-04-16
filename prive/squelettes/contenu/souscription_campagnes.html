@@ -2,5 +2,8 @@
 <INCLURE{fond=prive/objets/liste/souscription_campagnes, par=id_souscription_campagne, env, ajax, sinon=<:souscription_campagne:info_aucun_souscription_campagne:>}>
 
 [(#AUTORISER{creer,souscriptioncampagne})
-        [(#URL_ECRIRE{souscription_campagne_edit,new=oui}|icone_verticale{<:souscription_campagne:icone_creer_souscription_campagne:>,souscription_campagne,new,right})]
+	[(#URL_ECRIRE{souscription_campagne_edit,new=oui}|icone_verticale{<:souscription_campagne:icone_creer_souscription_campagne:>,souscription_campagne,new,right})]
+]
+[(#CONFIG{souscription/adhesion_activer,tbd}|=={tbd}|oui)
+<p>Vous devez <a href="#URL_ECRIRE{configurer_souscriptions}">configurer le fonctionnement des souscriptions</a> avant de créer une campagne.</p>
 ]

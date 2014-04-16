@@ -47,6 +47,18 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
 	// pour la saisie uniquement, pas en base
 	$valeurs['objectif_oui_non'] = "";
 
+	if (!intval($id_souscription_campagne)){
+		include_spip('inc/config');
+		if (lire_config('souscription/don_activer','off')=='on'){
+			$valeurs['type_saisie'] = lire_config('souscription/don_type_saisie',$valeurs['type_saisie']);
+			$valeurs['montants'] = lire_config('souscription/don_montants',$valeurs['montants']);
+		}
+		elseif (lire_config('souscription/adhesion_activer','off')=='on'){
+			$valeurs['type_saisie'] = lire_config('souscription/adhesion_type_saisie',$valeurs['type_saisie']);
+			$valeurs['montants'] = lire_config('souscription/adhesion_montants',$valeurs['montants']);
+		}
+	}
+
 	return $valeurs;
 }
 

@@ -1,7 +1,6 @@
 <div class="liste_item sous_navigation">
-  <h4><:souscription:titre_types_souscriptions:></h4>
   <ul class='liste-items'>
-    <li class="item"><a href="#URL_ECRIRE{souscription_campagnes}">Campagnes</a></li>
-    <li class="item"><a href="#URL_ECRIRE{souscriptions}">Souscriptions</a></li>
+    <li class="item[(#ENV{exec}|=={souscription_campagnes}|oui)on]">[(#URL_ECRIRE{souscription_campagnes}|lien_ou_expose{Campagnes,#ENV{exec}|=={souscription_campagnes}})]</a></li>
+    <li class="item[(#ENV{exec}|=={souscriptions}|oui)on]">[(#URL_ECRIRE{souscriptions}|lien_ou_expose{Souscriptions,#ENV{exec}|=={souscriptions}})]</li>
   </ul>
 </div>
