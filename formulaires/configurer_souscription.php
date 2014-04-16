@@ -1,4 +1,14 @@
 <?php
+/**
+ * Formulaire de configuration
+ *
+ * @plugin     Souscription
+ * @copyright  2013
+ * @author     Olivier Tétard
+ * @licence    GNU/GPL
+ * @package    SPIP\Souscription\Formulaires
+ */
+
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('inc/config');

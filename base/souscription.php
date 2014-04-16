@@ -6,7 +6,7 @@
  * @copyright  2013
  * @author     Olivier Tétard
  * @licence    GNU/GPL
- * @package    SPIP\Souscription\Pipelines
+ * @package    SPIP\Souscription\Base
  */
 
 if (!defined('_ECRIRE_INC_VERSION')) return;

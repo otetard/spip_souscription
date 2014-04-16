@@ -1,4 +1,14 @@
 <?php
+/**
+ * Edition de l'objet souscription
+ *
+ * @plugin     Souscription
+ * @copyright  2013
+ * @author     Olivier Tétard
+ * @licence    GNU/GPL
+ * @package    SPIP\Souscription\Action
+ */
+
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 function action_editer_souscription_dist($arg = null){
