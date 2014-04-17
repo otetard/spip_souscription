@@ -55,9 +55,15 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 	$montant_label = lire_config("souscription/${type}_montants_label", _T('souscription:label_montant'));
 	$montant_explication = nl2br(lire_config("souscription/${type}_montants_description"));
 
+	$email = '';
+	if (isset($GLOBALS['visiteur_session']['email']) AND $GLOBALS['visiteur_session']['email'])
+		$email = $GLOBALS['visiteur_session']['email'];
+	elseif (isset($GLOBALS['visiteur_session']['session_email']) AND $GLOBALS['visiteur_session']['session_email'])
+			$email = $GLOBALS['visiteur_session']['session_email'];
+
 	return array('montant' => '',
 		'montant_libre' => '',
-		'courriel' => '',
+		'courriel' => $email,
 		'recu_fiscal' => $recu_fiscal,
 		'envoyer_info' => 'on',
 		'informer_comite_local' => 'on',
