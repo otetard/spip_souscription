@@ -12,10 +12,6 @@
 
       #ACTION_FORMULAIRE{#ENV{action}}
 
-	    [<p class="explication dispositions_fiscales">
-		    (#CONFIG{souscription/dispositions_fiscales_explications}|nl2br)
-	    </p>]
-
       <ul>
 	      #SET{name,montant}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
         <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
@@ -41,8 +37,11 @@
             <input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
             <label for="#GET{name}_#GET{val}"><:souscription:label_recu_fiscal:></label>
           </div>
+	        [<p class="explication dispositions_fiscales small">
+	    		   (#CONFIG{souscription/dispositions_fiscales_explications}|nl2br)
+	    		  </p>]
         </li>
-	      <li class="fieldset suite souscription_bloc_fiscal[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|non)none]">
+	      <li class="fieldset saisie_suite souscription_bloc_fiscal[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|non)none]">
 		      <fieldset>
 			      <legend><:souscription:label_legende_bloc_fiscal:></legend>
 			      [(#INCLURE{fond=inclure/souscription/bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
@@ -90,6 +89,9 @@
 		            ]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}"/>
 		          </li>
 			      </ul>
+			      [<p class="explication donnees_personnelles small">
+			     	 (#CONFIG{souscription/donnees_personnelles_explications}|nl2br)
+			     	</p>]
 		      </fieldset>
 	      </li>
 
@@ -127,12 +129,14 @@
 
       <p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer:>" /></p>
     </div>
+
   </form>
   ]
 </div>
+
 <script type="text/javascript">
 	jQuery(function(){
-		jQuery(".formulaire_souscription_don .suite.fieldset").each(function(){
+		jQuery(".formulaire_souscription_don .saisie_suite.fieldset").each(function(){
 			var me=this;
 			jQuery(me).prev(".editer").find("input.checkbox").click(function(){
 				if (jQuery(this).prop("checked"))
@@ -145,6 +149,6 @@
 </script>
 <style>
 input.checkbox:checked+label {font-weight: bold;}
-li.suite {margin-left: 40px;}
-li.suite.none {display: none;}
+li.saisie_suite {margin-left: 40px;}
+li.saisie_suite.none {display: none;}
 </style>

@@ -58,6 +58,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_code_postal' => 'Code postal',
 	'label_courriel' => 'Courriel',
 	'label_dispositions_fiscales_explications' => 'Texte de présentation des dispositions fiscales',
+	'label_donnees_personnelles_explications' => 'Texte d\'information sur la collecte des données personnelles',
 	'label_don_groupe' => 'Dons',
 	'label_envoyer_info' => 'M&#8217inscrire sur la liste d&#8217information',
 	'label_exporter_campagne' => 'Campagne',
