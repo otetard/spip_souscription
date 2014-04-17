@@ -144,6 +144,22 @@
 		<fieldset>
 			<legend><:souscription:label_general_groupe:></legend>
 			<ul>
+				#SET{name,processus_paiement}#SET{obli,''}#SET{defaut,'redirige'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+					<label>[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+					<span class='erreur_message'>(#GET{erreurs})</span>
+					]
+					#SET{val,enplace}
+					<div class="choix">
+						<input type="radio" name="#GET{name}" class="radio" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+						<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
+					</div>
+					#SET{val,redirige}
+					<div class="choix">
+						<input type="radio" name="#GET{name}" class="radio" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+						<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
+					</div>
+				</li>
 				#SET{name,dispositions_fiscales_explications}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_dispositions_fiscales_explications:></label>[

@@ -79,7 +79,8 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 		'_montant_datas' => montants_str2array($montant_datas),
 		'montant_type' => $montant_type,
 		'montant_label' => $montant_label,
-		'montant_explication' => $montant_explication
+		'montant_explication' => $montant_explication,
+		'_souscription_paiement' => isset($GLOBALS['formulaires_souscription_paiement'])?$GLOBALS['formulaires_souscription_paiement']:'',
 	);
 }
 
@@ -248,8 +249,14 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
 			$hash = $row['transaction_hash'];
 			$id_transaction = $row['id_transaction'];
-			$redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
-			$ret['redirect'] = $redirect;
+			if (lire_config("souscription/processus_paiement","redirige")==="redirige"){
+				$redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
+				$ret['redirect'] = $redirect;
+			}
+			else {
+				$ret['message_ok'] = "Vous pouvez maintenant règler votre souscription.";
+				$GLOBALS['formulaires_souscription_paiement'] = recuperer_fond("content/payer-acte",array('id_transaction'=>$id_transaction,'transaction_hash'=>$hash,'class'=>'souscription_paiement'));
+			}
 		}
 
 		// si API newsletter est dispo ET que case inscription est cochee, inscrire a la newsletter

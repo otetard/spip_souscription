@@ -101,6 +101,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_nom' => 'Nom',
 	'label_pays' => 'Pays',
 	'label_prenom' => 'Prénom',
+	'label_processus_paiement' => 'Processus de paiement',
+	'label_processus_paiement_enplace' => 'Payer au sein du formulaire de souscription',
+	'label_processus_paiement_redirige' => 'Rediriger vers une page de paiement dédiée',
 	'label_proposer_infolettre' => 'Proposer l&#8217inscription à la lettre d&#8217information',
 	'label_proposer_informer_comite_local' => 'Proposer d&#8217informer le comité local lors de l&#8217adhésion',
 	'label_recu_fiscal' => 'Recevoir un reçu fiscal',
@@ -120,6 +123,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_souscription' => 'Souscription',
 	'titre_souscriptions' => 'Souscriptions',
 	'titre_types_souscriptions' => 'Types de souscriptions',
+	'titre_page_payer' => 'Règler votre souscription',
+	'titre_choix_mode_paiement' => 'Paiement sécurisé',
 
 // V
 	'voir_exporter' => 'Exporter les dons',
