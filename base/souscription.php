@@ -95,6 +95,8 @@ function souscription_declarer_tables_objets_sql($tables){
 				"configuration_specifique" => "varchar(3) NOT NULL DEFAULT ''",
 				"type_saisie" => "varchar(255) NOT NULL DEFAULT ''",
 				"montants" => "text NOT NULL DEFAULT ''",
+				"abo_type_saisie" => "varchar(255) NOT NULL DEFAULT ''",
+				"abo_montants" => "text NOT NULL DEFAULT ''",
 				"statut" => "varchar(255) NOT NULL DEFAULT 0",
 				"date" => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 				"maj" => "TIMESTAMP"
@@ -104,8 +106,8 @@ function souscription_declarer_tables_objets_sql($tables){
 			),
 			'titre' => "titre AS titre, '' AS lang",
 			'date' => "date",
-			'champs_editables' => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif', 'objectif_limiter', 'configuration_specifique', 'type_saisie', 'montants'),
-			'champs_versionnes' => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif', 'objectif_limiter', 'configuration_specifique', 'type_saisie', 'montants'),
+			'champs_editables' => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif', 'objectif_limiter', 'configuration_specifique', 'type_saisie', 'montants', 'abo_type_saisie', 'abo_montants'),
+			'champs_versionnes' => array('objectif', 'titre', 'texte', 'objectif_initial', 'type_objectif', 'objectif_limiter', 'configuration_specifique', 'type_saisie', 'montants', 'abo_type_saisie', 'abo_montants'),
 			'rechercher_champs' => array(),
 		);
 

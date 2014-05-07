@@ -50,7 +50,7 @@ function balise_AVANCEMENT_CAMPAGNE_dist($p) {
   return $p;
 }
 
-function montants_str2array($str) {
+function montants_str2array($str,$abo="") {
   include_spip('inc/saisies');
 
   /* Vérification du format de la chaine. Elle doit être sous la forme
@@ -60,6 +60,10 @@ function montants_str2array($str) {
       return false;
     }
   }
+
+	if ($abo){
+		$str = $abo . trim(str_replace("\n","\n$abo",$str));
+	}
 
   return saisies_chaine2tableau(saisies_aplatir_chaine($str));
 }

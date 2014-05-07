@@ -34,9 +34,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 		return false;
 
 	/* Récupération des information à propos de la campagne */
-	$campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
-		"spip_souscription_campagnes",
-		"id_souscription_campagne=$id_souscription_campagne");
+	$campagne = sql_fetsel("*","spip_souscription_campagnes","id_souscription_campagne=".intval($id_souscription_campagne));
 
 	$type = $campagne['type_objectif'];
 
@@ -46,14 +44,20 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 
 	if ($campagne['configuration_specifique']!=='on'){
 		$montant_type = lire_config("souscription/{$type}_type_saisie", 'input');
-		$montant_datas = lire_config("souscription/${type}_montants", array());
+		$montant_datas = lire_config("souscription/${type}_montants", '');
+		$abo_montant_type = lire_config("souscription/{$type}_abo_type_saisie", 'none');
+		$abo_montant_datas = lire_config("souscription/${type}_abo_montants", '');
 	} else {
 		$montant_type = $campagne['type_saisie'];
 		$montant_datas = $campagne['montants'];
+		$abo_montant_type = $campagne['abo_type_saisie'];
+		$abo_montant_datas = $campagne['abo_montants'];
 	}
 
 	$montant_label = lire_config("souscription/${type}_montants_label", _T('souscription:label_montant'));
+	$abo_montant_label = lire_config("souscription/${type}_abo_montants_label", _T('souscription:label_montant'));
 	$montant_explication = nl2br(lire_config("souscription/${type}_montants_description"));
+	$abo_montant_explication = nl2br(lire_config("souscription/${type}_abo_montants_description"));
 
 	$email = '';
 	if (isset($GLOBALS['visiteur_session']['email']) AND $GLOBALS['visiteur_session']['email'])
@@ -61,8 +65,11 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 	elseif (isset($GLOBALS['visiteur_session']['session_email']) AND $GLOBALS['visiteur_session']['session_email'])
 			$email = $GLOBALS['visiteur_session']['session_email'];
 
-	return array('montant' => '',
+	$valeurs = array(
+		'montant' => '',
 		'montant_libre' => '',
+		'abo_montant' => '',
+		'abo_montant_libre' => '',
 		'courriel' => $email,
 		'recu_fiscal' => $recu_fiscal,
 		'envoyer_info' => 'on',
@@ -77,11 +84,17 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 		'id_souscription_campagne' => $id_souscription_campagne,
 		'type_souscription' => $type,
 		'_montant_datas' => montants_str2array($montant_datas),
-		'montant_type' => $montant_type,
-		'montant_label' => $montant_label,
-		'montant_explication' => $montant_explication,
+		'_montant_type' => $montant_type,
+		'_montant_label' => $montant_label,
+		'_montant_explication' => $montant_explication,
+		'_abo_montant_datas' => montants_str2array($abo_montant_datas,"abo"),
+		'_abo_montant_type' => $abo_montant_type,
+		'_abo_montant_label' => $abo_montant_label,
+		'_abo_montant_explication' => $abo_montant_explication,
 		'_souscription_paiement' => isset($GLOBALS['formulaires_souscription_paiement'])?$GLOBALS['formulaires_souscription_paiement']:'',
 	);
+
+	return $valeurs;
 }
 
 
@@ -99,10 +112,9 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
  */
 function formulaires_souscription_verifier_dist($id_souscription_campagne){
 
-	$erreurs = formulaires_editer_objet_verifier('souscription', 'new', array('courriel','montant'));
+	$erreurs = formulaires_editer_objet_verifier('souscription', 'new', array('courriel'));
 
-	$campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
-		"spip_souscription_campagnes", "id_souscription_campagne=".intval($id_souscription_campagne));
+	$campagne = sql_fetsel("*","spip_souscription_campagnes","id_souscription_campagne=".intval($id_souscription_campagne));
 
 	$type_campagne = $campagne['type_objectif'];
 
@@ -111,7 +123,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 	}
 
 
-	if (_request('recu_fiscal')==="on" || $type_campagne=="adhesion"){
+	if (_request('recu_fiscal')==="on" OR $type_campagne=="adhesion"){
 		foreach (array('prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire){
 			if (!_request($obligatoire)){
 				if ($type_campagne=="adhesion"){
@@ -144,26 +156,64 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 		$erreurs['telephone'] = _T('souscription:erreur_telephone_invalide');
 	}
 
-	/* Vérification du montant. Si la campagne est configurée pour
-	 * utiliser une configuration spécifique, alors, il faut vérifier
-	 * avec les montants de la campagne. Autrement, il faut utiliser les
-	 * paramètres globaux.
-	 */
-	if ($e = _request('montant')){
-		$libre = false;
-		if ($e=="libre"){
-			$e = _request('montant_libre');
-			$libre = true;
+	$montant = formulaires_souscription_trouver_montant($campagne,$erreurs);
+	if (!$montant){
+		$erreurs['montant'] = $erreurs['abo_montant'] = _T('souscription:erreur_montant_obligatoire');
+	}
+
+	if (count($erreurs)>0
+		AND !isset($erreurs['message_erreur'])){
+		$erreurs['message_erreur'] = _T('souscription:erreur_formulaire');
+	}
+
+	return $erreurs;
+}
+
+/**
+ * Vérification du montant. Si la campagne est configurée pour
+ * utiliser une configuration spécifique, alors, il faut vérifier
+ * avec les montants de la campagne. Autrement, il faut utiliser les
+ * paramètres globaux.
+ *
+ * @param $campagne
+ * @param $erreurs
+ * @return null|string
+ */
+function formulaires_souscription_trouver_montant($campagne,&$erreurs){
+	$e = _request('montant');
+	$libre = false;
+
+	if ($ea = _request('abo_montant')){
+		$ea = _request('abo_montant');
+		if ($ea=="libre"){
+			$ea = _request('abo_montant_libre');
+			if ($ea)
+				$libre = true;
 		}
-		if (!(ctype_digit($e)))
-			$erreurs['montant'] = _T("souscription:erreur_montant_invalide");
+		if ($ea)
+			$e = ((strncmp($ea,"abo",3)==0)?"":"abo").$ea;
+	}
+	if ($e=="libre"){
+		$e = _request('montant_libre');
+		$libre = true;
+	}
+	elseif ($e=="abo_libre"){
+		$e = (_request('abo_montant_libre')?"abo"._request('abo_montant_libre'):"");
+		$libre = true;
+	}
+
+	if ($e){
+		$abo = (strncmp($e,"abo",3)==0)?"abo_":"";
+		if (!ctype_digit($abo?substr($e,3):$e))
+			$erreurs[$abo.'montant'] = _T("souscription:erreur_montant_invalide");
 		else {
+
 			if ($campagne['configuration_specifique']!=='on'){
-				$montant_type = lire_config("souscription/{$type_campagne}_type_saisie", 'input');
-				$montant_datas = lire_config("souscription/{$type_campagne}_montants", array());
+				$montant_type = lire_config("souscription/".$campagne['type_objectif']."{$abo}_type_saisie", 'input');
+				$montant_datas = lire_config("souscription/".$campagne['type_objectif']."{$abo}_montants", '');
 			} else {
-				$montant_type = $campagne['type_saisie'];
-				$montant_datas = $campagne['montants'];
+				$montant_type = $campagne[$abo.'type_saisie'];
+				$montant_datas = $campagne[$abo.'montants'];
 			}
 
 			/* On ne vérifie strictement la valeur du montant que si on
@@ -171,16 +221,11 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 			 * le montant. */
 			if (($montant_type!=="input")
 			  AND !$libre
-			  AND !array_key_exists($e, montants_str2array($montant_datas)))
-				$erreurs['montant'] = _T('souscription:erreur_montant_specifie_invalide');
+			  AND !array_key_exists($e, montants_str2array($montant_datas,$abo?"abo":"")))
+				$erreurs[$abo.'montant'] = _T('souscription:erreur_montant_specifie_invalide');
 		}
 	}
-
-	if (count($erreurs)>0){
-		$erreurs['message_erreur'] = _T('souscription:erreur_formulaire');
-	}
-
-	return $erreurs;
+	return $e;
 }
 
 /**
@@ -203,16 +248,23 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	$retour = '';
 	$ret = array();
 
-	$campagne = sql_fetsel(array("type_objectif", "configuration_specifique", "type_saisie", "montants"),
-		"spip_souscription_campagnes", "id_souscription_campagne=".intval($id_souscription_campagne));
+	$campagne = sql_fetsel("*","spip_souscription_campagnes", "id_souscription_campagne=".intval($id_souscription_campagne));
 	set_request("id_souscription_campagne",$id_souscription_campagne);
 	set_request('type_souscription',$campagne['type_objectif']);
 
+	$erreurs = array();
+	$montant = formulaires_souscription_trouver_montant($campagne,$erreurs);
+	$abo = false;
+	if (strncmp($montant,"abo",3)==0){
+		$abo = true;
+		$montant = substr($montant,3);
+	}
+
+	// TODO
+	// generer la transaction et le form en fonction de $abo
+
 	// generer la transaction et l'associer a la souscription
 	$inserer_transaction = charger_fonction('inserer_transaction', 'bank');
-	$montant = _request('montant');
-	if ($montant=="libre")
-		$montant = _request('montant_libre');
 
 	$id_auteur = (isset($GLOBALS['visiteur_session']['id_auteur'])?$GLOBALS['visiteur_session']['id_auteur']:0);
 	$id_transaction = $inserer_transaction($montant,

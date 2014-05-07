@@ -2,18 +2,18 @@
 <BOUCLE_p(POUR){tableau #ENV{montants}}>
 	#SET{val,#CLE}
 	<div class="choix">
-		<input type="radio" name="#ENV{name}" class="radio" id="#ENV{name}_#GET{val}" value="#GET{val}"[(#ENV{valeur}|=={#GET{val}}|oui)checked="checked"] />
-		<label for="#ENV{name}_#GET{val}">#VALEUR</label>
+		<input type="radio" name="#ENV{name}" class="radio" id="#ENV{id,#ENV{name}}_#GET{val}" value="#GET{val}"[(#ENV{valeur}|=={#GET{val}}|oui)checked="checked"] />
+		<label for="#ENV{id,#ENV{name}}_#GET{val}">#VALEUR</label>
 	</div>
 </BOUCLE_p>
-#SET{val,libre}
+#SET{val,#ENV{abo}libre}
 <div class="choix libre">
-	<input type="radio" name="#ENV{name}" class="radio" id="#ENV{name}_#GET{val}" value="#GET{val}"[(#ENV{valeur}|=={#GET{val}}|oui)checked="checked"] />
-	<label for="#ENV{name}_#GET{val}"><:souscription:label_montant_libre:></label><input
+	<input type="radio" name="#ENV{name}" class="radio" id="#ENV{id,#ENV{name}}_#GET{val}" value="#GET{val}"[(#ENV{valeur}|=={#GET{val}}|oui)checked="checked"] />
+	<label for="#ENV{abo}#ENV{name}_libre_input"><:souscription:label_montant_libre:></label><input
 	  type="text"
-	  name="#ENV{name}_libre"
+	  name="#ENV{abo}#ENV{name}_libre"
 	  class="text"
-	  value="#ENV*{#ENV{name}_libre}"
-	  id="#ENV{name}_libre_input"
+	  value="#ENV*{#ENV{abo}#ENV{name}_libre}"
+	  id="#ENV{abo}#ENV{name}_libre_input"
 	  onfocus="jQuery(this).siblings('input.radio').trigger('click');" />
 </div>

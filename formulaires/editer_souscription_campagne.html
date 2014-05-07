@@ -96,33 +96,16 @@
 	     	</li>
 	      <li class="suite fieldset configuration_specifique[(#ENV{#GET{name},#GET{defaut}}|=={on}|non)none]">
 	     		<fieldset>
-	     			<legend><:souscription_campagne:label_objectif_groupe:></legend>
-	     			<ul>
-				      #SET{name,type_saisie}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-		          <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
-		            <label for="#GET{name}"><:souscription:label_type_saisie:></label>[
-		            <span class='erreur_message'>(#GET{erreurs})</span>
-		            ]<select name="#GET{name}" class="select" id="#GET{name}">
-		              #SET{val,input}
-		              <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_input:></option>
-		              #SET{val,radio}
-		              <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radio:></option>
-				          #SET{val,radioinput}
-                  <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_radioinput:></option>
-		              #SET{val,selection}
-		              <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_selection:></option>
-		            </select>
-			          <p class="explication"><:souscription:explication_type_saisie:></p>
-		          </li>
-				      #SET{name,montants}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-		          <li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
-		            <label for="#GET{name}"><:souscription:label_montants:></label>[
-		            <span class='erreur_message'>(#GET{erreurs})</span>
-		            ]<textarea name="#GET{name}" class="textarea" rows="4">
-#ENV*{#GET{name},#GET{defaut}}</textarea>
-		            <p class="explication"><:souscription:explication_montants:></p>
-		          </li>
-			      </ul>
+	     			<legend><:souscription_campagne:label_montant_groupe:></legend>
+			      <ul>
+	            <INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier='',campagne=oui,env} />
+	          </ul>
+		      </fieldset>
+		      <fieldset>
+	     			<legend><:souscription_campagne:label_abo_montant_groupe:></legend>
+			      <ul>
+	            <INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier='abo',campagne=oui,env} />
+	          </ul>
 		      </fieldset>
 	      </li>
       </ul>
@@ -136,14 +119,18 @@
 <script type="application/javascript">
 function up_visibility_montants(){
 	var val = jQuery('select[name="type_saisie"]').val();
-	console.log(val);
-	if (val=="input")
+	if (val=="none" || val=="input")
 		jQuery(".editer_montants").hide('fast');
 	else
 		jQuery(".editer_montants").show('fast');
+	val = jQuery('select[name="abo_type_saisie"]').val();
+	if (val=="none" || val=="input")
+		jQuery(".editer_abo_montants").hide('fast');
+	else
+		jQuery(".editer_abo_montants").show('fast');
 }
 jQuery(function(){
 	up_visibility_montants();
-	jQuery('select[name="type_saisie"],input.checkbox[name="configuration_specifique"]').change(up_visibility_montants);
+	jQuery('select[name="type_saisie"],select[name="abo_type_saisie"],input.checkbox[name="configuration_specifique"]').change(up_visibility_montants);
 });
 </script>

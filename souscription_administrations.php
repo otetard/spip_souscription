@@ -27,29 +27,34 @@ function souscription_upgrade($nom_meta_base_version, $version_cible){
 	$maj['create'] = array(
 		array('maj_tables',	array('spip_souscriptions','spip_souscription_campagnes'))
 	);
-	$maj['0.1'] = array(
+	$maj['0.1.0'] = array(
 		array('sql_alter', "TABLE spip_souscriptions ADD informer_comite_local varchar(3) NOT NULL DEFAULT ''")
 	);
 
-	$maj['0.2'] = array(
+	$maj['0.2.0'] = array(
 		array('sql_alter', "TABLE spip_souscriptions ADD pays text NOT NULL DEFAULT ''")
 	);
 
-	$maj['0.3'] = array(
+	$maj['0.3.0'] = array(
 		array('sql_alter', "TABLE spip_souscriptions ADD telephone text NOT NULL DEFAULT ''")
 	);
 
-	$maj['0.4'] = array(
+	$maj['0.4.0'] = array(
 		array('sql_alter', "TABLE spip_souscription_campagnes ADD objectif_limiter varchar(3) NOT NULL DEFAULT ''")
 	);
 
-	$maj['0.5'] = array(
+	$maj['0.5.0'] = array(
 		array('sql_alter', "TABLE spip_souscription_campagnes ADD configuration_specifique varchar(3) NOT NULL DEFAULT ''"),
 		array('sql_alter', "TABLE spip_souscription_campagnes ADD type_saisie varchar(255) NOT NULL DEFAULT ''"),
 		array('sql_alter', "TABLE spip_souscription_campagnes ADD montants text NOT NULL DEFAULT ''")
 	);
 
-	$maj['0.6'] = array(array('maj_configuration_montants'));
+	$maj['0.6.0'] = array(array('maj_configuration_montants'));
+
+	$maj['0.7.0'] = array(
+		array('sql_alter', "TABLE spip_souscription_campagnes ADD abo_type_saisie varchar(255) NOT NULL DEFAULT ''"),
+		array('sql_alter', "TABLE spip_souscription_campagnes ADD abo_montants text NOT NULL DEFAULT ''")
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
