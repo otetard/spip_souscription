@@ -60,11 +60,24 @@ function souscription_upgrade($nom_meta_base_version, $version_cible){
 		array('sql_alter', "TABLE spip_souscriptions CHANGE id_transaction id_transaction_echeance bigint(21) NOT NULL DEFAULT 0"),
 		array('souscription_maj_liens_transactions'),
 	);
+	$maj['0.7.2'] = array(
+		array('maj_tables',	array('spip_souscriptions')),
+		array('sql_update','spip_souscriptions',array('date_echeance'=>'date_souscription','date_fin'=>'date_souscription')),
+		array('souscription_maj_montants_date'),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }
 
+function souscription_maj_montants_date(){
+	$res = sql_select("S.id_souscription,T.montant","spip_souscriptions AS S JOIN spip_transactions as T ON (T.id_transaction=S.id_transaction_echeance)","S.montant=".sql_quote(''));
+	while ($row = sql_fetch($res)){
+		sql_updateq("spip_souscriptions",array('montant'=>$row['montant']),'id_souscription='.intval($row['id_souscription']));
+		if (time()>_TIME_OUT)
+			return;
+	}
+}
 
 function souscription_maj_liens_transactions(){
 

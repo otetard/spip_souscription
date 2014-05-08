@@ -33,8 +33,7 @@
 			                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">[(#TYPE_SOUSCRIPTION)]</a></td>
 			<td class="courriel">#COURRIEL</td>
 			<td class="nom secondaire">#NOM #PRENOM</td>
-			#SET{montant,#INFO_MONTANT{transaction,#ID_TRANSACTION_ECHEANCE}}
-			<td class="montant secondaire">[(#GET{montant}|affiche_monnaie)]</td>
+			<td class="montant secondaire">[(#MONTANT|affiche_monnaie)]</td>
 			<td class="date secondaire">[(#DATE_SOUSCRIPTION|affdate{Y-m-d H:i:s})]</td>
 			<td class="statut secondaire">[(#STATUT)]</td>
 			<td class="id_souscription_campagne" scope="col"><a href="[(#ID_SOUSCRIPTION_CAMPAGNE|generer_url_entite{souscription_campagne})]"

@@ -15,10 +15,9 @@
 	<span dir="#LANG_DIR" class="#EDIT{titre} titre"><a href="[(#ID_SOUSCRIPTION_CAMPAGNE|generer_url_entite{souscription_campagne})]">(#TITRE)</a></span>
 </div>]
 
-#SET{montant,#INFO_MONTANT{transaction,#ID_TRANSACTION_ECHEANCE}}
-[<div class="champ contenu_montant[ (#GET*{montant}|strlen|?{'',vide})]">
+[<div class="champ contenu_montant[ (#MONTANT*|strlen|?{'',vide})]">
 	<div class='label'><:souscription:label_montant_liste:> : </div>
-	<span dir="#LANG_DIR" class="montant">(#GET{montant}|affiche_monnaie)</span>
+	<span dir="#LANG_DIR" class="montant">(#MONTANT|affiche_monnaie)</span>
 </div>]
 
 <hr />

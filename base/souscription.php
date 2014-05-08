@@ -48,6 +48,7 @@ function souscription_declarer_tables_objets_sql($tables){
 				"id_souscription" => "bigint(21) NOT NULL",
 				"id_souscription_campagne" => "bigint(21) NOT NULL DEFAULT 0",
 				"id_transaction_echeance" => "bigint(21) NOT NULL DEFAULT 0",
+				"montant" 	=> "varchar(25) NOT NULL DEFAULT ''", // montant en euros
 				"courriel" => "text NOT NULL DEFAULT ''",
 				"nom" => "text NOT NULL DEFAULT ''",
 				"prenom" => "text NOT NULL DEFAULT ''",
@@ -61,6 +62,9 @@ function souscription_declarer_tables_objets_sql($tables){
 				"informer_comite_local" => "varchar(3) NOT NULL DEFAULT ''",
 				"envoyer_info" => "varchar(3) NOT NULL DEFAULT ''",
 				"date_souscription " => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
+				"date_echeance" => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
+				"date_fin" => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
+				"abonne_uid" => "varchar(255) NOT NULL DEFAULT ''",
 				"maj" => "TIMESTAMP"
 			),
 			'key' => array(
@@ -70,8 +74,8 @@ function souscription_declarer_tables_objets_sql($tables){
 			),
 			'titre' => "nom AS titre, '' AS lang",
 			'date' => "date_souscription",
-			'champs_editables' => array('id_souscription_campagne','id_transaction','courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','informer_comite_local'),
-			'champs_versionnes' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info'),
+			'champs_editables' => array('id_souscription_campagne','id_transaction','courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','informer_comite_local','montant','date_echeance','date_fin','abonne_uid'),
+			'champs_versionnes' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','montant'),
 			'rechercher_champs' => array(
 				"id_souscription" => 1,
 				"courriel" => 1,
