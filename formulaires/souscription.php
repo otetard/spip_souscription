@@ -303,17 +303,17 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 			include_spip("action/editer_liens");
 			objet_associer(array("souscription"=>$ret['id_souscription']),array("transaction"=>$row['id_transaction']));
 
-
+			$target = ($abo?"payer-abonnement":"payer-acte");
 			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
 			$hash = $row['transaction_hash'];
 			$id_transaction = $row['id_transaction'];
 			if (lire_config("souscription/processus_paiement","redirige")==="redirige"){
-				$redirect = generer_url_public("payer-acte", "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
+				$redirect = generer_url_public($target, "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
 				$ret['redirect'] = $redirect;
 			}
 			else {
 				$ret['message_ok'] = "Vous pouvez maintenant règler votre souscription.";
-				$GLOBALS['formulaires_souscription_paiement'] = recuperer_fond("content/payer-acte",array('id_transaction'=>$id_transaction,'transaction_hash'=>$hash,'class'=>'souscription_paiement'));
+				$GLOBALS['formulaires_souscription_paiement'] = recuperer_fond("content/$target",array('id_transaction'=>$id_transaction,'transaction_hash'=>$hash,'class'=>'souscription_paiement'));
 			}
 		}
 
