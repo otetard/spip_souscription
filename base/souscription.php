@@ -44,9 +44,10 @@ function souscription_declarer_tables_objets_sql($tables){
 		array('type' => 'souscription',
 			'principale' => "oui",
 			'table_objet_surnoms' => array('souscription'), // table_objet('souscription') => 'souscription'
-			'field' => array("id_souscription" => "bigint(21) NOT NULL",
-				"id_transaction" => "bigint(21) NOT NULL DEFAULT 0",
+			'field' => array(
+				"id_souscription" => "bigint(21) NOT NULL",
 				"id_souscription_campagne" => "bigint(21) NOT NULL DEFAULT 0",
+				"id_transaction_echeance" => "bigint(21) NOT NULL DEFAULT 0",
 				"courriel" => "text NOT NULL DEFAULT ''",
 				"nom" => "text NOT NULL DEFAULT ''",
 				"prenom" => "text NOT NULL DEFAULT ''",
@@ -62,30 +63,37 @@ function souscription_declarer_tables_objets_sql($tables){
 				"date_souscription " => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 				"maj" => "TIMESTAMP"
 			),
-			'key' => array("PRIMARY KEY" => "id_souscription",
+			'key' => array(
+				"PRIMARY KEY" => "id_souscription",
 				"KEY id_transaction" => "id_transaction",
-				"KEY id_souscription_campagne" => "id_souscription_campagne"),
+				"KEY id_souscription_campagne" => "id_souscription_campagne"
+			),
 			'titre' => "nom AS titre, '' AS lang",
 			'date' => "date_souscription",
-			'champs_editables' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'recu_fiscal', 'envoyer_info'),
-			'champs_versionnes' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'recu_fiscal', 'envoyer_info'),
-			'rechercher_champs' => array("id_souscription" => 1,
+			'champs_editables' => array('id_souscription_campagne','id_transaction','courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','informer_comite_local'),
+			'champs_versionnes' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info'),
+			'rechercher_champs' => array(
+				"id_souscription" => 1,
 				"courriel" => 1,
 				"nom" => 1,
 				"prenom" => 1,
 				"adresse" => 1,
 				"ville" => 1,
-				"code_postal" => 1
+				"code_postal" => 1,
 			),
 			'join' => array("id_transaction" => "id_transaction"),
-			'tables_jointures' => array('spip_transactions'),
+			'tables_jointures' => array(
+				'souscriptions_liens',
+				'spip_transactions',
+			),
 		);
 
 	$tables['spip_souscription_campagnes'] =
 		array('type' => 'souscription_campagne',
 			'principale' => "oui",
 			'table_objet_surnoms' => array('souscriptioncampagne'),
-			'field' => array("id_souscription_campagne" => "bigint(21) NOT NULL",
+			'field' => array(
+				"id_souscription_campagne" => "bigint(21) NOT NULL",
 				"objectif" => "int(11) NOT NULL DEFAULT 0",
 				"objectif_initial" => "int(11) NOT NULL DEFAULT 0",
 				"type_objectif" => "varchar(255) NOT NULL DEFAULT 0",
@@ -112,4 +120,32 @@ function souscription_declarer_tables_objets_sql($tables){
 		);
 
 	return $tables;
+}
+
+
+/**
+ * Table auxilaire spip_souscriptions_liens
+ *
+ * @param array $tables_auxiliaires
+ * @return array
+ */
+function souscription_declarer_tables_auxiliaires($tables_auxiliaires){
+
+	$spip_souscriptions_liens = array(
+			"id_souscription"	=> "bigint(21) DEFAULT '0' NOT NULL",
+			"id_objet"	=> "bigint(21) DEFAULT '0' NOT NULL",
+			"objet"	=> "VARCHAR (25) DEFAULT '' NOT NULL"
+	);
+
+	$spip_souscriptions_liens_key = array(
+			"PRIMARY KEY"		=> "id_souscription,id_objet,objet",
+			"KEY id_souscription"	=> "id_souscription",
+			"KEY id_objet"	=> "id_objet",
+			"KEY objet"	=> "objet",
+	);
+
+	$tables_auxiliaires['spip_souscriptions_liens'] =
+		array('field' => &$spip_souscriptions_liens, 'key' => &$spip_souscriptions_liens_key);
+
+	return $tables_auxiliaires;
 }

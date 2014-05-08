@@ -5,7 +5,7 @@
         compatibilite="[3.0.5;3.0.*]"
         logo="souscription-32.png"
         documentation=""
-        schema="0.7.0">
+        schema="0.7.1">
 
   <nom>Souscription</nom>
   <auteur lien='http://olivier.miskin.fr'>Olivier Tétard</auteur>
@@ -18,16 +18,12 @@
   <necessite nom="pays" compatibilite="];["/>
 
   <pipeline nom="autoriser" inclure="souscription_autorisations.php"/>
-  <pipeline nom="declarer_tables_objets_sql"
-            inclure="base/souscription.php"/>
-  <pipeline nom="declarer_tables_interfaces"
-            inclure="base/souscription.php"/>
-  <pipeline nom="optimiser_base_disparus"
-            inclure="souscription_pipelines.php"/>
-  <pipeline nom="bank_traiter_reglement"
-            inclure="souscription_pipelines.php"/>
-  <pipeline nom="trig_bank_notifier_reglement"
-            inclure="souscription_pipelines.php"/>
+  <pipeline nom="declarer_tables_objets_sql" inclure="base/souscription.php"/>
+  <pipeline nom="declarer_tables_interfaces" inclure="base/souscription.php"/>
+  <pipeline nom="declarer_tables_auxiliaires" inclure="base/souscription.php"/>
+  <pipeline nom="optimiser_base_disparus" inclure="souscription_pipelines.php"/>
+  <pipeline nom="bank_traiter_reglement" inclure="souscription_pipelines.php"/>
+  <pipeline nom="trig_bank_notifier_reglement" inclure="souscription_pipelines.php"/>
 
   <menu nom="souscription"
         titre="souscription:titre_souscriptions"

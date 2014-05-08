@@ -25,7 +25,7 @@ function souscription_upgrade($nom_meta_base_version, $version_cible){
 	$maj = array();
 
 	$maj['create'] = array(
-		array('maj_tables',	array('spip_souscriptions','spip_souscription_campagnes'))
+		array('maj_tables',	array('spip_souscriptions','spip_souscriptions_liens','spip_souscription_campagnes'))
 	);
 	$maj['0.1.0'] = array(
 		array('sql_alter', "TABLE spip_souscriptions ADD informer_comite_local varchar(3) NOT NULL DEFAULT ''")
@@ -55,9 +55,34 @@ function souscription_upgrade($nom_meta_base_version, $version_cible){
 		array('sql_alter', "TABLE spip_souscription_campagnes ADD abo_type_saisie varchar(255) NOT NULL DEFAULT ''"),
 		array('sql_alter', "TABLE spip_souscription_campagnes ADD abo_montants text NOT NULL DEFAULT ''")
 	);
+	$maj['0.7.1'] = array(
+		array('maj_tables',	array('spip_souscriptions_liens')),
+		array('sql_alter', "TABLE spip_souscriptions CHANGE id_transaction id_transaction_echeance bigint(21) NOT NULL DEFAULT 0"),
+		array('souscription_maj_liens_transactions'),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
+}
+
+
+function souscription_maj_liens_transactions(){
+
+	$done = sql_allfetsel("DISTINCT id_souscription","spip_souscriptions_liens");
+	$done = array_map('reset',$done);
+
+	$res = sql_select("id_souscription,id_transaction_echeance","spip_souscriptions",sql_in('id_souscription',$done,"NOT"));
+	while ($row = sql_fetch($res)){
+		$ins = array(
+			'id_souscription'=>$row['id_souscription'],
+			'id_objet'=>$row['id_transaction_echeance'],
+			'objet'=>'transaction',
+		);
+		sql_insertq("spip_souscriptions_liens",$ins);
+		if (time()>_TIME_OUT)
+			return;
+	}
+
 }
 
 /* Fonction permettant de changer le format des montants globaux pour
