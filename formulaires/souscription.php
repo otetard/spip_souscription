@@ -278,7 +278,7 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	}
 	else {
 
-		set_request("id_transaction",$id_transaction);
+		set_request("id_transaction_echeance",$id_transaction);
 
 		$ret = formulaires_editer_objet_traiter('souscription',
 			'new',
@@ -290,14 +290,20 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 			$hidden);
 
 		$redirect = "";
-		$row = sql_fetsel("transaction_hash,id_transaction",
-			"spip_transactions LEFT JOIN spip_souscriptions USING(id_transaction)",
+		$row = sql_fetsel("T.transaction_hash,T.id_transaction",
+			"spip_transactions AS T LEFT JOIN spip_souscriptions AS S ON (T.id_transaction = S.id_transaction_echeance)",
 			"id_souscription=" . $ret['id_souscription']);
 
 		if (!$row){
 			spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
 			$ret['message_erreur'] = _T('souscription:erreur_echec_creation_transaction');
 		} else {
+
+			// associer transaction et souscription
+			include_spip("action/editer_liens");
+			objet_associer(array("souscription"=>$ret['id_souscription']),array("transaction"=>$row['id_transaction']));
+
+
 			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
 			$hash = $row['transaction_hash'];
 			$id_transaction = $row['id_transaction'];

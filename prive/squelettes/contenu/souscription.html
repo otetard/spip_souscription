@@ -1,5 +1,5 @@
 [(#AUTORISER{voir,souscription,#ID_SOUSCRIPTION}|sinon_interdire_acces)]
-<BOUCLE_souscription(SOUSCRIPTIONS spip_transactions){id_souscription}{si #ENV{exec}|=={souscription}}>
+<BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{si #ENV{exec}|=={souscription}}>
 
 [(#BOITE_OUVRIR{[
 	<h1>[(#TYPE_SOUSCRIPTION|ucfirst) ]#(#ID_SOUSCRIPTION)</h1>
@@ -14,7 +14,9 @@
 
 <div class="nettoyeur"></div>
 
-#PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,souscription,id,#ID_SOUSCRIPTION},data,'<div class="nettoyeur"></div>'}}
+[(#PIPELINE{afficher_complement_objet,[(#ARRAY{
+args,#ARRAY{type,souscription,id,#ID_SOUSCRIPTION},
+data,[(#INCLURE{fond=prive/objets/liste/transactions,id_transaction=#ID_SOUSCRIPTION|souscription_liste_transactions{}})]})]})]
 
 #BOITE_FERMER
 [(#EVAL{_AJAX}|oui)

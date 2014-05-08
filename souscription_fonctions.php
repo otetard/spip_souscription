@@ -11,11 +11,18 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+function souscription_liste_transactions($id_souscription){
+
+	$ids = sql_allfetsel("id_objet","spip_souscriptions_liens","id_souscription=".sql_quote($id_souscription)." AND objet=".sql_quote('transaction'));
+	$ids = array_map('reset',$ids);
+	return $ids;
+}
+
 function calcul_avancement_campagne($id_campagne, $type_objectif, $objectif_initial) {
 
-  $res = sql_fetsel(array("COUNT(*) as nombre",
-			  "SUM(montant) AS somme"),
-		    "spip_souscriptions AS S INNER JOIN spip_transactions AS T ON (S.id_transaction = T.id_transaction)",
+  $res = sql_fetsel(array("COUNT(S.id_souscription) as nombre",
+			  "SUM(T.montant) AS somme"),
+		    "spip_souscriptions AS S JOIN spip_souscriptions_liens as L ON (L.id_souscription=S.id_souscription) JOIN spip_transactions AS T ON (L.id_objet = T.id_transaction AND L.objet='transaction')",
 		    array("S.id_souscription_campagne=".sql_quote($id_campagne),
 			  "T.reglee = 'oui'"));
 

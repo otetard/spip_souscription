@@ -69,33 +69,36 @@ function action_exporter_souscriptions_dist($arg = null){
 	}
 
 	/* Préparation de la requête */
-	$select = "id_souscription, courriel, type_souscription,"
-		. "montant, reglee, spip_transactions.statut, date_paiement, mode, autorisation_id,"
-		. "nom, prenom, adresse, code_postal, ville, pays, telephone, recu_fiscal, envoyer_info, informer_comite_local, date_souscription,"
-		. "spip_souscription_campagnes.id_souscription_campagne, titre";
-	$from = "spip_souscriptions LEFT JOIN spip_transactions USING(id_transaction) LEFT JOIN spip_souscription_campagnes USING(id_souscription_campagne)";
+	$select = "S.id_souscription, S.courriel, S.type_souscription,"
+		. "T.montant, T.reglee, T.statut, T.date_paiement, T.mode, T.autorisation_id,"
+		. "S.nom, S.prenom, S.adresse, S.code_postal, S.ville, S.pays, S.telephone, S.recu_fiscal, S.envoyer_info, S.informer_comite_local, S.date_souscription,"
+		. "C.id_souscription_campagne, C.titre";
+	$from = "spip_souscriptions AS S
+		LEFT JOIN spip_transactions_liens AS L ON (L.id_souscription=S.id_souscription)
+		LEFT JOIN spip_transactions AS T ON (T.id_transaction=L.id_objet AND objet='transaction')
+		LEFT JOIN spip_souscription_campagnes AS C ON (C.id_souscription_campagne = S.id_souscription_campagne)";
 
 	$where = array();
 	if ($type_souscription)
-		$where[] = "type_souscription='$type_souscription'";
+		$where[] = "S.type_souscription='$type_souscription'";
 
 	if ($statut){
 		if ($statut=="paye")
-			$where[] = "spip_transactions.statut='ok' and reglee='oui'";
+			$where[] = "T.statut='ok' and reglee='oui'";
 		elseif ($statut=="commande")
-			$where[] = "spip_transactions.statut='commande'";
+			$where[] = "T.statut='commande'";
 		elseif ($statut=="erreur")
-			$where[] = "spip_transactions.statut like 'echec%'";
+			$where[] = "T.statut like 'echec%'";
 	}
 
 	if ($id_campagne)
-		$where[] = "spip_souscription_campagnes.id_souscription_campagne = '$id_campagne'";
+		$where[] = "C.id_souscription_campagne = '$id_campagne'";
 
 	if ($date_debut)
-		$where[] = "date_souscription > '" . date("Y-m-d 00:00:00", $date_debut) . "'";
+		$where[] = "S.date_souscription > '" . date("Y-m-d 00:00:00", $date_debut) . "'";
 
 	if ($date_fin)
-		$where[] = "date_souscription < '" . date("Y-m-d 23:59:59", $date_fin) . "'";
+		$where[] = "S.date_souscription < '" . date("Y-m-d 23:59:59", $date_fin) . "'";
 
 	$row = sql_select($select, $from, $where);
 

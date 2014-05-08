@@ -81,12 +81,14 @@ function souscription_declarer_tables_objets_sql($tables){
 				"ville" => 1,
 				"code_postal" => 1,
 			),
-			'join' => array("id_transaction" => "id_transaction"),
 			'tables_jointures' => array(
-				'souscriptions_liens',
+				'spip_souscriptions_liens',
+				'id_transaction'=>'spip_souscriptions_liens',
 				'spip_transactions',
 			),
 		);
+	$tables['spip_transactions']['tables_jointures'][] = 'spip_souscriptions_liens';
+	$tables['spip_transactions']['tables_jointures'][] = 'spip_souscriptions';
 
 	$tables['spip_souscription_campagnes'] =
 		array('type' => 'souscription_campagne',

@@ -34,7 +34,7 @@ function souscription_optimiser_base_disparus($flux){
  * @return array       Données du pipeline
  */
 function souscription_trig_bank_notifier_reglement($flux) {
-	$souscription = sql_fetsel(array('courriel', 'id_souscription_campagne'), 'spip_souscriptions', 'id_transaction='.intval($flux['args']['id_transaction']));
+	$souscription = sql_fetsel(array('courriel', 'id_souscription_campagne'), 'spip_souscriptions', 'id_transaction_echeance='.intval($flux['args']['id_transaction']));
 	$email = $souscription['courriel'];
 	$campagne = $souscription['id_souscription_campagne'];
 

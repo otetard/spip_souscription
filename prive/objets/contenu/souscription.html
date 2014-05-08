@@ -1,4 +1,4 @@
-<BOUCLE_souscription(SOUSCRIPTIONS transactions souscription_campagnes){id_souscription}>
+<BOUCLE_souscription(SOUSCRIPTIONS souscription_campagnes){id_souscription}>
 
 [<div class="champ contenu_type_souscription[ (#TYPE_SOUSCRIPTION*|strlen|?{'',vide})]">
 	<div class='label'><:souscription:label_type_souscription:> : </div>
@@ -15,22 +15,11 @@
 	<span dir="#LANG_DIR" class="#EDIT{titre} titre"><a href="[(#ID_SOUSCRIPTION_CAMPAGNE|generer_url_entite{souscription_campagne})]">(#TITRE)</a></span>
 </div>]
 
-[<div class="champ contenu_montant[ (#MONTANT*|strlen|?{'',vide})]">
+#SET{montant,#INFO_MONTANT{transaction,#ID_TRANSACTION_ECHEANCE}}
+[<div class="champ contenu_montant[ (#GET*{montant}|strlen|?{'',vide})]">
 	<div class='label'><:souscription:label_montant_liste:> : </div>
-	<span dir="#LANG_DIR" class="#EDIT{montant} montant">(#MONTANT) €</span>
+	<span dir="#LANG_DIR" class="montant">(#GET{montant}|affiche_monnaie)</span>
 </div>]
-
-<hr />
-<div>
-	<h3>Transaction :</h3>
-  <ul>
-    [<li><strong>Identifiant de la transaction</strong> : <span dir="#LANG_DIR" class="#EDIT{id_transaction} id_transaction"><a href="[(#URL_ECRIRE{transactions}|parametre_url{id_transaction,#ID_TRANSACTION})]">(#ID_TRANSACTION)</a></li>]
-    [<li><strong>Statut</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#STATUT)</span></li>]
-    [<li><strong>Mode de paiement</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#MODE)</span></li>]
-    [<li><strong>Date de paiement</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#DATE_PAIEMENT)</span></li>]
-    [<li><strong>Identifiant d'autorisation</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#AUTORISATION_ID)</span></li>]
-  </ul>
-</div>
 
 <hr />
 [<div class="champ contenu_nom[ (#NOM*|strlen|?{'',vide})]">

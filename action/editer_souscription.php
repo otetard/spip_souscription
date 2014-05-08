@@ -69,20 +69,8 @@ function souscription_modifier($id_souscription, $set = false){
 	include_spip('inc/modifier');
 
 	$c = collecter_requests(
-	// white list
-		array('courriel',
-			'recu_fiscal',
-			'envoyer_info',
-			'informer_comite_local',
-			'prenom',
-			'nom',
-			'adresse',
-			'code_postal',
-			'ville',
-			'telephone',
-			'id_souscription_campagne',
-			'id_transaction',
-			'type_souscription'),
+		// white list
+		objet_info('souscription','champs_editables'),
 		// black list
 		array('statut', 'date'),
 		// donnees eventuellement fournies

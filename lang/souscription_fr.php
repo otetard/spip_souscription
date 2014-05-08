@@ -50,6 +50,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_aucun_souscription' => 'Aucune souscription',
 	'info_choisissez_montant' => 'Choisissez un montant…',
 	'info_objectif_limite' => 'La campagne sera fermée lorsque l&#8217objectif sera atteint.',
+	'info_1_souscription' => '1 souscription',
+	'info_nb_souscriptions' => '@nb@ souscriptions',
 
 // L
 	'label_activer_adhesion' => 'Activer le module d&#8217adhésions',
