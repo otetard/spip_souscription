@@ -290,7 +290,6 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 
 			$target = ($abo?"payer-abonnement":"payer-acte");
 			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $id_transaction), "souscription");
-			$hash = $row['transaction_hash'];
 			if (lire_config("souscription/processus_paiement","redirige")==="redirige"){
 				$ret['redirect'] = generer_url_public($target, "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
 			}
