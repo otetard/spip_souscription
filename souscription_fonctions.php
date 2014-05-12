@@ -59,6 +59,7 @@ function balise_AVANCEMENT_CAMPAGNE_dist($p) {
 
 function montants_str2array($str,$abo="") {
   include_spip('inc/saisies');
+  include_spip('inc/texte');
 
   /* Vérification du format de la chaine. Elle doit être sous la forme
    * « [montant] | [label] », par exemple « 10 | 10 € ». */
@@ -72,7 +73,9 @@ function montants_str2array($str,$abo="") {
 		$str = $abo . trim(str_replace("\n","\n$abo",$str));
 	}
 
-  return saisies_chaine2tableau(saisies_aplatir_chaine($str));
+  $res = saisies_chaine2tableau(saisies_aplatir_chaine($str));
+	$res = array_map('typo',$res);
+	return $res;
 }
 
 function campagne_afficher_objectif($nombre,$type_objectif){
