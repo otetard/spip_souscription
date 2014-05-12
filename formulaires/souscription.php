@@ -258,75 +258,64 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	if (strncmp($montant,"abo",3)==0){
 		$abo = true;
 		$montant = substr($montant,3);
+		set_request("abo_statut","commande");
 	}
+	set_request('montant',$montant);
 
-	// TODO
-	// generer la transaction et le form en fonction de $abo
+	$ret = formulaires_editer_objet_traiter('souscription',
+		'new',
+		'',
+		$lier_trad,
+		$retour,
+		$config_fonc,
+		$row,
+		$hidden);
 
-	// generer la transaction et l'associer a la souscription
-	$inserer_transaction = charger_fonction('inserer_transaction', 'bank');
-
-	$id_auteur = (isset($GLOBALS['visiteur_session']['id_auteur'])?$GLOBALS['visiteur_session']['id_auteur']:0);
-	$id_transaction = $inserer_transaction($montant,
-		$montant, /* montant_ht */
-		$id_auteur, /* id_auteur */
-		'', /* auteur_id */
-		_request('courriel'));
-
-	if (!$id_transaction){
-		$ret['message_erreur'] = _T('souscription:erreur_technique_formulaire');
-	}
-	else {
-
-		set_request("id_transaction_echeance",$id_transaction);
-
-		$ret = formulaires_editer_objet_traiter('souscription',
-			'new',
-			'',
-			$lier_trad,
-			$retour,
-			$config_fonc,
-			$row,
-			$hidden);
-
-		$redirect = "";
-		$row = sql_fetsel("T.transaction_hash,T.id_transaction",
-			"spip_transactions AS T LEFT JOIN spip_souscriptions AS S ON (T.id_transaction = S.id_transaction_echeance)",
-			"id_souscription=" . $ret['id_souscription']);
-
-		if (!$row){
-			spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
-			$ret['message_erreur'] = _T('souscription:erreur_echec_creation_transaction');
-		} else {
-
+	if ($ret['id_souscription']){
+		$id_auteur = (isset($GLOBALS['visiteur_session']['id_auteur'])?$GLOBALS['visiteur_session']['id_auteur']:0);
+		// generer la transaction et l'associer a la souscription
+		$inserer_transaction = charger_fonction('inserer_transaction', 'bank');
+		$options = array(
+			"auteur" => _request('courriel'),
+			"id_auteur" => $id_auteur,
+			"parrain" => "souscription",
+			"tracking_id" => $ret['id_souscription'],
+		);
+		if ($id_transaction = $inserer_transaction($montant,$options)
+		  AND $hash = sql_getfetsel('transaction_hash',"spip_transactions","id_transaction=".intval($id_transaction))){
 			// associer transaction et souscription
 			include_spip("action/editer_liens");
-			objet_associer(array("souscription"=>$ret['id_souscription']),array("transaction"=>$row['id_transaction']));
+			objet_associer(array("souscription"=>$ret['id_souscription']),array("transaction"=>$id_transaction));
+			sql_updateq("spip_souscriptions",array('id_transaction_echeance'=>$id_transaction),"id_souscription=".intval($ret['id_souscription']));
 
 			$target = ($abo?"payer-abonnement":"payer-acte");
-			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $row['id_transaction']), "souscription");
+			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $id_transaction), "souscription");
 			$hash = $row['transaction_hash'];
-			$id_transaction = $row['id_transaction'];
 			if (lire_config("souscription/processus_paiement","redirige")==="redirige"){
-				$redirect = generer_url_public($target, "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
-				$ret['redirect'] = $redirect;
+				$ret['redirect'] = generer_url_public($target, "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
 			}
 			else {
 				$ret['message_ok'] = "Vous pouvez maintenant règler votre souscription.";
 				$GLOBALS['formulaires_souscription_paiement'] = recuperer_fond("content/$target",array('id_transaction'=>$id_transaction,'transaction_hash'=>$hash,'class'=>'souscription_paiement'));
 			}
 		}
-
-		// si API newsletter est dispo ET que case inscription est cochee, inscrire a la newsletter
-		if (_request("envoyer_info")==="on"
-		  AND $subscribe = charger_fonction("subscribe","newsletter",true)){
-			$email = _request("courriel");
-			$nom = array(_request("prenom"),_request("nom"));
-			$nom = array_filter($nom);
-			$nom = implode(" ",$nom);
-			$subscribe($email,array('nom'=>$nom));
+		else {
+			spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
+			$ret['message_erreur'] = _T('souscription:erreur_echec_creation_transaction');
 		}
+
 	}
+
+	// si API newsletter est dispo ET que case inscription est cochee, inscrire a la newsletter
+	if (_request("envoyer_info")==="on"
+	  AND $subscribe = charger_fonction("subscribe","newsletter",true)){
+		$email = _request("courriel");
+		$nom = array(_request("prenom"),_request("nom"));
+		$nom = array_filter($nom);
+		$nom = implode(" ",$nom);
+		$subscribe($email,array('nom'=>$nom));
+	}
+
 	return $ret;
 }
 

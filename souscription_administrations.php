@@ -65,6 +65,9 @@ function souscription_upgrade($nom_meta_base_version, $version_cible){
 		array('sql_update','spip_souscriptions',array('date_echeance'=>'date_souscription','date_fin'=>'date_souscription')),
 		array('souscription_maj_montants_date'),
 	);
+	$maj['0.7.3'] = array(
+		array('maj_tables',	array('spip_souscriptions')),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);

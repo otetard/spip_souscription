@@ -65,6 +65,9 @@ function souscription_declarer_tables_objets_sql($tables){
 				"date_echeance" => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 				"date_fin" => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 				"abonne_uid" => "varchar(255) NOT NULL DEFAULT ''",
+				"abo_statut" => "varchar(255) NOT NULL DEFAULT 'non'",
+				"abo_fin_raison" => "varchar(255) NOT NULL DEFAULT ''",
+				"montant_cumul" 	=> "varchar(25) NOT NULL DEFAULT ''", // montant en euros du total des versements pour cette souscription
 				"maj" => "TIMESTAMP"
 			),
 			'key' => array(
@@ -74,7 +77,7 @@ function souscription_declarer_tables_objets_sql($tables){
 			),
 			'titre' => "nom AS titre, '' AS lang",
 			'date' => "date_souscription",
-			'champs_editables' => array('id_souscription_campagne','id_transaction','courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','informer_comite_local','montant','date_echeance','date_fin','abonne_uid'),
+			'champs_editables' => array('id_souscription_campagne','id_transaction','courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','informer_comite_local','montant','date_echeance','date_fin','abonne_uid','abo_statut','abo_fin_raison','montant_cumul'),
 			'champs_versionnes' => array('courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','montant'),
 			'rechercher_champs' => array(
 				"id_souscription" => 1,

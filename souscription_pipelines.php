@@ -70,3 +70,146 @@ function souscription_bank_traiter_reglement($flux){
 	$flux['data'].=" <br />Vous allez recevoir un email de confirmation.";
 	return $flux;
 }
+
+
+/**
+ * Activer la souscription abonnee
+ * @param $flux
+ * @return mixed
+ */
+function souscription_bank_abos_activer_abonnement($flux){
+	if (!$flux['data']){
+		$abo_uid = $flux['args']['abo_uid'];
+		$set = array(
+			"abonne_uid"=>sql_quote($abo_uid),
+			"abo_statut"=>'ok',
+		);
+
+		if ($id_transaction = $flux['args']['id_transaction']){
+			if (!$row = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))
+			  OR !$id_souscription = $row['id_souscription']){
+			 	spip_log("Impossible de retrouver la souscription liee a la transaction $id_transaction",'souscriptions_abos'._LOG_ERREUR);
+				return $flux;
+			}
+
+			if (!$r = sql_fetsel("statut","spip_transactions","id_transaction=".intval($id_transaction))){
+				return $flux;
+			}
+			if ($r['statut']!=='ok'){
+			 	spip_log("La transaction $id_transaction n'a pas ete reglee (abo $abo_uid)",'souscriptions_abos'._LOG_ERREUR);
+				return $flux;
+			}
+			// fixer le montant cumul des dons
+			$set['montant_cumul'] = sql_quote($r['montant']);
+		}
+		elseif (
+			!$abo_uid
+		  OR !($row = sql_fetsel("*","spip_souscriptions","abonne_uid=".sql_quote($abo_uid)))
+		  ){
+		  spip_log("Impossible de retrouver l'abo_uid $abo_uid",'souscriptions_abos'._LOG_ERREUR);
+			return $flux;
+		}
+
+		if ($id_transaction
+		  AND ($id_transaction==$row['id_transaction_echeance']) ){
+
+			$set["date_echeance"] = sql_quote(date('Y-m-d H:i:s',strtotime("+1 month",strtotime($row["date_echeance"]))));
+			if ($flux['data']['validite']==='echeance'){
+				$set["date_fin"] = $set["date_echeance"];
+			}
+			else {
+				$set["date_fin"] = sql_quote($flux['data']['validite']);
+			}
+
+		}
+		if ($row['id_souscription'] AND count($set)){
+			sql_update("spip_souscriptions",$set,"id_souscription=".intval($row['id_souscription']));
+		}
+		if ($row['id_souscription']){
+			$flux['data'] = $row['id_souscription'];
+		}
+	}
+
+	return $flux;
+}
+
+function souscription_bank_abos_decrire_echeance($flux){
+	if ($id_transaction = $flux['args']['id_transaction']
+	  AND $row = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))){
+		$flux['data']['montant'] = $row['montant'];
+		$flux['data']['montant_ht'] = $row['montant'];
+	}
+	return $flux;
+}
+
+function souscription_bank_abos_renouveler($flux){
+
+	if (!$flux['data']){
+
+		$id = $flux['args']['id'];
+		if (strncmp($id,"uid:",4)==0){
+			$where = "abonne_uid=".sql_quote(substr($id,4));
+		}
+		else {
+			$where = "id_souscription=".intval($id);
+		}
+		if ($row = sql_fetsel("*","spip_souscriptions",$where,'','date_souscription DESC')){
+
+			$options = array(
+				'auteur' => $row['courriel'],
+				'parrain' => 'souscription',
+				'tracking_id' => $row['id_souscription'],
+			);
+
+			// ouvrir la transaction
+			$inserer_transaction = charger_fonction("inserer_transaction","bank");
+			if ($id_transaction = $inserer_transaction($row['montant'],$options)){
+				$set = array(
+					'id_transaction_echeance' => $id_transaction,
+					'abo_statut' => 'ok',
+					'montant_cumul' =>  round(floatval($row['montant_cumul']) + floatval($row['montant']),2),
+				);
+				sql_updateq('spip_souscriptions',$set,"id_souscription=".intval($row['id_souscription']));
+				include_spip("action/editer_liens");
+				objet_associer(array("souscription"=>$row['id_souscription']),array("transaction"=>$id_transaction));
+				$flux['data'] = $id_transaction;
+			}
+		}
+	}
+
+	return $flux;
+}
+
+function souscription_bank_abos_resilier($flux){
+
+	$id = $flux['args']['id'];
+	if (strncmp($id,"uid:",4)==0){
+		$where = "abonne_uid=".sql_quote(substr($id,4));
+	}
+	else {
+		$where = "id_souscription=".intval($id);
+	}
+	if ($row = sql_fetsel("*","spip_souscriptions",$where,'','date_souscription DESC')){
+		$set = array(
+			'abo_statut' => 'resilie',
+			'abo_fin_raison' => $flux['args']['message'],
+		);
+		if ($flux['args']['date_fin']=='date_echeance'){
+			$set['date_fin'] = $row['date_echeance'];
+		}
+		else {
+			$set['date_fin'] = $flux['args']['date_fin'];
+		}
+
+		$ok = true;
+		if ($flux['args']['notify_bank']
+		  AND $mode_paiement = sql_getfetsel("mode","spip_transactions","id_transaction=".intval($row['id_transaction_echeance']))){
+			$ok = abos_resilier_notify_bank($row['abonne_uid'],$mode_paiement);
+		}
+		if ($ok){
+			sql_updateq("spip_souscriptions",$set,"id_souscription=".intval($row['id_souscription']));
+		}
+	}
+
+	return $flux;
+}
