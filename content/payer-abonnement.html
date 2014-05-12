@@ -1,8 +1,8 @@
 <BOUCLE_payer(TRANSACTIONS){id_transaction}{transaction_hash}>
 	<h1><:souscription:titre_page_payer:></h1>
 	<div class="#ENV{class,formulaire_spip}">
-		<p><:souscription:label_montant:> <strong>[(#MONTANT|affiche_monnaie)]</strong>
-			<BOUCLE_sous(SOUSCRIPTIONS){id_transaction}>
+		<p><:souscription:label_montant:> <strong>[(#MONTANT|affiche_monnaie)] <:souscription:label_montant_chaque_mois:></strong>
+			<BOUCLE_sous(SOUSCRIPTIONS){id_transaction_echeance=#ID_TRANSACTION}>
 			<br />#COURRIEL
 			</BOUCLE_sous>
 		</p>

@@ -99,6 +99,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_informer_comite_local' => 'Me faire connaître auprès du comité local le plus proche',
 	'label_legende_bloc_fiscal' => 'Informations complémentaires',
 	'label_montant' => 'Montant',
+	'label_montant_chaque_mois' => 'chaque mois',
 	'label_montant_actuel' => 'Niveau actuel de la campagne',
 	'label_montant_libre' => 'Autre montant : ',
 	'label_montant_liste' => 'Montant',
