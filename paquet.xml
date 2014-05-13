@@ -1,7 +1,7 @@
 <paquet prefix="souscription"
         categorie="communication"
-        version="1.1.0"
-        etat="dev"
+        version="2.0.0"
+        etat="test"
         compatibilite="[3.0.5;3.0.*]"
         logo="souscription-32.png"
         documentation=""
@@ -13,7 +13,7 @@
 
   <necessite nom="saisies" compatibilite="[1.24.0;]"/>
   <necessite nom="verifier" compatibilite="[1.0.2;]"/>
-  <necessite nom="bank" compatibilite="[2.2.1;]"/>
+  <necessite nom="bank" compatibilite="[2.21.0;]"/>
   <necessite nom="spip_bonux" compatibilite="[3.0.4;]"/>
   <necessite nom="pays" compatibilite="];["/>
 
