@@ -13,6 +13,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 // B
 	'bouton_exporter' => 'Exporter',
+	'bouton_resilier' => 'Résilier',
 
 // C
 	'cfg_titre_parametrages' => 'Paramétrages',
@@ -23,6 +24,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'configurer_type_saisie_selection' => 'Liste déroulante',
 	'confirmer' => 'Valider',
 	'confirmer_creation_campagne' => 'Enregistrer',
+	'confirmer_resilier_abonnement' => 'Voulez-vous vraiment résilier cet abonnement ?',
 
 // E
 	'erreur_adhesion_champ_obligatoire' => 'Ce champ est obligatoire pour les adhésions',
@@ -54,6 +56,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_souscriptions' => '@nb@ souscriptions',
 
 // L
+	'label_abonne_uid' => 'UID Abonné',
+	'label_abo_statut' => 'Statut abonnement',
 	'label_activer_adhesion' => 'Activer le module d&#8217adhésions',
 	'label_activer_don' => 'Activer le module dons',
 	'label_adhesion_groupe' => 'Adhésions : paiement unique',
@@ -63,6 +67,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_avancement_campagne_dons' => 'Avancement de la campagne : @montant@ € sur @objectif@ € !',
 	'label_code_postal' => 'Code postal',
 	'label_courriel' => 'Courriel',
+	'label_date_echeance' => 'Prochaine échéance',
+	'label_date_derniere_echeance' => 'Dernière échéance',
 	'label_dispositions_fiscales_explications' => 'Texte de présentation des dispositions fiscales',
 	'label_donnees_personnelles_explications' => 'Texte d\'information sur la collecte des données personnelles',
 	'label_don_groupe' => 'Dons : paiement unique',
@@ -100,6 +106,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_legende_bloc_fiscal' => 'Informations complémentaires',
 	'label_montant' => 'Montant',
 	'label_montant_chaque_mois' => 'chaque mois',
+	'label_mensuel' => 'mensuel',
 	'label_montant_actuel' => 'Niveau actuel de la campagne',
 	'label_montant_libre' => 'Autre montant : ',
 	'label_montant_liste' => 'Montant',

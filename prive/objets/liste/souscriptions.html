@@ -25,17 +25,24 @@
 		</tr>
 	</thead>
 	<tbody>
-	<BOUCLE_liste_souscriptions(SOUSCRIPTIONS transactions){transactions.id_transaction?}{id_mot?}{id_auteur?}{where?}{recherche?}{type_souscription==#ENV{type_souscription,'.'}}{transactions.statut==#ENV{statut_transaction,'.'}}{tri #ENV{par,id_souscription},#GET{defaut_tri}}{pagination #ENV{nb,10}}>
-		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})] #STATUT">
+	<BOUCLE_liste_souscriptions(SOUSCRIPTIONS transactions)
+		{transactions.id_transaction?}{id_mot?}{id_auteur?}{where?}
+		{recherche?}
+		{abo_statut==#ENV{abo_statut,'.'}}
+		{type_souscription==#ENV{type_souscription,'.'}}
+		{transactions.statut==#ENV{statut_transaction,'.'}}
+		{tri #ENV{par,id_souscription},#GET{defaut_tri}}{pagination #ENV{nb,10}}>
+		#SET{abo,#ABO_STATUT|=={non}|non}
+		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})] #STATUT[(#GET{abo}) abonnement abo_#ABO_STATUT]">
 			<td class="id"><a href="[(#ID_SOUSCRIPTION|generer_url_entite{souscription})]"
 			                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">#ID_SOUSCRIPTION</a></td>
 			<td class="type_souscription"><a href="[(#ID_SOUSCRIPTION|generer_url_entite{souscription})]"
-			                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">[(#TYPE_SOUSCRIPTION)]</a></td>
+			                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">[(#TYPE_SOUSCRIPTION)]</a>[(#GET{abo})<br />mensuel]</td>
 			<td class="courriel">#COURRIEL</td>
 			<td class="nom secondaire">#NOM #PRENOM</td>
-			<td class="montant secondaire">[(#MONTANT|affiche_monnaie)]</td>
+			<td class="montant secondaire">[(#GET{abo}|?{#MONTANT_CUMUL,#MONTANT}|affiche_monnaie)][<br />(#GET{abo})[\((#MONTANT|affiche_monnaie{2,'&euro;/mois'})\)]]</td>
 			<td class="date secondaire">[(#DATE_SOUSCRIPTION|affdate{Y-m-d H:i:s})]</td>
-			<td class="statut secondaire">[(#STATUT)]</td>
+			<td class="statut secondaire">[(#STATUT)][(#GET{abo})<br />\([(#ABO_STATUT|=={ok}|?{[&rarr;(#DATE_ECHEANCE|souscription_derniere_echeance{#DATE_FIN}|affdate{Y-m})],#ABO_STATUT})]\)]</td>
 			<td class="id_souscription_campagne" scope="col"><a href="[(#ID_SOUSCRIPTION_CAMPAGNE|generer_url_entite{souscription_campagne})]"
 						                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION_CAMPAGNE">#ID_SOUSCRIPTION_CAMPAGNE</a></td>
 		</tr>

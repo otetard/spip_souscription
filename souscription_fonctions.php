@@ -81,3 +81,12 @@ function montants_str2array($str,$abo="") {
 function campagne_afficher_objectif($nombre,$type_objectif){
 	return $nombre.($type_objectif == "don" ? " EUR" : "");
 }
+
+function souscription_derniere_echeance($date_echeance,$date_fin){
+	$next = $date_echeance;
+	while (intval($date_fin) AND $date_echeance>$date_fin)
+		$date_echeance = date('Y-m-d H:i:s',strtotime('-1 month',strtotime($date_echeance)));
+	while (($next=date('Y-m-d H:i:s',strtotime('+1 month',strtotime($date_echeance))))<=$date_fin)
+		$date_echeance = $next;
+	return $date_echeance;
+}

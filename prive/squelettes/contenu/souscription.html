@@ -2,9 +2,9 @@
 <BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{si #ENV{exec}|=={souscription}}>
 
 [(#BOITE_OUVRIR{[
-	<h1>[(#TYPE_SOUSCRIPTION|ucfirst) ]#(#ID_SOUSCRIPTION)</h1>
+	<h1>[(#TYPE_SOUSCRIPTION|ucfirst) ]#(#ID_SOUSCRIPTION)[(#ABO_STATUT|=={non}|non)(<:souscription:label_mensuel:>)]</h1>
 	[<strong>#PRENOM (#NOM)</strong>]
-],simple fiche_objet #STATUT})]
+],simple fiche_objet #STATUT[(#ABO_STATUT|=={non}|non)abonnement]})]
 
 <!--affiche_milieu-->
 
