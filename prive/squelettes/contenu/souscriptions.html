@@ -18,5 +18,17 @@
 		<li>[(#SELF|parametre_url{statut_transaction,'commande'}|lien_ou_expose{Commande,#ENV{statut_transaction}|=={commande},ajax})]</li>
 	</ul>
 </div>
+<BOUCLE_hasabo(SOUSCRIPTIONS){abo_statut!=non}{0,1}> </BOUCLE_hasabo>
+<div class="onglets_simple second clearfix">
+	<ul>
+		<li>[(#SELF|parametre_url{abo_statut,'XXX'}|replace{XXX,''}|lien_ou_expose{Tous,[(#ENV{abo_statut}|non)],ajax})]</li>
+		<li>[(#SELF|parametre_url{abo_statut,'non'}|lien_ou_expose{Uniques,#ENV{abo_statut}|=={non},ajax})]</li>
+		<li>[(#SELF|parametre_url{abo_statut,'ok|resilies|commande'}|lien_ou_expose{Mensuels,#ENV{abo_statut}|=={ok|resilies|commande},ajax})]</li>
+		<li>[(#SELF|parametre_url{abo_statut,'ok'}|lien_ou_expose{En cours,#ENV{abo_statut}|=={ok},ajax})]</li>
+		<li>[(#SELF|parametre_url{abo_statut,'resilies'}|lien_ou_expose{Résiliés,#ENV{abo_statut}|=={resilie},ajax})]</li>
+		<li>[(#SELF|parametre_url{abo_statut,'commande'}|lien_ou_expose{Commande,#ENV{abo_statut}|=={commande},ajax})]</li>
+	</ul>
+</div>
+</B_hasabo>
 
 <INCLURE{fond=prive/objets/liste/souscriptions, par=date_souscription, env, ajax, sinon=<:souscription:info_aucun_souscription:>}>

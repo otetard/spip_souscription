@@ -11,6 +11,16 @@
 .souscription .fiche_objet[class*='echec'] .inner,
 .souscription .fiche_objet.abandon .inner {background:url(#CHEMIN{images/rayures-gris.gif}) center repeat;}
 
+.souscription .fiche_objet.abonnement:after {
+	content: "";
+	position:absolute;
+	top:10px;
+	right:10px;
+	width:32px;
+	height:32px;
+	background:url(#CHEMIN_IMAGE{souscription-abo-32.png}) top right;
+}
+
 .liste-objets.souscriptions .commande td,
 .liste-objets.souscriptions .commande th,
 .liste-objets.souscriptions .abandon td,
@@ -18,3 +28,14 @@
 .liste-objets.souscriptions tr[class*='echec'] td,
 .liste-objets.souscriptions tr[class*='echec'] th
 {background:url(#CHEMIN{images/rayures-gris.gif}) center repeat fixed;opacity:0.6;}
+
+.liste-objets.souscriptions .abonnement .id:after {
+	content: "";
+	position:absolute;
+	left:0;
+	width:16px;
+	height:16px;
+	background:url(#CHEMIN_IMAGE{souscription-abo-16.png}) top left;
+	opacity:0.6;
+}
+.souscription #wysiwyg .contenu_montant {margin:1em 0; font-size:1.25em;}

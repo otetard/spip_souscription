@@ -1,5 +1,5 @@
 #CACHE{0}
-<select name="#ENV{name}" class="select" id="#ENV{name}">
+<select name="#ENV{abo}#ENV{name}" class="select" id="#ENV{id,#ENV{abo}#ENV{name}}">
 	<option value=""><:souscription:info_choisissez_montant:></option>
 	<BOUCLE_p(POUR){tableau #ENV{montants}}>
 		#SET{val,#CLE}

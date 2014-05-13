@@ -37,8 +37,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_type_objectif_dons' => '(objectif en Euros)',
 
 // L
-	'label_configuration_specifique' => 'Activer une configuration spécifique',
+	'label_abo_montant_groupe' => 'Montants des paiements mensuels',
+	'label_configuration_specifique' => 'Configuration spécifique des montants pour cette campagne',
 	'label_description' => 'Description de la campagne',
+	'label_montant_groupe' => 'Montants des paiements uniques',
 	'label_objectif' => 'Niveau de l&#8217objectif',
 	'label_objectif_groupe' => 'Definition de l&#8217objectif de la campagne',
 	'label_objectif_initial' => 'Niveau initial de la campagne',

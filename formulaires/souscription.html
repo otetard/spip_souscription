@@ -13,13 +13,28 @@
       #ACTION_FORMULAIRE{#ENV{action}}
 
       <ul>
+	      [(#ENV{_montant_type}|=={none}|non)
 	      #SET{name,montant}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
         <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
-          <label for="#GET{name}">#ENV{montant_label}</label>[
+          <label for="#GET{name}">#ENV{_montant_label}</label>[
           <span class='erreur_message'>(#GET{erreurs})</span>
-          ][<span class="input">(#INCLURE{fond=formulaires/inc-souscription-#ENV{montant_type},name=#GET{name},valeur=#ENV*{#GET{name},#GET{defaut}},obli=#GET{obli},montants=#ENV{_montant_datas},montant_libre})</span>]
-	        [<p class="explication">(#ENV{montant_explication})</p>]
+          ][<span class="input">(#INCLURE{fond=formulaires/inc-souscription-#ENV{_montant_type},name=#GET{name},valeur=#ENV*{#GET{name},#GET{defaut}},obli=#GET{obli},montants=#ENV{_montant_datas},montant_libre})</span>]
+	        [(#ENV{_abo_montant_type}|=={none}|ou{#ENV{_montant_explication}|=={#ENV{_abo_montant_explication}}|non})
+	        [<p class="explication">(#ENV{_montant_explication})</p>]
+	        ]
         </li>
+	      ]
+	      [(#ENV{_abo_montant_type}|=={none}|non)
+	      #SET{name,abo_montant}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+	      #SET{abo,''}
+        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+          <label for="#GET{name}">#ENV{_abo_montant_label}</label>[
+          <span class='erreur_message'>(#GET{erreurs})</span>
+          ][(#ENV{_montant_type}|in_array{#LISTE{radio,radioinput}}|et{#ENV{_abo_montant_type}|in_array{#LISTE{radio,radioinput}}}|oui)#SET{name,montant}#SET{abo,'abo_'}
+	        ][<span class="input">(#INCLURE{fond=formulaires/inc-souscription-#ENV{_abo_montant_type},name=#GET{name},abo=#GET{abo},valeur=#ENV*{#GET{name},#GET{defaut}},obli=#GET{obli},montants=#ENV{_abo_montant_datas},abo_montant_libre})</span>]
+	        [<p class="explication">(#ENV{_abo_montant_explication})</p>]
+        </li>
+	      ]
 	      #SET{name,courriel}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
         <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
           <label for="#GET{name}"><:souscription:label_courriel:></label>[
@@ -97,7 +112,7 @@
 
 
 	      [(#CONFIG{souscription/proposer_infolettre,off}|=={on}|oui)
-	      #SET{name,envoyer_info}#SET{obli,''}#SET{defaut,'non'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+	      #SET{name,envoyer_info}#SET{obli,''}#SET{defaut,'off'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 	      <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]

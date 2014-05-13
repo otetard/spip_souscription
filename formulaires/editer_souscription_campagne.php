@@ -52,10 +52,14 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
 		if (lire_config('souscription/don_activer','off')=='on'){
 			$valeurs['type_saisie'] = lire_config('souscription/don_type_saisie',$valeurs['type_saisie']);
 			$valeurs['montants'] = lire_config('souscription/don_montants',$valeurs['montants']);
+			$valeurs['abo_type_saisie'] = lire_config('souscription/don_abo_type_saisie',$valeurs['abo_type_saisie']);
+			$valeurs['abo_montants'] = lire_config('souscription/don_abo_montants',$valeurs['abo_montants']);
 		}
 		elseif (lire_config('souscription/adhesion_activer','off')=='on'){
 			$valeurs['type_saisie'] = lire_config('souscription/adhesion_type_saisie',$valeurs['type_saisie']);
 			$valeurs['montants'] = lire_config('souscription/adhesion_montants',$valeurs['montants']);
+			$valeurs['abo_type_saisie'] = lire_config('souscription/adhesion_abo_type_saisie',$valeurs['abo_type_saisie']);
+			$valeurs['abo_montants'] = lire_config('souscription/adhesion_abo_montants',$valeurs['abo_montants']);
 		}
 	}
 
@@ -114,18 +118,37 @@ function formulaires_editer_souscription_campagne_verifier_dist($id_souscription
 	 * dans la fonction traiter. */
 	if (_request('configuration_specifique')){
 		$type_saisie = _request('type_saisie');
-		$saisies = array("input", "radio", "radioinput", "selection");
+		$saisies = array("none", "input", "radio", "radioinput", "selection");
 		if (!$type_saisie || !in_array($type_saisie, $saisies))
-			$erreurs['type_saisie'] = _T('souscription:erreur_champ_invalide');
+			$erreurs['type_saisie'] = _T('souscription:erreur_type_saisie_invalide');
 		else {
 			$montants = _request('montants');
-			if ($type_saisie && $type_saisie!=="input"){
+			if ($type_saisie AND $type_saisie!=="input" AND $type_saisie!=="none"){
 				if (!$montants || !is_string($montants))
-					$erreurs['montants'] = _T('souscription:erreur_montants');
+					$erreurs['montants'] = _T('souscription:erreur_champ_obligatoire');
 
 				elseif (!montants_str2array($montants))
 					$erreurs['montants'] = _T('souscription:erreur_montants');
 			}
+		}
+		$abo_type_saisie = _request('abo_type_saisie');
+		if (!$abo_type_saisie || !in_array($abo_type_saisie, $saisies))
+			$erreurs['abo_type_saisie'] = _T('souscription:erreur_type_saisie_invalide');
+		else {
+			$abo_montants = _request('abo_montants');
+			if ($abo_type_saisie AND $abo_type_saisie!=="input" AND $abo_type_saisie!=="none"){
+				if (!$abo_montants || !is_string($abo_montants))
+					$erreurs['abo_montants'] = _T('souscription:erreur_champ_obligatoire');
+
+				elseif (!montants_str2array($abo_montants))
+					$erreurs['abo_montants'] = _T('souscription:erreur_montants');
+			}
+		}
+		if (  !isset($erreurs['type_saisie'])
+			AND !isset($erreurs['abo_type_saisie'])
+			AND $type_saisie=="none"
+			AND $abo_type_saisie=="none"){
+			$erreurs['type_saisie'] = $erreurs['abo_type_saisie'] = _T('souscription:erreur_type_saisie_obligatoire');
 		}
 	}
 

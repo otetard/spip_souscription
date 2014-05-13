@@ -1,4 +1,5 @@
-<BOUCLE_souscription(SOUSCRIPTIONS transactions souscription_campagnes){id_souscription}>
+<BOUCLE_souscription(SOUSCRIPTIONS souscription_campagnes){id_souscription}>
+#SET{abo,#ABO_STATUT|=={non}|non}
 
 [<div class="champ contenu_type_souscription[ (#TYPE_SOUSCRIPTION*|strlen|?{'',vide})]">
 	<div class='label'><:souscription:label_type_souscription:> : </div>
@@ -17,20 +18,30 @@
 
 [<div class="champ contenu_montant[ (#MONTANT*|strlen|?{'',vide})]">
 	<div class='label'><:souscription:label_montant_liste:> : </div>
-	<span dir="#LANG_DIR" class="#EDIT{montant} montant">(#MONTANT) €</span>
+	<span dir="#LANG_DIR" class="montant"><strong>(#GET{abo}|?{#MONTANT_CUMUL,#MONTANT}|affiche_monnaie)</strong>[(#GET{abo}|oui)<small>([(#MONTANT|affiche_monnaie) <:souscription:label_montant_chaque_mois:>])</small>]</span>
 </div>]
 
-<hr />
-<div>
-	<h3>Transaction :</h3>
-  <ul>
-    [<li><strong>Identifiant de la transaction</strong> : <span dir="#LANG_DIR" class="#EDIT{id_transaction} id_transaction"><a href="[(#URL_ECRIRE{transactions}|parametre_url{id_transaction,#ID_TRANSACTION})]">(#ID_TRANSACTION)</a></li>]
-    [<li><strong>Statut</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#STATUT)</span></li>]
-    [<li><strong>Mode de paiement</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#MODE)</span></li>]
-    [<li><strong>Date de paiement</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#DATE_PAIEMENT)</span></li>]
-    [<li><strong>Identifiant d'autorisation</strong> : <span dir="#LANG_DIR" class="#EDIT{statut} statut">(#AUTORISATION_ID)</span></li>]
-  </ul>
-</div>
+[(#GET{abo})
+[<div class="champ contenu_abonne_uid[ (#ABONNE_UID*|strlen|?{'',vide})]">
+	<div class='label'><:souscription:label_abonne_uid:> : </div>
+	<span dir="#LANG_DIR" class="#EDIT{abonne_uid} abonne_uid">(#ABONNE_UID)</span>
+</div>]
+[<div class="champ contenu_date_echeance[ (#DATE_ECHEANCE*|>{#DATE_SOUSCRIPTION}|et{#DATE_ECHEANCE*|<{#DATE_FIN}}|?{'',vide})]">
+	<div class='label'><:souscription:label_date_echeance:> : </div>
+	<span dir="#LANG_DIR" class="#EDIT{date_echeance} date_echeance">(#DATE_ECHEANCE|affdate)</span>
+</div>]
+[<div class="champ contenu_date_fin[ (#DATE_FIN*|>{#DATE_SOUSCRIPTION}|?{'',vide})]">
+	<div class='label'><:souscription:label_date_derniere_echeance:> : </div>
+	<span dir="#LANG_DIR" class="date_fin">(#DATE_ECHEANCE|souscription_derniere_echeance{#DATE_FIN}|affdate)</span>
+</div>]
+[<div class="champ contenu_abo_statut[ (#ABO_STATUT*|strlen|?{'',vide})]">
+	<div class='label'><:souscription:label_abo_statut:> : </div>
+	<span dir="#LANG_DIR" class="abo_statut">(#ABO_STATUT)</span>
+	[(#ABO_STATUT|=={ok}|oui)
+	[(#BOUTON_ACTION{<:souscription:bouton_resilier:>,#URL_ACTION_AUTEUR{bank_resilier_abo,#ABONNE_UID,#SELF},'',<:souscription:confirmer_resilier_abonnement:>})]
+	]
+</div>]
+]
 
 <hr />
 [<div class="champ contenu_nom[ (#NOM*|strlen|?{'',vide})]">

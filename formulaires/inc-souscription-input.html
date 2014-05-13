@@ -1,2 +1,2 @@
 #CACHE{0}
-<input type="text" name="#ENV{name}" class="text" value="#ENV*{valeur}" id="#ENV{name}" [(#HTML5|et{#ENV{obli}})required='required']/>
+<input type="text" name="#ENV{abo}#ENV{name}" class="text" value="#ENV*{#ENV{abo}#ENV{name},#ENV*{valeur}}" id="#ENV{id,#ENV{abo}#ENV{name}}" [(#HTML5|et{#ENV{obli}})required='required']/>
