@@ -251,6 +251,8 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	$campagne = sql_fetsel("*","spip_souscription_campagnes", "id_souscription_campagne=".intval($id_souscription_campagne));
 	set_request("id_souscription_campagne",$id_souscription_campagne);
 	set_request('type_souscription',$campagne['type_objectif']);
+	if (!in_array(_request('envoyer_info'),array('on','off')))
+		set_request('envoyer_info','off');
 
 	$erreurs = array();
 	$montant = formulaires_souscription_trouver_montant($campagne,$erreurs);

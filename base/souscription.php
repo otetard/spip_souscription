@@ -60,7 +60,7 @@ function souscription_declarer_tables_objets_sql($tables){
 				"recu_fiscal" => "varchar(3) NOT NULL DEFAULT ''",
 				"type_souscription" => "varchar(255) NOT NULL DEFAULT ''",
 				"informer_comite_local" => "varchar(3) NOT NULL DEFAULT ''",
-				"envoyer_info" => "varchar(3) NOT NULL DEFAULT ''",
+				"envoyer_info" => "varchar(3) NOT NULL DEFAULT 'off'",
 				"date_souscription " => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 				"date_echeance" => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 				"date_fin" => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
