@@ -82,7 +82,7 @@ function souscription_bank_abos_activer_abonnement($flux){
 		$abo_uid = $flux['args']['abo_uid'];
 		$set = array(
 			"abonne_uid"=>sql_quote($abo_uid),
-			"abo_statut"=>'ok',
+			"abo_statut"=>sql_quote('ok'),
 		);
 
 		if ($id_transaction = $flux['args']['id_transaction']){
@@ -92,7 +92,7 @@ function souscription_bank_abos_activer_abonnement($flux){
 				return $flux;
 			}
 
-			if (!$r = sql_fetsel("statut","spip_transactions","id_transaction=".intval($id_transaction))){
+			if (!$r = sql_fetsel("statut,montant","spip_transactions","id_transaction=".intval($id_transaction))){
 				return $flux;
 			}
 			if ($r['statut']!=='ok'){
@@ -113,15 +113,26 @@ function souscription_bank_abos_activer_abonnement($flux){
 		if ($id_transaction
 		  AND ($id_transaction==$row['id_transaction_echeance']) ){
 
-			$set["date_echeance"] = sql_quote(date('Y-m-d H:i:s',strtotime("+1 month",strtotime($row["date_echeance"]))));
+			if (!intval($row["date_echeance"]))
+				$row["date_echeance"] = $row["date_souscription"];
+
+			$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($row["date_echeance"])));
 			if ($flux['data']['validite']==='echeance'){
+				$set["date_echeance"] = sql_quote($prochaine_echeance);
 				$set["date_fin"] = $set["date_echeance"];
 			}
 			else {
-				$set["date_fin"] = sql_quote($flux['data']['validite']);
+				if ($prochaine_echeance<$flux['args']['validite']){
+					$set["date_echeance"] = sql_quote($prochaine_echeance);
+				}
+				else {
+					$set["date_echeance"] = sql_quote($row["date_souscription"]);
+				}
+				$set["date_fin"] = sql_quote($flux['args']['validite']);
 			}
 
 		}
+
 		if ($row['id_souscription'] AND count($set)){
 			sql_update("spip_souscriptions",$set,"id_souscription=".intval($row['id_souscription']));
 		}
@@ -195,7 +206,8 @@ function souscription_bank_abos_resilier($flux){
 			'abo_fin_raison' => $flux['args']['message'],
 		);
 		if ($flux['args']['date_fin']=='date_echeance'){
-			$set['date_fin'] = $row['date_echeance'];
+			$set['date_fin'] = date('Y-m-d 00:00:00',strtotime($row['date_echeance']));
+			$set['date_echeance'] = souscription_derniere_echeance($row['date_echeance'],$set['date_fin']);
 		}
 		else {
 			$set['date_fin'] = $flux['args']['date_fin'];
