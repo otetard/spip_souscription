@@ -13,7 +13,7 @@
       #ACTION_FORMULAIRE{#ENV{action}}
 
       <ul>
-	      [(#ENV{_montant_type}|=={none}|non)
+	      [(#ENV{_montant_type}|sinon{none}|=={none}|non)
 	      #SET{name,montant}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
         <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
           <label for="#GET{name}">#ENV{_montant_label}</label>[
@@ -24,7 +24,7 @@
 	        ]
         </li>
 	      ]
-	      [(#ENV{_abo_montant_type}|=={none}|non)
+	      [(#ENV{_abo_montant_type}|sinon{none}|=={none}|non)
 	      #SET{name,abo_montant}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 	      #SET{abo,''}
         <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
