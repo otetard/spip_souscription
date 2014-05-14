@@ -130,6 +130,15 @@ function action_exporter_souscriptions_dist($arg = null){
 	/* Utilisation de la fonction exporter_csv de Bonux */
 	$exporter_csv = charger_fonction('exporter_csv', 'inc/', true);
 
-	$exporter_csv("souscriptions", $res, ',', $entete);
+	$titre = _T("souscription:titre_souscriptions")."-".$GLOBALS['meta']['nom_site'];
+	if ($id_campagne)
+		$titre .= "-Campagne$id_campagne";
+	if ($date_debut)
+		$titre .= "-From".date("Ymd", $date_debut);
+	if ($date_fin)
+		$titre .= "-To".date("Ymd", $date_fin);
+	$titre .= "-".date('Ymd');
+	$exporter_csv($titre, $res, ',', $entete);
 	exit();
+
 }
