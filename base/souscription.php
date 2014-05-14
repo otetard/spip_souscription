@@ -87,6 +87,7 @@ function souscription_declarer_tables_objets_sql($tables){
 				"adresse" => 1,
 				"ville" => 1,
 				"code_postal" => 1,
+				"abonne_uid" => 1,
 			),
 			'tables_jointures' => array(
 				'spip_souscriptions_liens',
