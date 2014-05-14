@@ -1,6 +1,7 @@
 <BOUCLE_campagnes(SOUSCRIPTION_CAMPAGNES){tout} />[(#TOTAL_BOUCLE|sinon_interdire_acces{#URL_ECRIRE{souscription_campagnes}})]<//B_campagnes>
 [(#AUTORISER{voir,souscription}|sinon_interdire_acces)]
 #FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+<h1 class="grostitre"><:souscription:titre_souscriptions:></h1>
 <div class="nettoyeur"></div>
 <div class="onglets_simple clearfix">
 	<ul>

@@ -93,3 +93,14 @@ function souscription_derniere_echeance($date_echeance,$date_fin){
 		$date_echeance = $next;
 	return $date_echeance;
 }
+
+function souscription_rappel_duree($date_echeance){
+	$fin = strtotime('+1 month',strtotime($date_echeance));
+	$now = time();
+	if ($now>$fin) return "end";
+	foreach(array(15,30,45,60,90) as $d){
+		$jalon = strtotime("-$d day",$fin);
+		if ($now>$jalon) return $d;
+	}
+	return $d;
+}
