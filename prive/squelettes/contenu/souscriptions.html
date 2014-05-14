@@ -23,7 +23,7 @@
 	<ul>
 		<li>[(#SELF|parametre_url{abo_statut,'XXX'}|replace{XXX,''}|lien_ou_expose{Tous,[(#ENV{abo_statut}|non)],ajax})]</li>
 		<li>[(#SELF|parametre_url{abo_statut,'non'}|lien_ou_expose{Uniques,#ENV{abo_statut}|=={non},ajax})]</li>
-		<li>[(#SELF|parametre_url{abo_statut,'ok|resilie|commande'}|lien_ou_expose{Mensuels,#ENV{abo_statut}|=={ok|resilies|commande},ajax})]</li>
+		<li>[(#SELF|parametre_url{abo_statut,'ok|resilie|commande'}|lien_ou_expose{Mensuels,#ENV{abo_statut}|=={ok|resilie|commande},ajax})]</li>
 		<li>[(#SELF|parametre_url{abo_statut,'ok'}|lien_ou_expose{En cours,#ENV{abo_statut}|=={ok},ajax})]</li>
 		<li>[(#SELF|parametre_url{abo_statut,'resilie'}|lien_ou_expose{Résiliés,#ENV{abo_statut}|=={resilie},ajax})]</li>
 		<li>[(#SELF|parametre_url{abo_statut,'commande'}|lien_ou_expose{Commande,#ENV{abo_statut}|=={commande},ajax})]</li>
