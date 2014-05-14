@@ -84,6 +84,9 @@ function campagne_afficher_objectif($nombre,$type_objectif){
 
 function souscription_derniere_echeance($date_echeance,$date_fin){
 	$next = $date_echeance;
+	if (!intval($date_fin)){
+		$date_fin = "2020-12-31 00:00:00";
+	}
 	while (intval($date_fin) AND $date_echeance>$date_fin)
 		$date_echeance = date('Y-m-d H:i:s',strtotime('-1 month',strtotime($date_echeance)));
 	while (($next=date('Y-m-d H:i:s',strtotime('+1 month',strtotime($date_echeance))))<=$date_fin)

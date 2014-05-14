@@ -16,8 +16,7 @@
 		<tr class="first_row">
 			<th class="id" scope="col">[(#TRI{id_souscription,<:info_numero_abbreviation:>,ajax})]</th>
 			<th class="type_souscription" scope="col">[(#TRI{type_souscription,Type,ajax})]</th>
-			<th class="courriel" scope="col">[(#TRI{courriel,<:souscription:label_courriel:>,ajax})]</th>
-			<th class="nom" scope="col">[(#TRI{nom,<:souscription:label_nom:>,ajax})]</th>
+			<th class="courriel" scope="col">[(#TRI{courriel,<:souscription:label_courriel:>,ajax})] / [(#TRI{nom,<:souscription:label_nom:>,ajax})]</th>
 			<th class="montant" scope="col">[(#TRI{montant,<:souscription:label_montant_liste:>,ajax})]</th>
 			<th class="date" scope="col">[(#TRI{date_souscription,<:date:>,ajax})]</th>
 			<th class="statut" scope="col">[(#TRI{statut,<:souscription:label_statut:>,ajax})]</th>
@@ -37,9 +36,8 @@
 			<td class="id"><a href="[(#ID_SOUSCRIPTION|generer_url_entite{souscription})]"
 			                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">#ID_SOUSCRIPTION</a></td>
 			<td class="type_souscription"><a href="[(#ID_SOUSCRIPTION|generer_url_entite{souscription})]"
-			                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">[(#TYPE_SOUSCRIPTION)]</a>[(#GET{abo})<br />mensuel]</td>
-			<td class="courriel">#COURRIEL</td>
-			<td class="nom secondaire">#NOM #PRENOM</td>
+			                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION">[(#TYPE_SOUSCRIPTION)]</a>[(#GET{abo})<br />mens.]</td>
+			<td class="courriel">[<a href="mailto:#COURRIEL" title="#COURRIEL">(#COURRIEL|couper{30,…})</a>]<br />#NOM #PRENOM</td>
 			<td class="montant secondaire">[(#GET{abo}|?{#MONTANT_CUMUL,#MONTANT}|affiche_monnaie)][<br />(#GET{abo})[\((#MONTANT|affiche_monnaie{2,'&euro;/mois'})\)]]</td>
 			<td class="date secondaire">[(#DATE_SOUSCRIPTION|affdate{Y-m-d H:i:s})]</td>
 			<td class="statut secondaire">[(#STATUT)][(#GET{abo})<br />\([(#ABO_STATUT|=={ok}|?{[&rarr;(#DATE_ECHEANCE|souscription_derniere_echeance{#DATE_FIN}|affdate{Y-m})],#ABO_STATUT})]\)]</td>
