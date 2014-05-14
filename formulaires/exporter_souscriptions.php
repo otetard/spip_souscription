@@ -47,7 +47,7 @@ function formulaires_exporter_souscriptions_traiter_dist($type_souscription="tou
   $campagne = _request('exporter_campagne');
 
   $verifier = charger_fonction('verifier', 'inc/');
-  $date = "";
+	$date_debut = $date_fin = "";
   $verifier(_request('exporter_date_debut'), 'date', array('normaliser' => 'datetime'), $date_debut);
   $verifier(_request('exporter_date_fin'), 'date', array('normaliser' => 'datetime'), $date_fin);
 

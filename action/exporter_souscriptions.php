@@ -74,33 +74,33 @@ function action_exporter_souscriptions_dist($arg = null){
 		. "S.nom, S.prenom, S.adresse, S.code_postal, S.ville, S.pays, S.telephone, S.recu_fiscal, S.envoyer_info, S.informer_comite_local, S.date_souscription,"
 		. "C.id_souscription_campagne, C.titre";
 	$from = "spip_souscriptions AS S
-		LEFT JOIN spip_transactions_liens AS L ON (L.id_souscription=S.id_souscription)
+		LEFT JOIN spip_souscriptions_liens AS L ON (L.id_souscription=S.id_souscription)
 		LEFT JOIN spip_transactions AS T ON (T.id_transaction=L.id_objet AND objet='transaction')
 		LEFT JOIN spip_souscription_campagnes AS C ON (C.id_souscription_campagne = S.id_souscription_campagne)";
 
 	$where = array();
 	if ($type_souscription)
-		$where[] = "S.type_souscription='$type_souscription'";
+		$where[] = "S.type_souscription=".sql_quote($type_souscription);
 
 	if ($statut){
 		if ($statut=="paye")
-			$where[] = "T.statut='ok' and reglee='oui'";
+			$where[] = "T.statut=" . sql_quote('ok') . " AND reglee=" . sql_quote('oui');
 		elseif ($statut=="commande")
-			$where[] = "T.statut='commande'";
+			$where[] = "T.statut=" . sql_quote('commande');
 		elseif ($statut=="erreur")
-			$where[] = "T.statut like 'echec%'";
+			$where[] = "T.statut LIKE " . sql_quote('echec%');
 	}
 
 	if ($id_campagne)
-		$where[] = "C.id_souscription_campagne = '$id_campagne'";
+		$where[] = "C.id_souscription_campagne=" . intval($id_campagne);
 
 	if ($date_debut)
-		$where[] = "S.date_souscription > '" . date("Y-m-d 00:00:00", $date_debut) . "'";
+		$where[] = "T.date_transaction>" . sql_quote(date("Y-m-d 00:00:00", $date_debut));
 
 	if ($date_fin)
-		$where[] = "S.date_souscription < '" . date("Y-m-d 23:59:59", $date_fin) . "'";
+		$where[] = "T.date_transaction<" . sql_quote(date("Y-m-d 23:59:59", $date_fin));
 
-	$row = sql_select($select, $from, $where);
+	$res = sql_select($select, $from, $where);
 
 	$entete = array(
 		_T("souscription:label_exporter_entete_id_don"),
@@ -130,6 +130,6 @@ function action_exporter_souscriptions_dist($arg = null){
 	/* Utilisation de la fonction exporter_csv de Bonux */
 	$exporter_csv = charger_fonction('exporter_csv', 'inc/', true);
 
-	$exporter_csv("souscriptions", $row, ',', $entete);
+	$exporter_csv("souscriptions", $res, ',', $entete);
 	exit();
 }
