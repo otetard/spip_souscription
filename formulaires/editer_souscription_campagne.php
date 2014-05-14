@@ -13,6 +13,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('inc/actions');
 include_spip('inc/editer');
+include_spip('inc/config');
 
 function formulaires_editer_souscription_campagne_identifier_dist($id_souscription_campagne = 'new',
                                                                   $retour = '',
@@ -48,7 +49,6 @@ function formulaires_editer_souscription_campagne_charger_dist($id_souscription_
 	$valeurs['objectif_oui_non'] = "";
 
 	if (!intval($id_souscription_campagne)){
-		include_spip('inc/config');
 		if (lire_config('souscription/don_activer','off')=='on'){
 			$valeurs['type_saisie'] = lire_config('souscription/don_type_saisie',$valeurs['type_saisie']);
 			$valeurs['montants'] = lire_config('souscription/don_montants',$valeurs['montants']);

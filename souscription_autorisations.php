@@ -54,7 +54,8 @@ function autoriser_souscription_voir_dist($faire, $type, $id, $qui, $opt) {
 
 
 function autoriser_souscriptioncampagne_creer_dist($faire, $type, $id, $qui, $opt) {
-	include_spip("inc/config");
+	if (!function_exists("lire_config"))
+		include_spip("inc/config");
 	if (lire_config("souscription/adhesion_activer","off")=="off" AND lire_config("souscription/don_activer","off")=="off")
 		return false;
 	return autoriser("defaut","",$id,$qui,$opt);

@@ -109,6 +109,8 @@ function maj_configuration_montants(){
 	foreach (array('adhesion_montants', 'don_montants') as $cfg){
 		$cle_cfg = "souscription/${cfg}";
 
+		if (!function_exists("lire_config"))
+			include_spip("inc/config");
 		$montants_orig = lire_config($cle_cfg);
 
 		$montants = "";
