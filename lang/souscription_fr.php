@@ -45,7 +45,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'erreur_telephone_invalide' => 'Numéro de téléphone incorrect',
 	'explication_bloc_fiscal_adhesion' => 'Les informations suivantes sont nécessaires pour nous permettre de réaliser l&#8217adhésion :',
 	'explication_bloc_fiscal_don' => 'Ces informations sont nécessaires en vue de l&#8217établissement du reçu permettant une déduction fiscale qui vous sera envoyé',
-	'explication_montants' => 'Le montants divent être au format suivant: <code>[montant]|[description]</code> à raison d&#8217une entrée par ligne.',
+	'explication_montants' => 'Le montants divent être au format suivant: <code>montant|description</code> à raison d&#8217une entrée par ligne.',
 	'explication_type_saisie' => 'Mode d&#8217affichage des différents montants possibles',
 
 // I

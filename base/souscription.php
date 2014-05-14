@@ -72,7 +72,7 @@ function souscription_declarer_tables_objets_sql($tables){
 			),
 			'key' => array(
 				"PRIMARY KEY" => "id_souscription",
-				"KEY id_transaction" => "id_transaction",
+				"KEY id_transaction_echeance" => "id_transaction_echeance",
 				"KEY id_souscription_campagne" => "id_souscription_campagne"
 			),
 			'titre' => "nom AS titre, '' AS lang",
