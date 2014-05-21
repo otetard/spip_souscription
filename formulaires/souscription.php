@@ -277,7 +277,9 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 		$hidden);
 
 	if ($ret['id_souscription']){
-		$id_auteur = (isset($GLOBALS['visiteur_session']['id_auteur'])?$GLOBALS['visiteur_session']['id_auteur']:0);
+		// recuperer l'id_auteur de la souscription, qui a pu etre renseigne en post_edition par un autre plugin
+		// ou recupere de la session courante hors espace prive
+		$id_auteur = sql_getfetsel("id_auteur","spip_souscriptions","id_souscription=".intval($ret['id_souscription']));
 		// generer la transaction et l'associer a la souscription
 		$inserer_transaction = charger_fonction('inserer_transaction', 'bank');
 		$options = array(
