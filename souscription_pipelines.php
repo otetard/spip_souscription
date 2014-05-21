@@ -207,6 +207,9 @@ function souscription_bank_abos_resilier($flux){
 		);
 		if ($flux['args']['date_fin']=='date_echeance'){
 			$set['date_fin'] = date('Y-m-d 00:00:00',strtotime($row['date_echeance']));
+			if (!function_exists('souscription_derniere_echeance')){
+				include_spip("public/parametrer");
+			}
 			$set['date_echeance'] = souscription_derniere_echeance($row['date_echeance'],$set['date_fin']);
 		}
 		else {
