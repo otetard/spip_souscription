@@ -48,6 +48,7 @@ function souscription_declarer_tables_objets_sql($tables){
 				"id_souscription" => "bigint(21) NOT NULL",
 				"id_souscription_campagne" => "bigint(21) NOT NULL DEFAULT 0",
 				"id_transaction_echeance" => "bigint(21) NOT NULL DEFAULT 0",
+				"id_auteur" 	=> "bigint(21) NOT NULL", // auteur (spip) loge qui realise le don, si connu
 				"montant" 	=> "varchar(25) NOT NULL DEFAULT ''", // montant en euros
 				"courriel" => "text NOT NULL DEFAULT ''",
 				"nom" => "text NOT NULL DEFAULT ''",

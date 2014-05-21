@@ -60,10 +60,13 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 	$abo_montant_explication = nl2br(lire_config("souscription/${type}_abo_montants_description"));
 
 	$email = '';
-	if (isset($GLOBALS['visiteur_session']['email']) AND $GLOBALS['visiteur_session']['email'])
-		$email = $GLOBALS['visiteur_session']['email'];
-	elseif (isset($GLOBALS['visiteur_session']['session_email']) AND $GLOBALS['visiteur_session']['session_email'])
+	// dans l'espace prive c'est une souscription pour autrui, pas de pre-remplissage
+	if (!test_espace_prive()){
+		if (isset($GLOBALS['visiteur_session']['email']) AND $GLOBALS['visiteur_session']['email'])
+			$email = $GLOBALS['visiteur_session']['email'];
+		elseif (isset($GLOBALS['visiteur_session']['session_email']) AND $GLOBALS['visiteur_session']['session_email'])
 			$email = $GLOBALS['visiteur_session']['session_email'];
+	}
 
 	$valeurs = array(
 		'montant' => '',

@@ -35,6 +35,11 @@
 #PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,souscription_campagne,id,#ID_SOUSCRIPTION_CAMPAGNE},data,'<div class="nettoyeur"></div>'}}
 
 #BOITE_FERMER
+
+[(#AUTORISER{deleguer,souscription})
+<h2><:souscription:titre_souscription_deleguee:></h2>
+#FORMULAIRE_SOUSCRIPTION{#ID_SOUSCRIPTION_CAMPAGNE}
+]
 [(#EVAL{_AJAX}|oui)
 	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin');/*\\]\\]>*/</script>
 ]

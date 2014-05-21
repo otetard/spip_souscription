@@ -39,18 +39,32 @@ function souscription_inserer(){
 
 	$champs = array('date_souscription' => date('Y-m-d H:i:s'));
 
+	if (!test_espace_prive()
+	  AND is_null(_request('id_auteur'))
+		AND isset($GLOBALS['visiteur_session']['id_auteur'])){
+		$champs['id_auteur'] = $GLOBALS['visiteur_session']['id_auteur'];
+	}
+
 	// Envoyer aux plugins
 	$champs = pipeline('pre_insertion',
-		array('args' => array('table' => 'spip_souscriptions'),
-			'data' => $champs)
+		array(
+			'args' => array(
+				'table' => 'spip_souscriptions'
+			),
+			'data' => $champs
+		)
 	);
 
 	$id_souscription = sql_insertq("spip_souscriptions", $champs);
 
 	pipeline('post_insertion',
-		array('args' => array('table' => 'spip_souscriptions',
-			'id_objet' => $id_souscription),
-			'data' => $champs)
+		array(
+			'args' => array(
+				'table' => 'spip_souscriptions',
+				'id_objet' => $id_souscription
+			),
+			'data' => $champs
+		)
 	);
 
 	return $id_souscription;
@@ -80,7 +94,7 @@ function souscription_modifier($id_souscription, $set = false){
 
 	/* Récupération du nom du pays */
 	$code_pays = _request('pays');
-	$pays = sql_getfetsel(sql_multi("nom", $GLOBALS['spip_lang']), 'spip_pays', "code='$code_pays'");
+	$pays = sql_getfetsel(sql_multi("nom", $GLOBALS['spip_lang']), 'spip_pays', "code=".sql_quote($code_pays));
 
 	$c = array_merge($c,array("pays" => $pays));
 

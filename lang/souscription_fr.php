@@ -136,6 +136,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_configurer_souscriptions' => 'Souscriptions',
 	'titre_page_configurer_souscriptions' => 'Configuration des souscriptions',
 	'titre_souscription' => 'Souscription',
+	'titre_souscription_deleguee' => 'Souscription déléguée',
 	'titre_souscriptions' => 'Souscriptions',
 	'titre_types_souscriptions' => 'Types de souscriptions',
 	'titre_page_payer' => 'Règler votre souscription',
