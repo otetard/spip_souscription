@@ -170,6 +170,7 @@ function souscription_bank_abos_renouveler($flux){
 				'auteur' => $row['courriel'],
 				'parrain' => 'souscription',
 				'tracking_id' => $row['id_souscription'],
+				'id_auteur' => $row['id_auteur'],
 			);
 
 			// ouvrir la transaction
