@@ -6,7 +6,7 @@
 	[<div class="souscription_avancement">(#ENV{avancement}|!={non}|?{#INCLURE{fond=inclure/souscription/avancement-campagne,campagne=#ENV{campagne}}})</div>]
 	[(#OBJECTIF_LIMITER|!={on}|ou{#AVANCEMENT_CAMPAGNE|<{#OBJECTIF}|oui})
 	<div class="ajax">
-		#FORMULAIRE_SOUSCRIPTION{#ENV{campagne}}
+		<INCLURE{fond=modeles/formulaire,class=souscription,args=#LISTE{#ENV{campagne}}} />
 	</div>
 	]
 	[(#OBJECTIF_LIMITER|=={on}|oui|et{#AVANCEMENT_CAMPAGNE|<{#OBJECTIF}|non})
