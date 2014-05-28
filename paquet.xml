@@ -27,6 +27,7 @@
   <pipeline nom="bank_abos_decrire_echeance" inclure="souscription_pipelines.php"/>
   <pipeline nom="bank_abos_renouveler" inclure="souscription_pipelines.php"/>
   <pipeline nom="bank_abos_resilier" inclure="souscription_pipelines.php"/>
+	<pipeline nom="taches_generales_cron" inclure="souscription_pipelines.php" />
   <pipeline nom="trig_bank_notifier_reglement" inclure="souscription_pipelines.php"/>
 
   <menu nom="souscription"

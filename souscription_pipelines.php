@@ -206,6 +206,7 @@ function souscription_bank_abos_renouveler($flux){
 						'abo_statut' => 'ok',
 						'montant_cumul' =>  round(floatval($row['montant_cumul']) + floatval($row['montant']),2),
 						'date_echeance' => $prochaine_echeance,
+						'abo_fin_raison' => '', // effacer la trace d'un rappel de paiement manquant
 					);
 					sql_updateq('spip_souscriptions',$set,"id_souscription=".intval($row['id_souscription']));
 					$row = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($row['id_souscription']));
@@ -223,6 +224,7 @@ function souscription_bank_abos_renouveler($flux){
 					'abo_statut' => 'ok',
 					'montant_cumul' =>  round(floatval($row['montant_cumul']) + floatval($row['montant']),2),
 					'date_echeance' => $prochaine_echeance,
+					'abo_fin_raison' => '', // effacer la trace d'un rappel de paiement manquant
 				);
 				sql_updateq('spip_souscriptions',$set,"id_souscription=".intval($row['id_souscription']));
 				$row = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($row['id_souscription']));
@@ -288,4 +290,14 @@ function souscription_bank_abos_resilier($flux){
 	}
 
 	return $flux;
+}
+
+/**
+ * Programmer la surveillance des echeances
+ * @param $taches_generales
+ * @return mixed
+ */
+function souscription_taches_generales_cron($taches_generales){
+	$taches_generales['surveiller_echeances_souscriptions'] = 24*3600; // 24h
+	return $taches_generales;
 }
