@@ -117,7 +117,7 @@ function souscription_bank_abos_activer_abonnement($flux){
 				$row["date_echeance"] = $row["date_souscription"];
 
 			$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($row["date_echeance"])));
-			if ($flux['data']['validite']==='echeance'){
+			if ($flux['args']['validite']==='echeance'){
 				$set["date_echeance"] = sql_quote($prochaine_echeance);
 				$set["date_fin"] = $set["date_echeance"];
 			}
@@ -176,26 +176,69 @@ function souscription_bank_abos_renouveler($flux){
 			$where = "id_souscription=".intval($id);
 		}
 		if ($row = sql_fetsel("*","spip_souscriptions",$where,'','date_souscription DESC')){
-
 			$options = array(
 				'auteur' => $row['courriel'],
 				'parrain' => 'souscription',
 				'tracking_id' => $row['id_souscription'],
 				'id_auteur' => $row['id_auteur'],
 			);
+			$inserer_transaction = charger_fonction("inserer_transaction","bank");
+			include_spip("action/editer_liens");
+
+			// verifier que c'est bien l'echeance attendue
+			// et sinon generer des transactions offline de rattrapage
+			if (!intval($row["date_echeance"]))
+				$row["date_echeance"] = $row["date_souscription"];
+			$date_echeance = $row['date_echeance'];
+			$datem45 = date('Y-m-d H:i:s',strtotime("-45 day"));
+			while ($date_echeance<$datem45){
+				$o = $options;
+				$o['champs']['date_transaction'] = $date_echeance;
+				$o['champs']['mode'] = 'offline';
+				$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($date_echeance)));
+				if ($id_transaction = $inserer_transaction($row['montant'],$o)){
+					// regler la transacton offline
+					$regler_transaction = charger_fonction('regler_transaction','bank');
+					$regler_transaction($id_transaction);
+
+					// mettre a jour la souscription
+					$set = array(
+						'abo_statut' => 'ok',
+						'montant_cumul' =>  round(floatval($row['montant_cumul']) + floatval($row['montant']),2),
+						'date_echeance' => $prochaine_echeance,
+					);
+					sql_updateq('spip_souscriptions',$set,"id_souscription=".intval($row['id_souscription']));
+					$row = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($row['id_souscription']));
+					objet_associer(array("souscription"=>$row['id_souscription']),array("transaction"=>$id_transaction));
+				}
+				$date_echeance = $prochaine_echeance;
+			}
+
 
 			// ouvrir la transaction
-			$inserer_transaction = charger_fonction("inserer_transaction","bank");
 			if ($id_transaction = $inserer_transaction($row['montant'],$options)){
+				$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($row['date_echeance'])));
 				$set = array(
 					'id_transaction_echeance' => $id_transaction,
 					'abo_statut' => 'ok',
 					'montant_cumul' =>  round(floatval($row['montant_cumul']) + floatval($row['montant']),2),
+					'date_echeance' => $prochaine_echeance,
 				);
 				sql_updateq('spip_souscriptions',$set,"id_souscription=".intval($row['id_souscription']));
-				include_spip("action/editer_liens");
+				$row = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($row['id_souscription']));
 				objet_associer(array("souscription"=>$row['id_souscription']),array("transaction"=>$id_transaction));
 				$flux['data'] = $id_transaction;
+			}
+
+			// verifier si ce n'est pas la derniere transaction, auquel cas on notifie
+			if ($row['date_echeance']>$row['date_fin']
+			  AND $row['date_fin']>$row['date_souscription']){
+
+				// Notifications
+				if ($notifications = charger_fonction('notifications', 'inc', true)) {
+					$notifications('informersouscriptionterminee', $row['id_souscription']);
+				}
+
 			}
 		}
 	}
