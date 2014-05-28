@@ -144,6 +144,11 @@ function souscription_bank_abos_activer_abonnement($flux){
 	return $flux;
 }
 
+/**
+ * Decrire l'echeance d'une souscription mensuelle
+ * @param array $flux
+ * @return array
+ */
 function souscription_bank_abos_decrire_echeance($flux){
 	if ($id_transaction = $flux['args']['id_transaction']
 	  AND $row = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))){
@@ -153,6 +158,12 @@ function souscription_bank_abos_decrire_echeance($flux){
 	return $flux;
 }
 
+/**
+ * Gerer le renouvellement lors de la notification de paiement d'une echeance par le presta bancaire
+ *
+ * @param array
+ * @return array
+ */
 function souscription_bank_abos_renouveler($flux){
 
 	if (!$flux['data']){
@@ -192,6 +203,12 @@ function souscription_bank_abos_renouveler($flux){
 	return $flux;
 }
 
+/**
+ * Prendre en charge la resiliation demandee par le client
+ *
+ * @param array $flux
+ * @return array
+ */
 function souscription_bank_abos_resilier($flux){
 
 	$id = $flux['args']['id'];
