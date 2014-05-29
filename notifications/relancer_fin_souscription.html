@@ -1,0 +1,41 @@
+[(#REM)
+
+Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_html
+
+
+]
+<BOUCLE_souscription(SOUSCRIPTIONS souscription_campagnes){id_souscription}{tout}>
+#SET{abo,#ABO_STATUT|=={non}|non}
+<title>[[(#NOM_SITE_SPIP|textebrut)]] Nous avons encore besoin de vous...</title>
+
+<intro>[(#DATE_FIN|date_relativecourt)] nous n'avons pas reçu votre versement mensuel | </intro>
+
+<body>
+	<div class="header">
+		<p>[(#TYPE_OBJECTIF|=={don}|?{<:souscription:sous_titre_type_dons:>,<:souscription:sous_titre_type_adhesions:>})]<br />
+			[&laquo;&nbsp;<strong>(#TITRE)</strong>&nbsp;&raquo;]
+		</p>
+
+		<hr/>
+	</div>
+	<h2>Nous avons encore besoin de vous...</h2>
+
+	<p>Nous avons reçu votre dernier versement mensuel le [(#INFO_DATE_TRANSACTION{transaction,#ID_TRANSACTION_ECHEANCE}|affdate_court)].
+	<p>Il n'a pas été reconduit automatiquement <strong>[(#DATE_FIN|date_relativecourt)]</strong> car votre moyen de paiement n'est plus valide.</p>
+	<p>Nous avons encore besoin de vous, pensez à venir renouveler votre [(#TYPE_SOUSCRIPTION)] sur le site <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>.</p>
+	<p>Merci !</p>
+
+
+	<div class="footer">
+		<hr/>
+		<h3>Votre dernier versement</h3>
+		<p>
+			<BOUCLE_trans(TRANSACTIONS){id_transaction=#ID_TRANSACTION_ECHEANCE}>
+			[(#DATE_TRANSACTION|affdate_heure)] - [(#MONTANT|affiche_monnaie)] (#MODE)</li>
+			</BOUCLE_trans>
+		</p>
+	</div>
+
+</body>
+</BOUCLE_souscription>
+#FILTRE{facteur_email_wrap_to_html}

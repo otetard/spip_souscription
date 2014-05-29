@@ -1,0 +1,71 @@
+[(#REM)
+
+Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_html
+
+
+]
+<BOUCLE_souscription(SOUSCRIPTIONS souscription_campagnes){id_souscription}{tout}>
+#SET{abo,#ABO_STATUT|=={non}|non}
+<title>[[(#NOM_SITE_SPIP|textebrut)]] ALERTE Souscription &eacute;ch&eacute;ance manquante</title>
+
+<intro>[(#TYPE_SOUSCRIPTION|ucfirst) ]##ID_SOUSCRIPTION : &eacute;ch&eacute;ance du [(#DATE_ECHEANCE|affdate)] [((#MONTANT|affiche_monnaie))] manquante | </intro>
+
+<body>
+	<div class="header">
+		[<p class="champ contenu_titre_campagne[ (#TITRE*|strlen|?{'',vide})]">
+			<span class='label'><:souscription_campagne:titre_souscription_campagne:></span>
+			<span dir="#LANG_DIR" class="titre">&laquo;&nbsp;<a href="[(#URL_ECRIRE{souscription_campagne,id_souscription_campagne=#ID_SOUSCRIPTION_CAMPAGNE}|url_absolue)]">(#TITRE)</a>&nbsp;&raquo;</span>
+		</p>]
+
+		<hr/>
+	</div>
+	<h2><a href="[(#URL_ECRIRE{souscription,id_souscription=#ID_SOUSCRIPTION}|url_absolue)]">[(#TYPE_SOUSCRIPTION|ucfirst) ][(#GET{abo})<:souscription:label_mensuel:> ]##ID_SOUSCRIPTION</a></h2>
+
+	<p>L'&eacute;ch&eacute;ance du [(#DATE_ECHEANCE|affdate)] n'a pas &eacute;t&eacute; re&ccedil;ue</p>
+
+	[<div class="champ contenu_courriel[ (#COURRIEL*|strlen|?{'',vide})]">
+		<span class='label'><:souscription:label_courriel:> : </span>
+		<span dir="#LANG_DIR" class="courriel"><a href="mailto:#COURRIEL">(#COURRIEL)</a></span>
+	</div>]
+
+	[<div class="champ contenu_montant[ (#MONTANT*|strlen|?{'',vide})]">
+		<span class='label'><:souscription:label_montant_liste:> : </span>
+		<span dir="#LANG_DIR" class="montant"><strong>(#GET{abo}|?{#MONTANT_CUMUL,#MONTANT}|affiche_monnaie)</strong>[(#GET{abo}|oui)<small>([(#MONTANT|affiche_monnaie) <:souscription:label_montant_chaque_mois:>])</small>]</span>
+	</div>]
+
+	[(#GET{abo})
+	[<div class="champ contenu_abonne_uid[ (#ABONNE_UID*|strlen|?{'',vide})]">
+		<span class='label'><:souscription:label_abonne_uid:> : </span>
+		<span dir="#LANG_DIR" class="abonne_uid">(#ABONNE_UID)</span>
+	</div>]
+	[<div class="champ contenu_date_echeance[ (#DATE_ECHEANCE*|>{#DATE_SOUSCRIPTION}|et{#DATE_ECHEANCE*|<{#DATE_FIN}}|?{'',vide})]">
+		<span class='label'><:souscription:label_date_echeance:> : </span>
+		<span dir="#LANG_DIR" class="date_echeance">(#DATE_ECHEANCE|affdate)</span>
+	</div>]
+	[<div class="champ contenu_date_fin[ (#DATE_FIN*|>{#DATE_SOUSCRIPTION}|?{'',vide})]">
+		<span class='label'><:souscription:label_date_derniere_echeance:> : </span>
+		<span dir="#LANG_DIR" class="date_fin">(#DATE_ECHEANCE|souscription_derniere_echeance{#DATE_FIN}|affdate)</span>
+	</div>]
+	[<div class="champ contenu_abo_statut[ (#ABO_STATUT*|strlen|?{'',vide})]">
+		<span class='label'><:souscription:label_abo_statut:> : </span>
+		<span dir="#LANG_DIR" class="abo_statut">(#ABO_STATUT)</span>
+	</div>]
+	]
+
+	<div class="footer">
+		<hr/>
+		<B_trans>
+			<h3>[(#TOTAL_BOUCLE|singulier_ou_pluriel{1_transaction,nb_transactions})]</h3>
+		<ul>
+		<BOUCLE_trans(TRANSACTIONS){id_transaction IN #ID_SOUSCRIPTION|souscription_liste_transactions}{par date_transaction}{statut=ok}>
+			<li>##ID_TRANSACTION - [(#DATE_TRANSACTION|affdate_heure)] - [(#MONTANT|affiche_monnaie)] (#MODE)</li>
+		</BOUCLE_trans>
+		</ul>
+		</B_trans>
+
+
+	</div>
+
+</body>
+</BOUCLE_souscription>
+#FILTRE{facteur_email_wrap_to_html}

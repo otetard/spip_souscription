@@ -49,7 +49,7 @@ function genie_relance_souscriptions_finies($now=null){
 	// abo_statut = fini pour les souscriptions qui vont a leur terme mais s'arrete a cause de la validite CB
 	// il faut les relancer, contrairement aux resilies
 	$date_fin = date('Y-m-d H:i:s',$now);
-	sql_updateq("spip_souscriptions",array('abo_statut'=>'fini'),"abo_statut=".sql_quote('ok')." AND date_fin>date_souscription AND date_fin<".sql_quote($date_fin));
+	sql_updateq("spip_souscriptions",array('abo_statut'=>'fini','abo_fin_raison'=>'date de fin'),"abo_statut=".sql_quote('ok')." AND date_fin>date_souscription AND date_fin<".sql_quote($date_fin));
 
 
 	// trouver tous les rappels en cours sur les abo_statut=fini
@@ -69,7 +69,7 @@ function genie_relance_souscriptions_finies($now=null){
 	while($nb--){
 		if ($row = sql_fetsel('id_souscription,date_fin,abo_relance','spip_souscriptions',$where,'','date_fin','0,1')){
 			spip_log("genie_relance_souscriptions_finies id_souscription=".$row['id_souscription'].", date_fin:".$row['date_fin'].", abo_relance:".$row['abo_relance'],'souscriptions_surveillance');
-			$notifications('alerterfinsouscription', $row['id_souscription']);
+			$notifications('relancerfinsouscription', $row['id_souscription']);
 			// noter qu'on a fait le rappel
 			sql_updateq("spip_souscriptions",array('abo_relance'=>souscriptions_prochaine_relance($row['date_fin'],$now)),'id_souscription='.intval($row['id_souscription']));
 		}
