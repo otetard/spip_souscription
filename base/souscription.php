@@ -68,6 +68,7 @@ function souscription_declarer_tables_objets_sql($tables){
 				"abonne_uid" => "varchar(255) NOT NULL DEFAULT ''",
 				"abo_statut" => "varchar(255) NOT NULL DEFAULT 'non'",
 				"abo_fin_raison" => "varchar(255) NOT NULL DEFAULT ''",
+				"abo_relance" => "varchar(3) NOT NULL DEFAULT ''",
 				"montant_cumul" 	=> "varchar(25) NOT NULL DEFAULT ''", // montant en euros du total des versements pour cette souscription
 				"maj" => "TIMESTAMP"
 			),
