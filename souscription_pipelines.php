@@ -316,6 +316,6 @@ function souscription_bank_abos_resilier($flux){
  * @return mixed
  */
 function souscription_taches_generales_cron($taches_generales){
-	$taches_generales['surveiller_echeances_souscriptions'] = 2*3600; // 2h
+	$taches_generales['surveiller_paiement_souscriptions'] = 2*3600; // 2h
 	return $taches_generales;
 }

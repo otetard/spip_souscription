@@ -12,10 +12,21 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 
-function genie_surveiller_echeances_souscriptions_dist(){
+function genie_surveiller_paiement_souscriptions_dist(){
 
-	$datemoins2d = date('Y-m-d H:i:s',strtotime('-2 day'));
-	$datemoins2m = date('Y-m-d H:i:s',strtotime('-2 month'));
+
+	genie_alerte_echeances_manquantes();
+	genie_relance_souscriptions_finies();
+
+	return 1;
+}
+
+
+function genie_alerte_echeances_manquantes($now=null){
+	if (!$now) $now = time();
+
+	$datemoins2d = date('Y-m-d H:i:s',strtotime('-2 day',$now));
+	$datemoins2m = date('Y-m-d H:i:s',strtotime('-2 month',$now));
 	$notifications = charger_fonction('notifications', 'inc');
 
 	// trouver toutes les souscriptions dont l'echeance est passee de plus de 2 jours et notifier
@@ -33,7 +44,6 @@ function genie_surveiller_echeances_souscriptions_dist(){
 		sql_updateq("spip_souscriptions",array('abo_fin_raison'=>'Alerte echeance manquante'),'id_souscription='.intval($row['id_souscription']));
 	}
 
-	return 1;
 }
 
 
