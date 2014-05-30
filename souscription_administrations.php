@@ -65,12 +65,28 @@ function souscription_upgrade($nom_meta_base_version, $version_cible){
 		array('sql_update','spip_souscriptions',array('date_echeance'=>'date_souscription','date_fin'=>'date_souscription')),
 		array('souscription_maj_montants_date'),
 	);
-	$maj['0.7.6'] = array(
+	$maj['0.8.0'] = array(
 		array('maj_tables',	array('spip_souscriptions')),
+	);
+	$maj['0.8.1'] = array(
+		array('souscription_maj_statut'),
 	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
+}
+
+function souscription_maj_statut(){
+	// toutes les transactions ok liees a une souscription
+	$ids = sql_allfetsel(
+		"L.id_souscription",
+		"spip_souscriptions_liens AS L JOIN spip_transactions AS T ON (L.objet=".sql_quote('transaction')." AND L.id_objet=T.id_transaction)",
+		"T.statut=".sql_quote('ok')
+	);
+	#var_dump($ids);
+	$ids = array_map('reset',$ids);
+	sql_updateq("spip_souscriptions",array('statut'=>'ok'),"statut=".sql_quote('prepa')." AND ".sql_in('id_souscription',$ids));
+
 }
 
 function souscription_maj_montants_date(){

@@ -40,7 +40,7 @@
 			<td class="courriel">[<a href="mailto:#COURRIEL" title="#COURRIEL">(#COURRIEL|couper{30,…})</a>]<br />#NOM #PRENOM</td>
 			<td class="montant secondaire">[(#GET{abo}|?{#MONTANT_CUMUL,#MONTANT}|affiche_monnaie)][<br />(#GET{abo})[(#MONTANT|affiche_monnaie{2,'&euro;/mois'})]]</td>
 			<td class="date secondaire">[(#DATE_SOUSCRIPTION|affdate{Y-m-d H:i:s})]</td>
-			<td class="statut secondaire">[(#STATUT)][(#GET{abo})<br />[(#ABO_STATUT|=={ok}|?{[<span class="fin">&rarr;(#DATE_ECHEANCE|souscription_derniere_echeance{#DATE_FIN}|affdate{Y-m})</span>],\(#ABO_STATUT\)})]]</td>
+			<td class="statut secondaire">[(#STATUT|=={ok}|non|ou{#GET{abo}|non}|?{#INFO_STATUT{transaction,#ID_TRANSACTION_ECHEANCE},[<br/>(#ABO_STATUT|=={ok}|?{[<span class="fin">&rarr;(#DATE_ECHEANCE|souscription_derniere_echeance{#DATE_FIN}|affdate{Y-m})</span>],\(#ABO_STATUT\)})]})]</td>
 			<td class="id_souscription_campagne" scope="col"><a href="[(#ID_SOUSCRIPTION_CAMPAGNE|generer_url_entite{souscription_campagne})]"
 						                  title="<:info_numero_abbreviation|attribut_html:> #ID_SOUSCRIPTION_CAMPAGNE">#ID_SOUSCRIPTION_CAMPAGNE</a></td>
 		</tr>

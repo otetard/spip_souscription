@@ -37,7 +37,10 @@ function action_editer_souscription_dist($arg = null){
  */
 function souscription_inserer(){
 
-	$champs = array('date_souscription' => date('Y-m-d H:i:s'));
+	$champs = array(
+		'date_souscription' => date('Y-m-d H:i:s'),
+		'statut' => 'prepa',
+	);
 
 	if (!test_espace_prive()
 	  AND is_null(_request('id_auteur'))
@@ -86,7 +89,7 @@ function souscription_modifier($id_souscription, $set = false){
 		// white list
 		objet_info('souscription','champs_editables'),
 		// black list
-		array('statut', 'date'),
+		array(),
 		// donnees eventuellement fournies
 		$set
 	);

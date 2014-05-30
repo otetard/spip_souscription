@@ -23,15 +23,15 @@ function calcul_avancement_campagne($id_campagne, $type_objectif, $objectif_init
 	// les paiements uniques
   $row_unique = sql_fetsel(
 	  array("COUNT(S.id_souscription) as nombre","SUM(S.montant) AS somme"),
-		"spip_souscriptions AS S JOIN spip_souscriptions_liens as L ON (L.id_souscription=S.id_souscription) JOIN spip_transactions AS T ON (L.id_objet = T.id_transaction AND L.objet='transaction')",
-		array("S.id_souscription_campagne=".sql_quote($id_campagne),"T.reglee=".sql_quote('oui'),"abo_statut=".sql_quote('non'))
+		"spip_souscriptions AS S",
+		array("S.id_souscription_campagne=".sql_quote($id_campagne),"S.statut=".sql_quote('ok'),"S.abo_statut=".sql_quote('non'))
   );
 	// les paiements recurents
 	// comptes pour 1 (don|adhesion) et pour le comul de la somme versee
 	$row_abos = sql_fetsel(
     array("COUNT(S.id_souscription) as nombre","SUM(S.montant_cumul) AS somme"),
 		"spip_souscriptions AS S",
-		array("S.id_souscription_campagne=".sql_quote($id_campagne),sql_in("abo_statut",array('ok','resilie')))
+		array("S.id_souscription_campagne=".sql_quote($id_campagne),sql_in("S.abo_statut",array('ok','resilie')))
   );
 
   return ($type_objectif == "don" ? $row_unique['somme']+$row_abos['somme'] : $row_unique['nombre']+$row_abos['nombre']) + $objectif_initial;

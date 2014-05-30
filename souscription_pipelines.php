@@ -67,6 +67,9 @@ function _trouver_modele_courriel_reglement($type, $id_souscription_campagne) {
 
 
 function souscription_bank_traiter_reglement($flux){
+	// on peut marquer cette souscription comme effective
+	sql_updateq("spip_souscriptions",array('statut'=>'ok'),'statut<>'.sql_quote('ok').' AND id_transaction_echeance='.intval($flux['args']['id_transaction']));
+
 	$flux['data'].=" <br />Vous allez recevoir un email de confirmation.";
 	return $flux;
 }
@@ -203,6 +206,7 @@ function souscription_bank_abos_renouveler($flux){
 
 					// mettre a jour la souscription
 					$set = array(
+						'statut' => 'ok',
 						'abo_statut' => 'ok',
 						'montant_cumul' =>  round(floatval($row['montant_cumul']) + floatval($row['montant']),2),
 						'date_echeance' => $prochaine_echeance,
@@ -221,6 +225,7 @@ function souscription_bank_abos_renouveler($flux){
 				$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($row['date_echeance'])));
 				$set = array(
 					'id_transaction_echeance' => $id_transaction,
+					'statut' => 'ok',
 					'abo_statut' => 'ok',
 					'montant_cumul' =>  round(floatval($row['montant_cumul']) + floatval($row['montant']),2),
 					'date_echeance' => $prochaine_echeance,
