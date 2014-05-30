@@ -1,0 +1,44 @@
+[(#REM)
+
+Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_html
+
+
+]
+<BOUCLE_souscription(SOUSCRIPTIONS souscription_campagnes){id_souscription}{tout}>
+#SET{abo,#ABO_STATUT|=={non}|non}
+<title>[[(#NOM_SITE_SPIP|textebrut)]] Votre [(#TYPE_SOUSCRIPTION)]</title>
+
+<intro>Vous n'avez pas fini votre paiement | </intro>
+
+<body>
+	<div class="header">
+		<p>[(#TYPE_OBJECTIF|=={don}|?{<:souscription:sous_titre_type_dons:>,<:souscription:sous_titre_type_adhesions:>})]<br />
+			[&laquo;&nbsp;<strong>(#TITRE)</strong>&nbsp;&raquo;]
+		</p>
+
+		<hr/>
+	</div>
+	<h2>Vous n'avez pas fini...</h2>
+
+	<p>Vous n'avez pas fini votre <b>[(#TYPE_SOUSCRIPTION)]</b>
+		[(#INFO_DATE_TRANSACTION{transaction,#ID_TRANSACTION_ECHEANCE}|date_relative)]
+		sur notre site <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>.</p>
+
+	<p>Peut-&ecirc;tre avez-vous &eacute;t&eacute; interrompu et aimeriez finir maintenant&nbsp;?
+		<BOUCLE_trans(TRANSACTIONS){id_transaction=#ID_TRANSACTION_ECHEANCE}>
+		Dans ce cas, il vous suffit simplement de
+		<a href="[(#URL_PAGE{#ABO_STATUT|=={non}|?{payer-acte,payer-abonnement},id_transaction=#ID_TRANSACTION&transaction_hash=#TRANSACTION_HASH}|url_absolue)]">
+			proc&eacute;der au paiement</a>, nous avons conserv&eacute; toute votre saisie.
+		</BOUCLE_trans>
+	</p>
+	<p>Si vous voulez modifier votre [(#TYPE_SOUSCRIPTION)] vous pouvez simplement recommencer le processus sur notre site <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>.</p>
+	<p>Merci !</p>
+
+
+	<div class="footer">
+		<hr/>
+	</div>
+
+</body>
+</BOUCLE_souscription>
+#FILTRE{facteur_email_wrap_to_html}

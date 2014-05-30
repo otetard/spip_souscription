@@ -15,13 +15,52 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 function genie_surveiller_paiement_souscriptions_dist(){
 
 
+	genie_relancer_souscriptions_abandonnees();
+
 	genie_alerte_echeances_manquantes();
+
 	genie_relance_souscriptions_finies();
 
 	return 1;
 }
 
 
+/**
+ * Trouver toutes les souscriptions qui sont restees en commande : processus abandonne avant paiement
+ * (ce qui permet de donner une url directe vers la page de paiement sans refaire le processus)
+ * et on relance en invitant a revenir souscrire
+ *
+ * @param null|int $now
+ */
+function genie_relancer_souscriptions_abandonnees($now = null){
+	if (!$now) $now = time();
+
+	$datemoins1w = date('Y-m-d H:i:s',strtotime('-1 week',$now));
+	$notifications = charger_fonction('notifications', 'inc');
+
+
+	// trouver toutes les souscriptions dont l'echeance est passee de plus de 1 semaine et notifier
+	// ca laisse le temps de recevoir les cheques pour les reglements par cheque, sans relancer inutilement
+	$rows = sql_allfetsel(
+		"S.id_souscription",
+		"spip_souscriptions AS S JOIN spip_transactions AS T on T.id_transaction=S.id_transaction_echeance",
+		"S.statut=".sql_quote('prepa')." AND S.date_souscription<".sql_quote($datemoins1w)." AND T.statut=".sql_quote('commande'),
+	  '','date_souscription','0,5');
+
+	foreach($rows as $row){
+		$notifications('inviterrecommencersouscription', $row['id_souscription']);
+		spip_log("inviterrecommencersouscription id_souscription=".$row['id_souscription'],'souscriptions_surveillance');
+		// noter qu'on a fait le rappel
+		sql_updateq("spip_souscriptions",array('statut'=>'relance'),'id_souscription='.intval($row['id_souscription']));
+	}
+
+}
+
+
+/**
+ * chercher toutes les souscriptions dont l'echeance est passee de plus de 2 jours et notifier aux admins
+ * @param null|int $now
+ */
 function genie_alerte_echeances_manquantes($now=null){
 	if (!$now) $now = time();
 
@@ -34,7 +73,8 @@ function genie_alerte_echeances_manquantes($now=null){
 		"abo_statut=".sql_quote('ok')." AND abo_fin_raison=".sql_quote('')
 		." AND date_echeance<".sql_quote($datemoins2d)
 		." AND date_echeance>".sql_quote($datemoins2m)
-	  ." AND (date_echeance<date_fin OR date_fin<date_souscription)"
+	  ." AND (date_echeance<date_fin OR date_fin<date_souscription)",
+		'','date_echeance','0,5'
 	);
 
 	foreach($rows as $row){
@@ -51,6 +91,7 @@ function genie_alerte_echeances_manquantes($now=null){
 /**
  * chercher les souscriptions mensuelles terminees et les relancer
  * et envoyer une relance
+ * @param null|int $now
  */
 function genie_relance_souscriptions_finies($now=null){
 	if (!$now) $now = time();
@@ -74,7 +115,7 @@ function genie_relance_souscriptions_finies($now=null){
 	$where = "(".implode(") OR (",$where).")";
 	$where = "(($where) AND (abo_statut=".sql_quote('fini')."))";
 
-	$nb=2;
+	$nb=5;
 	$notifications = charger_fonction('notifications', 'inc');
 	while($nb--){
 		if ($row = sql_fetsel('id_souscription,date_fin,abo_relance','spip_souscriptions',$where,'','date_fin','0,1')){
