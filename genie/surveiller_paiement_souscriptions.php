@@ -42,16 +42,28 @@ function genie_relancer_souscriptions_abandonnees($now = null){
 	// trouver toutes les souscriptions dont l'echeance est passee de plus de 1 semaine et notifier
 	// ca laisse le temps de recevoir les cheques pour les reglements par cheque, sans relancer inutilement
 	$rows = sql_allfetsel(
-		"S.id_souscription",
+		"S.id_souscription,S.courriel,S.date_souscription",
 		"spip_souscriptions AS S JOIN spip_transactions AS T on T.id_transaction=S.id_transaction_echeance",
 		"S.statut=".sql_quote('prepa')." AND S.date_souscription<".sql_quote($datemoins1w)." AND T.statut=".sql_quote('commande'),
-	  '','date_souscription','0,5');
+	  '','date_souscription DESC','0,5');
 
 	foreach($rows as $row){
-		$notifications('inviterrecommencersouscription', $row['id_souscription']);
-		spip_log("inviterrecommencersouscription id_souscription=".$row['id_souscription'],'souscriptions_surveillance');
-		// noter qu'on a fait le rappel
-		sql_updateq("spip_souscriptions",array('statut'=>'relance'),'id_souscription='.intval($row['id_souscription']));
+		// il faut verifier que la personne n'a pas reussi a faire une nouvelle souscription par la suite
+		// si c'est le cas, on note en abandon cette souscription
+		if (sql_countsel("spip_souscriptions","statut=".sql_quote('ok')." AND courriel=".sql_quote($row['courriel'])." AND date_souscription>".sql_quote($row['date_souscription']))){
+			sql_updateq("spip_souscriptions",array('statut'=>'abandon'),'id_souscription='.intval($row['id_souscription']));
+		}
+		// si on a deja fait une relance plus recente, on ne fait rien non plus
+		elseif (sql_countsel("spip_souscriptions","statut=".sql_quote('relance')." AND courriel=".sql_quote($row['courriel'])." AND date_souscription>".sql_quote($row['date_souscription']))){
+			sql_updateq("spip_souscriptions",array('statut'=>'abandon'),'id_souscription='.intval($row['id_souscription']));
+		}
+		// sinon on envoi une relance, et on note en relance
+		else {
+			$notifications('inviterrecommencersouscription', $row['id_souscription']);
+			spip_log("inviterrecommencersouscription id_souscription=".$row['id_souscription'],'souscriptions_surveillance');
+			// noter qu'on a fait le rappel
+			sql_updateq("spip_souscriptions",array('statut'=>'relance'),'id_souscription='.intval($row['id_souscription']));
+		}
 	}
 
 }
