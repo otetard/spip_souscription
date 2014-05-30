@@ -30,7 +30,7 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 		<h3>Votre dernier versement</h3>
 		<p>
 			<BOUCLE_trans(TRANSACTIONS){id_transaction=#ID_TRANSACTION_ECHEANCE}>
-			[(#DATE_TRANSACTION|affdate_heure)] - [(#MONTANT|affiche_monnaie)] (#MODE)</li>
+			[(#DATE_TRANSACTION|affdate_heure)] - [(#MONTANT|affiche_monnaie)] [\((#MODE)\)]
 			</BOUCLE_trans>
 		</p>
 	</div>

@@ -1,0 +1,46 @@
+[(#REM)
+
+Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_html
+
+
+]
+<BOUCLE_souscription(SOUSCRIPTIONS souscription_campagnes){id_souscription}{tout}>
+#SET{abo,#ABO_STATUT|=={non}|non}
+<title>[[(#NOM_SITE_SPIP|textebrut)]] Nous avons encore besoin de vous...</title>
+
+<intro>Votre paiement mensuel a &eacute;t&eacute; refus&eacute; | </intro>
+
+<body>
+	<div class="header">
+		<p>[(#TYPE_OBJECTIF|=={don}|?{<:souscription:sous_titre_type_dons:>,<:souscription:sous_titre_type_adhesions:>})]<br />
+			[&laquo;&nbsp;<strong>(#TITRE)</strong>&nbsp;&raquo;]
+		</p>
+
+		<hr/>
+	</div>
+	<h2>Problème technique</h2>
+	<strong>Votre paiement mensuel a &eacute;t&eacute; refus&eacute;.</strong>
+
+	<p>En raison d'un refus bancaire, nous n'avons pas pu recevoir votre paiement du [(#INFO_DATE_TRANSACTION{transaction,#ID_TRANSACTION_ECHEANCE}|affdate_court)].
+	Cela peut venir d'un problème technique ou d'un incident sur votre moyen de paiement.</p>
+	<p>Malheureusement cela interrompt automatiquement tous vos prochains versements mensuels.</p>
+	<p>Si cela n'est pas votre intention, venez vite renouveler votre [(#TYPE_SOUSCRIPTION)] sur le site <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>.</p>
+	<p>Merci !</p>
+
+
+	<div class="footer">
+		<hr/>
+		<B_trans>
+		<h3>Paiement refusé</h3>
+		<p>
+			<BOUCLE_trans(TRANSACTIONS){id_transaction=#ENV{id_transaction}}>
+			[(#DATE_TRANSACTION|affdate_heure)] - [(#MONTANT|affiche_monnaie)] [\((#MODE)\)]
+			[<br />(#MESSAGE)]
+			</BOUCLE_trans>
+		</p>
+		</B_trans>
+	</div>
+
+</body>
+</BOUCLE_souscription>
+#FILTRE{facteur_email_wrap_to_html}

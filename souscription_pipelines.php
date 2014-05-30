@@ -287,6 +287,19 @@ function souscription_bank_abos_resilier($flux){
 		if ($ok){
 			sql_updateq("spip_souscriptions",$set,"id_souscription=".intval($row['id_souscription']));
 		}
+
+		// si c'est une resiliation suite a refus de paiement, notifier
+		if (strncmp($flux['args']['message'],'[bank]',6)==0){
+			// Notifications
+			if ($notifications = charger_fonction('notifications', 'inc', true)) {
+				$id_transaction = 0;
+				if (preg_match(",\b#(\d+)\b,",$flux['args']['message'],$m)){
+					$id_transaction = intval($m[1]);
+				}
+				$notifications('informersouscriptioninterrompue', $row['id_souscription'], array('id_transaction'=>$id_transaction,'message'=>$flux['args']['message']));
+			}
+		}
+
 	}
 
 	return $flux;
