@@ -1,4 +1,5 @@
 #CACHE{600}
+<B_souscription>
 #HTTP_HEADER{Content-Type: text/html; charset=#CHARSET}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
@@ -9,8 +10,9 @@
 [<link rel="stylesheet" href="(#CHEMIN{attestations/attestation.css})" type="text/css" media="all" />]
 </head>
 <body>
-<BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{statut=ok}>
-[(#INCLURE{fond=attestations/corps,id_souscription,annee,hash=#ENV{hash,''}})]
-</BOUCLE_souscription>
+<BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{statut=ok}>[(#ENV{hash}|=={#ID_SOUSCRIPTION|souscription_hash_lowsec{#ENV{annee}}}|oui)
+[(#INCLURE{fond=attestations/corps,id_souscription,annee})]
+]</BOUCLE_souscription>
 </body>
 </html>
+</B_souscription>

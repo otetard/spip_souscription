@@ -144,3 +144,13 @@ function souscription_transactions($id_souscription,$annee){
 	$trans = array_map("reset",$trans);
 	return $trans;
 }
+
+function souscription_hash_lowsec($id_souscription,$annee){
+	$souscription = sql_fetsel('id_souscription,montant,courriel,date_souscription,nom,prenom,adresse,code_postal,ville','spip_souscriptions','id_souscription='.intval($id_souscription));
+
+
+	$souscription = serialize($souscription);
+	$hash = md5("$souscription-hashlowsec-$annee");
+	$hash = substr($hash,0,10);
+	return $hash;
+}
