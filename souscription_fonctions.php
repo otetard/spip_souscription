@@ -145,12 +145,21 @@ function souscription_transactions($id_souscription,$annee){
 	return $trans;
 }
 
+/**
+ * Calculer un hash lowsec pour securiser les urls qui permettent de voir les recus
+ * @param $id_souscription
+ * @param $annee
+ * @return string
+ */
 function souscription_hash_lowsec($id_souscription,$annee){
 	$souscription = sql_fetsel('id_souscription,montant,courriel,date_souscription,nom,prenom,adresse,code_postal,ville','spip_souscriptions','id_souscription='.intval($id_souscription));
-
 
 	$souscription = serialize($souscription);
 	$hash = md5("$souscription-hashlowsec-$annee");
 	$hash = substr($hash,0,10);
 	return $hash;
+}
+
+function souscription_numero_recu($id_souscription,$annee){
+	return "R-$annee-$id_souscription";
 }

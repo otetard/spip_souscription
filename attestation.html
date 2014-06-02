@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=#CHARSET" />
 <meta name="robots" content="noindex, nofollow" />
 <meta name="author" content="<:meta_author:>" />
-[<link rel="stylesheet" href="(#CHEMIN{attestations/attestation.css})" type="text/css" media="all" />]
+[<link rel="stylesheet" href="(#CHEMIN{attestations/attestation.css}|url_absolue)" type="text/css" media="all" />]
 </head>
 <body>
 <BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{statut=ok}>[(#ENV{hash}|=={#ID_SOUSCRIPTION|souscription_hash_lowsec{#ENV{annee}}}|oui)

@@ -2,7 +2,7 @@
 	<h2>Reçu fiscal
 	<small class="mention"><br />art 87 loi n° 81-1160 du 30/12/81</small>
 	</h2>
-	<h3 class="numero">Numéro : R-#ENV{annee}-#ID_SOUSCRIPTION
+	<h3 class="numero">Numéro : [(#ID_SOUSCRIPTION|souscription_numero_recu{#ENV{annee}})]
 	<small class="annee"><br />Année #ENV{annee}</small>
 	</h3>
 </div>
