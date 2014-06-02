@@ -43,6 +43,7 @@ function souscription_declarer_tables_objets_sql($tables){
 	$tables['spip_souscriptions'] =
 		array('type' => 'souscription',
 			'principale' => "oui",
+			'page' => false,
 			'table_objet_surnoms' => array('souscription'), // table_objet('souscription') => 'souscription'
 			'field' => array(
 				"id_souscription" => "bigint(21) NOT NULL",
@@ -104,6 +105,7 @@ function souscription_declarer_tables_objets_sql($tables){
 	$tables['spip_souscription_campagnes'] =
 		array('type' => 'souscription_campagne',
 			'principale' => "oui",
+			'page' => false,
 			'table_objet_surnoms' => array('souscriptioncampagne'),
 			'field' => array(
 				"id_souscription_campagne" => "bigint(21) NOT NULL",
