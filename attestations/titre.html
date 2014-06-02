@@ -1,0 +1,17 @@
+<div class="titre">
+	<h2>Reçu fiscal
+	<small class="mention"><br />art 87 loi n° 81-1160 du 30/12/81</small>
+	</h2>
+	<h3 class="numero">Numéro : R-#ENV{annee}-#ID_SOUSCRIPTION
+	<small class="annee"><br />Année #ENV{annee}</small>
+	</h3>
+</div>
+
+<div class="beneficiaire">
+	<h4>Bénéficiaire</h4>
+	Association #CONFIG{souscription/association_nom}<br />
+	[(#CONFIG{souscription/association_adresse}|propre|PtoBR)]
+	[<br />Objet : (#CONFIG{souscription/association_objet}|propre|PtoBR)]
+	[<br />(#CONFIG{souscription/association_mention}|propre|PtoBR)]
+	<hr />
+</div>

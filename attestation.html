@@ -1,0 +1,16 @@
+#CACHE{600}
+#HTTP_HEADER{Content-Type: text/html; charset=#CHARSET}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=#CHARSET" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="author" content="<:meta_author:>" />
+[<link rel="stylesheet" href="(#CHEMIN{attestations/attestation.css})" type="text/css" media="all" />]
+</head>
+<body>
+<BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{statut=ok}>
+[(#INCLURE{fond=attestations/corps,id_souscription,annee,hash=#ENV{hash,''}})]
+</BOUCLE_souscription>
+</body>
+</html>

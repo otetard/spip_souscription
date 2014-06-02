@@ -1,0 +1,31 @@
+<div class='attestation'>
+<BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{statut=ok}>
+	[(#INCLURE{fond=attestations/top,id_souscription,annee})]
+
+	[(#INCLURE{fond=attestations/titre,id_souscription,annee})]
+
+	<div class="donateur">
+		<h4>Donateur</h4>
+		[(#NOM) ][(#PRENOM)]<br />
+		[(#ADRESSE|nl2br)]
+		<br />[(#CODE_POSTAL) ][ (#VILLE)]
+		[<br />(#PAYS)]
+		<hr />
+	</div>
+
+	<p class="atteste">L'association <strong>#CONFIG{souscription/association_nom}</strong>
+		atteste avoir reçu de la personne dont le nom figure ci-dessus la somme de [***<strong>(#ID_SOUSCRIPTION|souscription_montant_recu{#ENV{annee}}|affiche_monnaie)</strong>***]
+		au titre de l'année [<strong>(#ENV{annee})</strong>]&nbsp;:</p>
+	<ul>
+	<BOUCLE_transactions(TRANSACTIONS){id_transaction IN #ID_SOUSCRIPTION|souscription_transactions{#ENV{annee}}}{statut=ok}>
+		<li>[Montant : (#MONTANT|affiche_monnaie)], le [(#DATE_TRANSACTION|affdate)] par [(#MODE|bank_titre_type_paiement)]</li>
+	</BOUCLE_transactions>
+	</ul>
+
+
+	[(#INCLURE{fond=attestations/signature,id_souscription,annee})]
+
+	[(#INCLURE{fond=attestations/pied,id_souscription,annee})]
+
+</BOUCLE_souscription>
+</div>

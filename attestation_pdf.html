@@ -1,0 +1,12 @@
+<BOUCLE_souscription(SOUSCRIPTIONS){id_souscription}{statut=ok}>
+<page lib_pdf="mpdf" orientation="P" format="A4" backtop="7mm" backbottom="7mm" backleft="10mm" backright="10mm">
+
+	[<link rel="stylesheet" href="(#CHEMIN{attestations/attestation.css})" type="text/css" media="all" />]
+	<style>
+		div.attestation {width: auto;border: 0;padding: 0;margin: 0;}
+	</style>
+
+	[(#INCLURE{fond=attestations/corps,id_souscription,annee,hash=#ENV{hash,''}})]
+
+</page>
+</BOUCLE_souscription>

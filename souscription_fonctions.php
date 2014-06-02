@@ -112,3 +112,35 @@ function souscription_rappel_duree($date_echeance){
 	}
 	return $d;
 }
+
+
+function souscription_montant_recu($id_souscription,$annee){
+	$souscription = sql_fetsel('*','spip_souscriptions','id_souscription='.intval($id_souscription));
+	if ($souscription['statut']!=='ok') return 0;
+	// c'est un don ponctuel : facile il suffit de verifier l'annee de souscription
+	if ($souscription['abo_statut']=='non'){
+		if (intval(date('Y',strtotime($souscription['date_souscription']))==$annee))
+			return $souscription['montant'];
+		else
+			return 0;
+	}
+	// c'est un don mensuel : ressortir toutes les transactions de la bonne annee associees a cette souscription
+	// et faire la somme
+	$montant = sql_getfetsel("sum(montant)","spip_transactions","statut=".sql_quote('ok')." AND ".sql_in('id_transaction',souscription_transactions($id_souscription,$annee)));
+	return $montant;
+
+}
+
+function souscription_transactions($id_souscription,$annee){
+	$start = mktime(0,0,0,1,1,$annee);
+	$end = mktime(0,0,0,1,1,$annee+1);
+	$start = date('Y-m-d H:i:s',$start);
+	$end = date('Y-m-d H:i:s',$end);
+
+	$trans = sql_allfetsel("T.id_transaction",
+		"spip_souscriptions_liens as L JOIN spip_transactions as T on (L.objet=".sql_quote('transaction')." AND L.id_objet=T.id_transaction)",
+		"L.id_souscription=".intval($id_souscription)." AND date_transaction>=".sql_quote($start)." AND date_transaction<".sql_quote($end)
+	);
+	$trans = array_map("reset",$trans);
+	return $trans;
+}
