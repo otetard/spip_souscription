@@ -14,8 +14,8 @@
 	</div>
 
 	<p class="atteste">L'association <strong>#CONFIG{souscription/association_nom}</strong>
-		atteste avoir reçu de la personne dont le nom figure ci-dessus la somme de [***<strong>(#ID_SOUSCRIPTION|souscription_montant_recu{#ENV{annee}}|affiche_monnaie)</strong>***]
-		au titre de l'année [<strong>(#ENV{annee})</strong>]&nbsp;:</p>
+		atteste avoir reçu la somme de [***<strong>(#ID_SOUSCRIPTION|souscription_montant_recu{#ENV{annee}}|affiche_monnaie)</strong>***]
+		du donateur désigné ci-dessus au titre de l'année [<strong>(#ENV{annee})</strong>]&nbsp;:</p>
 	<ul>
 	<BOUCLE_transactions(TRANSACTIONS){id_transaction IN #ID_SOUSCRIPTION|souscription_transactions{#ENV{annee}}}{statut=ok}>
 		<li>[Montant : (#MONTANT|affiche_monnaie)], le [(#DATE_TRANSACTION|affdate)] par [(#MODE|bank_titre_type_paiement)]</li>
