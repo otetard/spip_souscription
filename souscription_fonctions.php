@@ -160,6 +160,77 @@ function souscription_hash_lowsec($id_souscription,$annee){
 	return $hash;
 }
 
+/**
+ * Numeroter un recu
+ * @param int $id_souscription
+ * @param int $annee
+ * @return string
+ */
 function souscription_numero_recu($id_souscription,$annee){
 	return "R-$annee-$id_souscription";
+}
+
+/**
+ * Lister les recus disponibles pour une souscription :
+ *  - 1 recu par annee fiscale
+ *  - s'arrete a annee N-1 si souscription mensuelle toujours en cours
+ * @param $id_souscription
+ * @return array
+ */
+function souscription_lister_recus($id_souscription){
+	$annees = array();
+	$souscription = sql_fetsel('id_souscription,date_souscription,date_fin,statut,abo_statut','spip_souscriptions','id_souscription='.intval($id_souscription));
+
+	if ($souscription['statut']!=='ok')
+		return $annees;
+
+	if ($souscription['abo_statut']=='non'){
+		$annees[] = date('Y',strtotime($souscription['date_souscription']));
+	}
+	else {
+		$annee = date('Y',strtotime($souscription['date_souscription']));
+		$annee_fin = max($annee,date('Y',strtotime($souscription['date_fin'])));
+		$annee_fiscalenmoins1 = date('Y')-1;
+
+		while ($annee<=$annee_fin AND $annee<=$annee_fiscalenmoins1) {
+			$annees[] = $annee;
+			$annee++;
+		}
+		// si resilie ou fini, on peut ajouter l'annee de fin si pas prise en compte
+		if ($souscription['abo_statut']!=='ok'){
+			if ($annee_fin>$annee_fiscalenmoins1){
+				$annees[] = $annee_fin;
+			}
+		}
+	}
+
+	return $annees;
+}
+
+/**
+ * Lister les souscriptions d'un auteur, triee par annee
+ * @param int $id_auteur
+ * @return array
+ */
+function souscription_lister_recus_auteur($id_auteur){
+	$sous = sql_allfetsel("id_souscription","spip_souscriptions","id_auteur=".intval($id_auteur));
+	$recus = array();
+	foreach($sous as $sou){
+		$annees = souscription_lister_recus($sou['id_souscription']);
+		foreach($annees as $annee){
+			$recus["$annee-".$sou['id_souscription']] = array('id_souscription'=>$sou['id_souscription'],'annee'=>$annee);
+		}
+	}
+	ksort($recus);
+	return $recus;
+}
+
+/**
+ * URL pour generer/voir le recu pour une souscription+annee
+ * @param int $id_souscription
+ * @param int $annee
+ * @return string
+ */
+function souscription_generer_url_recu($id_souscription,$annee){
+	return generer_url_action("generer_recu_souscription","id_souscription=$id_souscription&annee=$annee&hash=".souscription_hash_lowsec($id_souscription,$annee));
 }

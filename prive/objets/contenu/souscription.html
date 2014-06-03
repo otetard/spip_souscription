@@ -42,10 +42,17 @@
 	<div class='label'><:souscription:label_abo_statut:> : </div>
 	<span dir="#LANG_DIR" class="abo_statut">(#ABO_STATUT)</span>
 	[(#ABO_STATUT|=={ok}|oui)
-	[(#BOUTON_ACTION{<:souscription:bouton_resilier:>,#URL_ACTION_AUTEUR{bank_resilier_abo,#ABONNE_UID,#SELF},'',<:souscription:confirmer_resilier_abonnement:>})]
+	[(#BOUTON_ACTION{<:souscription:bouton_resilier:>,#URL_ACTION_AUTEUR{bank_resilier_abo,#ABONNE_UID,#SELF},'right',<:souscription:confirmer_resilier_abonnement:>})]
 	]
 </div>]
 ]
+
+<B_annees>
+Recus fiscaux :
+	<BOUCLE_annees(POUR){tableau #ID_SOUSCRIPTION|souscription_lister_recus}{', '}>
+	<a href="[(#ID_SOUSCRIPTION|souscription_generer_url_recu{#VALEUR})]">#VALEUR</a>
+	</BOUCLE_annees>
+</B_annees>
 
 <hr />
 [<div class="champ contenu_nom[ (#NOM*|strlen|?{'',vide})]">
