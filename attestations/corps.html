@@ -6,7 +6,7 @@
 
 	<div class="donateur">
 		<h4>Donateur</h4>
-		[(#NOM) ][(#PRENOM)]<br />
+		[(#NOM|concat{' ',#PRENOM}|trim|sinon{#COURRIEL}) ]<br />
 		[(#ADRESSE|nl2br)]
 		<br />[(#CODE_POSTAL) ][ (#VILLE)]
 		[<br />(#PAYS)]
