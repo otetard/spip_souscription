@@ -27,10 +27,13 @@ function action_generer_recu_souscription_dist($id_souscription = null, $annee=n
 		$lowsec = souscription_hash_lowsec($id_souscription, $annee);
 	}
 
-	// PDF ou HTML ? si le plugin SPIPDF est la on genere un recu en PDF
-	$format = "html";
-	if (test_plugin_actif("spipdf")){
-		$format = "pdf";
+	$format = _request('format');
+	if (!in_array($format,array('html','pdf'))){
+		// PDF ou HTML ? si le plugin SPIPDF est la on genere un recu en PDF
+		$format = "html";
+		if (test_plugin_actif("spipdf")){
+			$format = "pdf";
+		}
 	}
 
 	$numero = souscription_numero_recu($id_souscription,$annee);
