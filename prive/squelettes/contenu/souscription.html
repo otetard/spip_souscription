@@ -16,7 +16,7 @@
 
 [(#PIPELINE{afficher_complement_objet,[(#ARRAY{
 args,#ARRAY{type,souscription,id,#ID_SOUSCRIPTION},
-data,[(#INCLURE{fond=prive/objets/liste/transactions,id_transaction=#ID_SOUSCRIPTION|souscription_liste_transactions{}})]})]})]
+data,[(#INCLURE{fond=prive/objets/liste/transactions,id_transaction=#ID_SOUSCRIPTION|souscription_liste_transactions{},ajax,env})]})]})]
 
 #BOITE_FERMER
 [(#EVAL{_AJAX}|oui)
