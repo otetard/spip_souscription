@@ -6,9 +6,9 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 ]
 <BOUCLE_souscription(SOUSCRIPTIONS souscription_campagnes){id_souscription}{tout}>
 #SET{abo,#ABO_STATUT|=={non}|non}
-<title>[[(#NOM_SITE_SPIP|textebrut)]] ALERTE Souscription &eacute;ch&eacute;ance manquante</title>
+<title>[[(#NOM_SITE_SPIP|textebrut)]] ALERTE Souscription échéance manquante</title>
 
-<intro>[(#TYPE_SOUSCRIPTION|ucfirst) ]##ID_SOUSCRIPTION : &eacute;ch&eacute;ance du [(#DATE_ECHEANCE|affdate)] [((#MONTANT|affiche_monnaie))] manquante | </intro>
+<intro>[(#TYPE_SOUSCRIPTION|ucfirst) ]##ID_SOUSCRIPTION : échéance du [(#DATE_ECHEANCE|affdate)] [((#MONTANT|affiche_monnaie))] manquante | </intro>
 
 <body>
 	<div class="header">
@@ -21,7 +21,7 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 	</div>
 	<h2><a href="[(#URL_ECRIRE{souscription,id_souscription=#ID_SOUSCRIPTION}|url_absolue)]">[(#TYPE_SOUSCRIPTION|ucfirst) ][(#GET{abo})<:souscription:label_mensuel:> ]##ID_SOUSCRIPTION</a></h2>
 
-	<p>L'&eacute;ch&eacute;ance du [(#DATE_ECHEANCE|affdate)] n'a pas &eacute;t&eacute; re&ccedil;ue</p>
+	<p>L'échéance du [(#DATE_ECHEANCE|affdate)] n'a pas été reçue</p>
 
 	[<div class="champ contenu_courriel[ (#COURRIEL*|strlen|?{'',vide})]">
 		<span class='label'><:souscription:label_courriel:> : </span>

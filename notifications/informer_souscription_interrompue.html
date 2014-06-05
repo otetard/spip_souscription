@@ -8,7 +8,7 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 #SET{abo,#ABO_STATUT|=={non}|non}
 <title>[[(#NOM_SITE_SPIP|textebrut)]] Nous avons encore besoin de vous...</title>
 
-<intro>Votre paiement mensuel a &eacute;t&eacute; refus&eacute; | </intro>
+<intro>Votre paiement mensuel a été refusé | </intro>
 
 <body>
 	<div class="header">
@@ -18,11 +18,11 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 
 		<hr/>
 	</div>
-	<h2>Probl�me technique</h2>
-	<strong>Votre paiement mensuel a &eacute;t&eacute; refus&eacute;.</strong>
+	<h2>Problème technique</h2>
+	<strong>Votre paiement mensuel a été refusé.</strong>
 
 	<p>En raison d'un refus bancaire, nous n'avons pas pu recevoir votre paiement du [(#INFO_DATE_TRANSACTION{transaction,#ID_TRANSACTION_ECHEANCE}|affdate_court)].
-	Cela peut venir d'un probl�me technique ou d'un incident sur votre moyen de paiement.</p>
+	Cela peut venir d'un problème technique ou d'un incident sur votre moyen de paiement.</p>
 	<p>Malheureusement cela interrompt automatiquement tous vos prochains versements mensuels.</p>
 	<p>Si cela n'est pas votre intention, venez vite renouveler votre [(#TYPE_SOUSCRIPTION)] sur le site <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>.</p>
 	<p>Merci !</p>
@@ -31,7 +31,7 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 	<div class="footer">
 		<hr/>
 		<B_trans>
-		<h3>Paiement refus�</h3>
+		<h3>Paiement refusé</h3>
 		<p>
 			<BOUCLE_trans(TRANSACTIONS){id_transaction=#ENV{id_transaction}}>
 			[(#DATE_TRANSACTION|affdate_heure)] - [(#MONTANT|affiche_monnaie)] [\((#MODE)\)]

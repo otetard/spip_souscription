@@ -8,7 +8,7 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 #SET{abo,#ABO_STATUT|=={non}|non}
 <title>[[(#NOM_SITE_SPIP|textebrut)]] Nous avons encore besoin de vous...</title>
 
-<intro>[(#DATE_FIN|date_relativecourt)] nous n'avons pas re&ccedil;u votre versement mensuel | </intro>
+<intro>[(#DATE_FIN|date_relativecourt)] nous n'avons pas reçu votre versement mensuel | </intro>
 
 <body>
 	<div class="header">
@@ -20,9 +20,9 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 	</div>
 	<h2>Nous avons encore besoin de vous...</h2>
 
-	<p>Nous avons re&ccedil;u votre dernier versement mensuel le [(#INFO_DATE_TRANSACTION{transaction,#ID_TRANSACTION_ECHEANCE}|affdate_court)].
-	<p>Il n'a pas &eacute;t&eacute; reconduit automatiquement <strong>[(#DATE_FIN|date_relativecourt)]</strong> car votre moyen de paiement n'est plus valide.</p>
-	<p>Nous avons encore besoin de vous, pensez &agrave; venir renouveler votre [(#TYPE_SOUSCRIPTION)] sur le site <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>.</p>
+	<p>Nous avons reçu votre dernier versement mensuel le [(#INFO_DATE_TRANSACTION{transaction,#ID_TRANSACTION_ECHEANCE}|affdate_court)].
+	<p>Il n'a pas été reconduit automatiquement <strong>[(#DATE_FIN|date_relativecourt)]</strong> car votre moyen de paiement n'est plus valide.</p>
+	<p>Nous avons encore besoin de vous, pensez à venir renouveler votre [(#TYPE_SOUSCRIPTION)] sur le site <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>.</p>
 	<p>Merci !</p>
 
 

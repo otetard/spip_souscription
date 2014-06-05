@@ -24,11 +24,11 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 		[(#INFO_DATE_TRANSACTION{transaction,#ID_TRANSACTION_ECHEANCE}|date_relative)]
 		sur notre site <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>.</p>
 
-	<p>Peut-&ecirc;tre avez-vous &eacute;t&eacute; interrompu et aimeriez finir maintenant&nbsp;?
+	<p>Peut-être avez-vous été interrompu et aimeriez finir maintenant&nbsp;?
 		<BOUCLE_trans(TRANSACTIONS){id_transaction=#ID_TRANSACTION_ECHEANCE}>
 		Dans ce cas, il vous suffit simplement de
 		<a href="[(#URL_PAGE{#ABO_STATUT|=={non}|?{payer-acte,payer-abonnement},id_transaction=#ID_TRANSACTION&transaction_hash=#TRANSACTION_HASH}|url_absolue)]">
-			proc&eacute;der au paiement</a>, nous avons conserv&eacute; toute votre saisie.
+			procéder au paiement</a>, nous avons conservé toute votre saisie.
 		</BOUCLE_trans>
 	</p>
 	<p>Si vous voulez modifier votre [(#TYPE_SOUSCRIPTION)] vous pouvez simplement recommencer le processus sur notre site <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a>.</p>
