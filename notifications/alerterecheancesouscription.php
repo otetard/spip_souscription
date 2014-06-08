@@ -5,7 +5,7 @@
  *
  * @plugin     Souscription
  * @copyright  2013
- * @author     Olivier Tétard
+ * @author     Olivier TÃ©tard
  * @licence    GNU/GPL
  * @package    SPIP\Souscription\Genie
  */
