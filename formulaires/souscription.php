@@ -301,7 +301,7 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 				$ret['redirect'] = generer_url_public($target, "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
 			}
 			else {
-				$ret['message_ok'] = "Vous pouvez maintenant règler votre souscription.";
+				$ret['message_ok'] = _T('souscription:message_regler_votre_'.$campagne['type_objectif']);
 				$GLOBALS['formulaires_souscription_paiement'] = recuperer_fond("content/$target",array('id_transaction'=>$id_transaction,'transaction_hash'=>$hash,'class'=>'souscription_paiement'));
 			}
 		}

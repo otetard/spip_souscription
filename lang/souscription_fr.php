@@ -135,6 +135,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_type_souscription' => 'Type de souscription',
 	'label_ville' => 'Ville',
 
+// M
+	'message_regler_votre_don' => 'Vous pouvez maintenant régler votre don.',
+	'message_regler_votre_adhesion' => 'Vous pouvez maintenant régler votre adhesion.',
+
 // S
 	'sous_titre_type_adhesions' => 'Campagne d&#8217adhésion',
 	'sous_titre_type_dons' => 'Campagne de dons',
