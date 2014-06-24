@@ -47,8 +47,7 @@ function souscription_trig_bank_notifier_reglement($flux) {
 					  array('id_transaction' => $flux['args']['id_transaction']));
 	}
 
-	spip_log(sprintf("Envoi de notifiaction de confirmation de paiement à [%] pour la souscription [%s].", $email, $flux['args']['id_transaction']),
-		 "souscription");
+	spip_log("Envoi de notifiaction de confirmation de paiement a [$email] pour la souscription #".$flux['args']['id_transaction'],"souscription");
 
 	include_spip("inc/notifications");
 	notifications_envoyer_mails($email, $message, "", $GLOBALS['meta']['email_webmaster']);

@@ -296,7 +296,7 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 			sql_updateq("spip_souscriptions",array('id_transaction_echeance'=>$id_transaction),"id_souscription=".intval($ret['id_souscription']));
 
 			$target = ($abo?"payer-abonnement":"payer-acte");
-			spip_log(sprintf("La souscription [%s], associée à la transaction [%s] a bien été crée.", $ret['id_souscription'], $id_transaction), "souscription");
+			spip_log(sprintf("La souscription [%s], associee a la transaction [%s] a bien ete cree.", $ret['id_souscription'], $id_transaction), "souscription");
 			if (lire_config("souscription/processus_paiement","redirige")==="redirige"){
 				$ret['redirect'] = generer_url_public($target, "id_transaction=$id_transaction&transaction_hash=$hash", false, false);
 			}
@@ -306,7 +306,7 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 			}
 		}
 		else {
-			spip_log(sprintf("Erreur lors de la création de la transaction liée à la souscription [%s].", $ret['id_souscription']), "souscription");
+			spip_log(sprintf("Erreur lors de la creation de la transaction liee a la souscription [%s].", $ret['id_souscription']), "souscription");
 			$ret['message_erreur'] = _T('souscription:erreur_echec_creation_transaction');
 		}
 
