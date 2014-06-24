@@ -1,10 +1,10 @@
 [(#HTTP_HEADER{Content-type: text/plain[; charset=(#CHARSET)]})]
 [#NOM_SITE_SPIP] Confirmation de votre règlement
 
-<BOUCLE_infos_souscription(SOUSCRIPTIONS spip_transactions){id_transaction}>
+<BOUCLE_infos_souscription(SOUSCRIPTIONS){id_transaction}>
 Bonjour[ (#PRENOM)][ (#NOM)],
 
-Votre règlement de [(#MONTANT|affiche_monnaie)] a bien été pris en compte, et nous vous en remercions.
+Votre règlement de [(#MONTANT|affiche_monnaie|textebrut)] a bien été pris en compte, et nous vous en remercions.
 
-Référence : Transaction ##ID_TRANSACTION du [(#DATE_TRANSACTION|affdate{Y-m-d H:i:s})]
+Référence : Transaction ##ID_TRANSACTION du [(#INFO_DATE_TRANSACTION{transaction,#ID_TRANSACTION_ECHEANCE}|affdate{Y-m-d H:i:s})]
 </BOUCLE_infos_souscription>
