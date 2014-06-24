@@ -10,7 +10,7 @@
 <div class="beneficiaire">
 	<h4>Bénéficiaire</h4>
 	Association #CONFIG{souscription/association_nom}<br />
-	[(#CONFIG{souscription/association_adresse}|propre|PtoBR)]
+	[(#CONFIG{souscription/association_adresse}|nl2br|propre|PtoBR)]
 	[<br />Objet : (#CONFIG{souscription/association_objet}|propre|PtoBR)]
 	[<br />(#CONFIG{souscription/association_mention}|propre|PtoBR)]
 	<hr />
