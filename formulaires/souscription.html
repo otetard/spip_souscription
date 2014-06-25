@@ -164,10 +164,12 @@
 /*[(#ENV{_montant_type}|sinon{none}|=={none}|non)
 		[(#ENV{_montant_type}|sinon{none}|=={none}|non)*/
 		jQuery(".editer_abo_montant").find("input[name=abo_montant],select[name=abo_montant]").change(function(){
-			jQuery(".editer_montant").find("input,select").val('').attr("checked",false);
+			jQuery(".editer_montant").find("input.text,select").val('');
+			jQuery(".editer_montant").find("input.radio").attr("checked",false);
 		});
 		jQuery(".editer_montant").find("input[name=montant],select[name=montant]").change(function(){
-			jQuery(".editer_abo_montant").find("input[name=abo_montant],select[name=abo_montant]").val('').attr("checked",false);
+			jQuery(".editer_abo_montant").find("input[name=abo_montant].text,select[name=abo_montant]").val('');
+			jQuery(".editer_abo_montant").find("input[name=abo_montant].radio").attr("checked",false);
 		});
 /*]
 ]*/
