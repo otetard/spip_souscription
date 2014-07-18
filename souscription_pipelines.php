@@ -34,23 +34,32 @@ function souscription_optimiser_base_disparus($flux){
  * @return array       Données du pipeline
  */
 function souscription_trig_bank_notifier_reglement($flux) {
-	$souscription = sql_fetsel(array('courriel', 'id_souscription_campagne'), 'spip_souscriptions', 'id_transaction_echeance='.intval($flux['args']['id_transaction']));
-	$email = $souscription['courriel'];
-	$campagne = $souscription['id_souscription_campagne'];
+	$souscription = sql_fetsel(array('courriel', 'id_souscription_campagne','abo_statut','id_souscription'), 'spip_souscriptions', 'id_transaction_echeance='.intval($flux['args']['id_transaction']));
 
-	if ($flux['args']['succes']) {
-		$message = recuperer_fond(_trouver_modele_courriel_reglement("succes", $campagne),
-					  array('id_transaction' => $flux['args']['id_transaction']));
-	}
-	else {
-		$message = recuperer_fond(_trouver_modele_courriel_reglement("echec", $campagne),
-					  array('id_transaction' => $flux['args']['id_transaction']));
+	// on ne notifie pas les N echeances d'un don mensuel mais seulement la premiere
+	$n_echeance = 1;
+	if ($souscription['abo_statut']=='ok'){
+		$n_echeance = sql_countsel("spip_souscriptions_liens","id_souscription=".intval($souscription['id_souscription'])." AND objet=".sql_quote('transaction'));
 	}
 
-	spip_log("Envoi de notifiaction de confirmation de paiement a [$email] pour la souscription #".$flux['args']['id_transaction'],"souscription");
+	if ($n_echeance<=1){
+		$email = $souscription['courriel'];
+		$campagne = $souscription['id_souscription_campagne'];
 
-	include_spip("inc/notifications");
-	notifications_envoyer_mails($email, $message, "", $GLOBALS['meta']['email_webmaster']);
+		if ($flux['args']['succes']) {
+			$message = recuperer_fond(_trouver_modele_courriel_reglement("succes", $campagne),
+						  array('id_transaction' => $flux['args']['id_transaction']));
+		}
+		else {
+			$message = recuperer_fond(_trouver_modele_courriel_reglement("echec", $campagne),
+						  array('id_transaction' => $flux['args']['id_transaction']));
+		}
+
+		spip_log("Envoi de notification de confirmation de paiement a [$email] pour la souscription #".$flux['args']['id_transaction'],"souscription");
+
+		include_spip("inc/notifications");
+		notifications_envoyer_mails($email, $message, "", $GLOBALS['meta']['email_webmaster']);
+	}
 
 	return $flux;
 }
