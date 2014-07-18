@@ -218,10 +218,34 @@ function souscription_bank_abos_renouveler($flux){
 				$date_echeance = $prochaine_echeance;
 			}
 
-
+			// si il y a deja eu une transaction echeance il y a moins de 15j sur cette souscription
+			// c'est un double appel, renvoyer l'id_transaction concerne
+			$datem15 = date('Y-m-d H:i:s',strtotime("-15 day"));
+			if ($id_transaction = sql_getfetsel(
+				"id_transaction",
+				"spip_transactions",
+				"statut<>".sql_quote('commande')
+				." AND date_transaction>".sql_quote($datem15)
+				." AND parrain=".sql_quote('souscription')
+				." AND tracking_id=".intval($row['id_souscription'])
+				." AND id_auteur=".intval($row['id_auteur']),
+				"",
+				"date_transaction"
+			)){
+				$flux['data'] = $id_transaction;
+			}
 			// ouvrir la transaction
-			if ($id_transaction = $inserer_transaction($row['montant'],$options)){
-				$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($row['date_echeance'])));
+			elseif ($id_transaction = $inserer_transaction($row['montant'],$options)){
+				$prochaine_echeance = $row['date_echeance'];
+				$datep15 = date('Y-m-d H:i:s',strtotime("+15 day"));
+				// recaler la prochaine echeance si trop en avance (double appel anterieur ou erreur de calcul)
+				while($prochaine_echeance>$datep15){
+					$prochaine_echeance = date('Y-m-d H:i:s',strtotime("-1 month",strtotime($prochaine_echeance)));
+				}
+				// l'incrementer pour atteindre celle du mois prochain
+				while($prochaine_echeance<$datep15){
+					$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($prochaine_echeance)));
+				}
 				$set = array(
 					'id_transaction_echeance' => $id_transaction,
 					'statut' => 'ok',
@@ -234,17 +258,17 @@ function souscription_bank_abos_renouveler($flux){
 				$row = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($row['id_souscription']));
 				objet_associer(array("souscription"=>$row['id_souscription']),array("transaction"=>$id_transaction));
 				$flux['data'] = $id_transaction;
-			}
 
-			// verifier si ce n'est pas la derniere transaction, auquel cas on notifie
-			if ($row['date_echeance']>$row['date_fin']
-			  AND $row['date_fin']>$row['date_souscription']){
+				// verifier si ce n'est pas la derniere transaction, auquel cas on notifie
+				if ($row['date_echeance']>$row['date_fin']
+				  AND $row['date_fin']>$row['date_souscription']){
 
-				// Notifications
-				if ($notifications = charger_fonction('notifications', 'inc', true)) {
-					$notifications('informersouscriptionterminee', $row['id_souscription']);
+					// Notifications
+					if ($notifications = charger_fonction('notifications', 'inc', true)) {
+						$notifications('informersouscriptionterminee', $row['id_souscription']);
+					}
+
 				}
-
 			}
 		}
 	}
