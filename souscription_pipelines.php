@@ -75,8 +75,21 @@ function _trouver_modele_courriel_reglement($type, $id_souscription_campagne) {
 
 
 function souscription_bank_traiter_reglement($flux){
+
 	// on peut marquer cette souscription comme effective
-	sql_updateq("spip_souscriptions",array('statut'=>'ok'),'statut<>'.sql_quote('ok').' AND id_transaction_echeance='.intval($flux['args']['id_transaction']));
+	// et mettre a jour le montant cumul si besoin
+	if ($id_transaction = $flux['args']['id_transaction']
+	  AND $r = sql_fetsel("statut,montant","spip_transactions","id_transaction=".intval($id_transaction))
+	  AND $sous = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))){
+
+		$set = array(
+			'statut' => 'ok'
+		);
+		if ($sous['abo_statut']=="ok"){
+			$set['montant_cumul'] = round(floatval($sous['montant_cumul']) + floatval($r['montant']),2);
+		}
+		sql_updateq("spip_souscriptions",$set,'id_souscription='.intval($sous['id_souscription']));
+	}
 
 	$flux['data'].=" <br />Vous allez recevoir un email de confirmation.";
 	return $flux;
@@ -255,11 +268,15 @@ function souscription_bank_abos_renouveler($flux){
 				while($prochaine_echeance<$datep15){
 					$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($prochaine_echeance)));
 				}
+
+				// a ce stade on ne sait pas encore si la transaction est reussie ou en echec
+				// on ne peut donc pas incrementer le montant cumul, mais seulement mettre a jour les echeances etc
+				// si echec => declenchera une resiliation
+				// si succes => declenchera un traitement reglement ou l'on mettra a jour le cumul
 				$set = array(
 					'id_transaction_echeance' => $id_transaction,
 					'statut' => 'ok',
 					'abo_statut' => 'ok',
-					'montant_cumul' =>  round(floatval($row['montant_cumul']) + floatval($row['montant']),2),
 					'date_echeance' => $prochaine_echeance,
 					'abo_fin_raison' => '', // effacer la trace d'un rappel de paiement manquant
 				);
