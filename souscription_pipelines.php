@@ -125,6 +125,15 @@ function souscription_bank_abos_activer_abonnement($flux){
 			}
 			// fixer le montant cumul des dons
 			$set['montant_cumul'] = sql_quote($r['montant']);
+
+
+			if ($row['abo_statut']==='ok'
+			  AND $row['abonne_uid']===$abo_uid
+			  AND $row['montant_cumul']==$r['montant']){
+				// c'est un double appel, on retourne sans rien faire
+				return $flux;
+			}
+
 		}
 		elseif (
 			!$abo_uid
@@ -137,10 +146,7 @@ function souscription_bank_abos_activer_abonnement($flux){
 		if ($id_transaction
 		  AND ($id_transaction==$row['id_transaction_echeance']) ){
 
-			if (!intval($row["date_echeance"]))
-				$row["date_echeance"] = $row["date_souscription"];
-
-			$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($row["date_echeance"])));
+			$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($row["date_souscription"])));
 			if ($flux['args']['validite']==='echeance'){
 				$set["date_echeance"] = sql_quote($prochaine_echeance);
 				$set["date_fin"] = $set["date_echeance"];
