@@ -61,9 +61,19 @@
 			      <legend><:souscription:label_legende_bloc_fiscal:></legend>
 			      [(#INCLURE{fond=inclure/souscription/bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
 			      <ul>
+				      #SET{name0,civilite}#SET{obli1,'obligatoire'}#SET{defaut0,''}#SET{erreurs0,#ENV**{erreurs}|table_valeur{#GET{name0}}}
 				      #SET{name1,prenom}#SET{obli1,'obligatoire'}#SET{defaut1,''}#SET{erreurs1,#ENV**{erreurs}|table_valeur{#GET{name1}}}
 				      #SET{name2,nom}#SET{obli2,'obligatoire'}#SET{defaut2,''}#SET{erreurs2,#ENV**{erreurs}|table_valeur{#GET{name2}}}
 		          <li class="editer [ (#GET{obli1})][ (#GET{erreurs1}|oui)erreur][ (#GET{erreurs2}|oui)erreur]">
+			          <div class="demi left editer_[(#GET{name0})]">
+				          <label for="#GET{name0}"><:souscription:label_civilite:></label>[
+			            <span class='erreur_message'>(#GET{erreurs0})</span>
+			            ]<select name="#GET{name0}" class="select" id="#GET{name0}">
+				      <option value=""></option>
+				      <option value="monsieur"[ (#ENV*{#GET{name0},#GET{defaut0}}|=={monsieur}|oui)selected="selected"]><:souscription:label_monsieur:></option>
+				      <option value="madame"[ (#ENV*{#GET{name0},#GET{defaut0}}|=={madame}|oui)selected="selected"]><:souscription:label_madame:></option>
+				    </select>
+			          </div>
 			          <div class="demi left editer_[(#GET{name1})]">
 				          <label for="#GET{name1}"><:souscription:label_prenom:></label>[
 			            <span class='erreur_message'>(#GET{erreurs1})</span>

@@ -71,6 +71,9 @@ function souscription_upgrade($nom_meta_base_version, $version_cible){
 	$maj['0.8.1'] = array(
 		array('souscription_maj_statut'),
 	);
+	$maj['0.8.3'] = array(
+		array('maj_tables',	array('spip_souscriptions')),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);

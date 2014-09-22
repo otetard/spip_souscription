@@ -53,6 +53,7 @@ function souscription_declarer_tables_objets_sql($tables){
 				"montant" 	=> "varchar(25) NOT NULL DEFAULT ''", // montant en euros
 				"statut" => "varchar(25) NOT NULL DEFAULT 'prepa'",
 				"courriel" => "text NOT NULL DEFAULT ''",
+				"civilite" => "varchar(15) NOT NULL DEFAULT ''",
 				"nom" => "text NOT NULL DEFAULT ''",
 				"prenom" => "text NOT NULL DEFAULT ''",
 				"code_postal" => "text NOT NULL DEFAULT ''",
@@ -81,8 +82,8 @@ function souscription_declarer_tables_objets_sql($tables){
 			),
 			'titre' => "nom AS titre, '' AS lang",
 			'date' => "date_souscription",
-			'champs_editables' => array('id_souscription_campagne','id_transaction','statut','courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','informer_comite_local','montant','date_echeance','date_fin','abonne_uid','abo_statut','abo_fin_raison','montant_cumul'),
-			'champs_versionnes' => array('statut','courriel', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','montant'),
+			'champs_editables' => array('id_souscription_campagne','id_transaction','statut','courriel', 'civilite', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','informer_comite_local','montant','date_echeance','date_fin','abonne_uid','abo_statut','abo_fin_raison','montant_cumul'),
+			'champs_versionnes' => array('statut','courriel', 'civilite', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','montant'),
 			'rechercher_champs' => array(
 				"id_souscription" => 1,
 				"courriel" => 1,

@@ -77,6 +77,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 		'recu_fiscal' => $recu_fiscal,
 		'envoyer_info' => 'on',
 		'informer_comite_local' => 'on',
+		'civilite' => '',
 		'prenom' => '',
 		'nom' => '',
 		'adresse' => '',
@@ -127,7 +128,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 
 
 	if (_request('recu_fiscal')==="on" OR $type_campagne=="adhesion"){
-		foreach (array('prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire){
+		foreach (array('civilite', 'prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire){
 			if (!_request($obligatoire)){
 				if ($type_campagne=="adhesion"){
 					$erreurs[$obligatoire] = _T('souscription:erreur_adhesion_champ_obligatoire');
