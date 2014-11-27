@@ -1,17 +1,21 @@
 <BOUCLE_payer(TRANSACTIONS){id_transaction}{transaction_hash}>
 	<h1><:souscription:titre_page_payer:></h1>
-	<div class="#ENV{class,formulaire_spip}">
-		<BOUCLE_campagne(SOUSCRIPTIONS souscription_campagnes){id_transaction_echeance=#ID_TRANSACTION}>
+	<div class="#ENV{class,formulaire_spip payer_souscription}">
+		<div class="resume">
+			<BOUCLE_campagne(SOUSCRIPTIONS souscription_campagnes){id_transaction_echeance=#ID_TRANSACTION}>
 			<p class="campagne">
 			[(#TYPE_OBJECTIF|=={don}|?{<:souscription:sous_titre_type_dons:>,<:souscription:sous_titre_type_adhesions:>})]
 			[&laquo;&nbsp;<strong>(#TITRE)</strong>&nbsp;&raquo;]
 			</p>
-		</BOUCLE_campagne>
-		<p><:souscription:label_montant:> <strong>[(#_payer:MONTANT|affiche_monnaie)]</strong>
-			<BOUCLE_sous(SOUSCRIPTIONS){id_transaction_echeance=#ID_TRANSACTION}>
-			<br />#COURRIEL
-			</BOUCLE_sous>
-		</p>
+			</BOUCLE_campagne>
+			<p class="infos">
+				<span class="montant"><:souscription:label_montant:> <strong>[(#_payer:MONTANT|affiche_monnaie)]</strong><br /></span>
+				<BOUCLE_sous(SOUSCRIPTIONS){id_transaction_echeance=#ID_TRANSACTION}>
+				[<span class="qui">(#PRENOM|concat{' ',#NOM}|trim)<br /></span>]
+				[<span class="email">(#COURRIEL)<br /></span>]
+				</BOUCLE_sous>
+			</p>
+		</div>
 		<INCLURE{fond=modeles/payer_acte,id_transaction,transaction_hash,title=<:souscription:titre_choix_mode_paiement:>} />
 	</div>
 	<style>
