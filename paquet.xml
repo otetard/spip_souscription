@@ -39,5 +39,5 @@
         titre="souscription:titre_configurer_souscriptions"
         parent="menu_configuration"
         icone="images/souscription-16.png"
-        action="configurer_souscriptions"/>
+        action="configurer_souscription"/>
 </paquet>
