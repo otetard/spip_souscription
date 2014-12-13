@@ -80,6 +80,9 @@ function souscription_declarer_tables_objets_sql($tables){
 				"KEY id_transaction_echeance" => "id_transaction_echeance",
 				"KEY id_souscription_campagne" => "id_souscription_campagne"
 			),
+			'join' => array(
+				'id_souscription','id_souscription_campagne','id_auteur'
+			),
 			'titre' => "nom AS titre, '' AS lang",
 			'date' => "date_souscription",
 			'champs_editables' => array('id_souscription_campagne','id_transaction','statut','courriel', 'civilite', 'nom', 'prenom', 'code_postal', 'adresse', 'ville', 'pays', 'telephone','recu_fiscal', 'type_souscription', 'envoyer_info','informer_comite_local','montant','date_echeance','date_fin','abonne_uid','abo_statut','abo_fin_raison','montant_cumul'),
