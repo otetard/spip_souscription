@@ -44,7 +44,7 @@ function genie_relancer_souscriptions_abandonnees($now = null){
 	$rows = sql_allfetsel(
 		"S.id_souscription,S.courriel,S.date_souscription",
 		"spip_souscriptions AS S JOIN spip_transactions AS T on T.id_transaction=S.id_transaction_echeance",
-		"S.statut=".sql_quote('prepa')." AND S.date_souscription<".sql_quote($datemoins1w)." AND T.statut=".sql_quote('commande'),
+		"S.statut=".sql_quote('prepa')." AND S.date_souscription<".sql_quote($datemoins1w)." AND T.statut=".sql_quote('commande')."AND T.mode not in (".sql_quote('cheque').",".sql_quote('virement').") ",
 	  '','date_souscription DESC','0,5');
 
 	foreach($rows as $row){
