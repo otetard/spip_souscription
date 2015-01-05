@@ -81,7 +81,7 @@ function souscription_declarer_tables_objets_sql($tables){
 				"KEY id_souscription_campagne" => "id_souscription_campagne"
 			),
 			'join' => array(
-				'id_souscription','id_souscription_campagne','id_auteur'
+				'id_souscription','id_souscription_campagne'
 			),
 			'titre' => "nom AS titre, '' AS lang",
 			'date' => "date_souscription",
