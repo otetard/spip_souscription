@@ -11,6 +11,26 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+
+/**
+ * Afficher la liste des transactions d'un auteur sur la page auteur de l'espace prive
+ *
+ * @pipeline affiche_auteurs_interventions
+ * @param  array $flux Données du pipeline
+ * @return array       Données du pipeline
+ */
+function souscription_affiche_auteurs_interventions($flux) {
+	if ($id_auteur = intval($flux['args']['id_auteur'])) {
+
+		$flux['data'] .= recuperer_fond('prive/objets/liste/souscriptions', array(
+			'id_auteur' => $id_auteur,
+		), array('ajax' => true));
+
+	}
+	return $flux;
+}
+
+
 /**
  * Optimiser la base de données en supprimant les liens orphelins
  * de l'objet vers quelqu'un et de quelqu'un vers l'objet.
