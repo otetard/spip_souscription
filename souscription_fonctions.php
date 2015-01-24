@@ -15,6 +15,8 @@ function souscription_liste_transactions($id_souscription){
 
 	$ids = sql_allfetsel("id_objet","spip_souscriptions_liens","id_souscription=".sql_quote($id_souscription)." AND objet=".sql_quote('transaction'));
 	$ids = array_map('reset',$ids);
+	if (!count($ids))
+		$ids = array(0);
 	return $ids;
 }
 
