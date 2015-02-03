@@ -15,5 +15,7 @@
 	  class="text"
 	  value="#ENV*{#ENV{abo}#ENV{name}_libre}"
 	  id="#ENV{abo}#ENV{name}_libre_input"
-	  onfocus="jQuery(this).siblings('input.radio').trigger('click');" />
+	  onchange="jQuery(this).siblings('input.radio').trigger('click');"
+	  onkeyup="if (jQuery(this).val()) jQuery(this).siblings('input.radio').trigger('click');"
+	/>
 </div>
