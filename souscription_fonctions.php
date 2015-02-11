@@ -39,6 +39,31 @@ function calcul_avancement_campagne($id_campagne, $type_objectif, $objectif_init
   return ($type_objectif == "don" ? $row_unique['somme']+$row_abos['somme'] : $row_unique['nombre']+$row_abos['nombre']) + $objectif_initial;
 }
 
+function souscription_campagne_historique_encaissements($id_campagne){
+	$rows = sql_allfetsel(
+		"sum(T.montant_ht) as montant_mensuel_ht,sum(T.montant) as montant_mensuel,T.date_paiement",
+		"spip_transactions AS T
+			JOIN spip_souscriptions_liens AS L ON (L.objet='transaction' AND L.id_objet=T.id_transaction)
+			JOIN spip_souscriptions AS S ON S.id_souscription=L.id_souscription",
+		"T.statut='ok' AND S.id_souscription_campagne=".intval($id_campagne),
+		"month(T.date_paiement)",
+		"T.date_paiement DESC"
+	);
+	$out = "";
+	foreach($rows as $row){
+		$mois = affdate_mois_annee($row['date_paiement']);
+		$montant = affiche_monnaie($row['montant_mensuel']);
+		$montant_ht = affiche_monnaie($row['montant_mensuel_ht']);
+		$out .= "<tr><td>$mois</td><td class='numeric'>$montant_ht</td><td class='numeric'>$montant</td></tr>\n";
+	}
+
+	$out = "<table class='spip'>
+<thead><tr class='row_first'><th>Mois</th><th class='numeric'>Montant HT</th><th class='numeric'>Montant</th></td></thead>
+<tbody>$out</tbody></table>";
+
+	return $out;
+}
+
 /*
  * Balise #AVANCEMENT_CAMPAGNE permettant de faire les calculs
  * d'avancement de la campagne (nombre des adhésions pourl es
