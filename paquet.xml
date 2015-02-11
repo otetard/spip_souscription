@@ -1,6 +1,6 @@
 <paquet prefix="souscription"
         categorie="communication"
-        version="2.4.22"
+        version="2.4.23"
         etat="test"
         compatibilite="[3.0.5;3.0.*]"
         logo="souscription-32.png"
@@ -24,6 +24,7 @@
   <pipeline nom="declarer_tables_auxiliaires" inclure="base/souscription.php"/>
   <pipeline nom="optimiser_base_disparus" inclure="souscription_pipelines.php"/>
   <pipeline nom="bank_traiter_reglement" inclure="souscription_pipelines.php"/>
+  <pipeline nom="bank_traiter_remboursement" inclure="souscription_pipelines.php"/>
   <pipeline nom="bank_abos_activer_abonnement" inclure="souscription_pipelines.php"/>
   <pipeline nom="bank_abos_decrire_echeance" inclure="souscription_pipelines.php"/>
   <pipeline nom="bank_abos_renouveler" inclure="souscription_pipelines.php"/>

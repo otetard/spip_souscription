@@ -115,6 +115,27 @@ function souscription_bank_traiter_reglement($flux){
 	return $flux;
 }
 
+function souscription_bank_traiter_remboursement($flux){
+
+	// on marque cette souscription comme remboursee
+	// et mettre a jour le montant cumul si besoin
+	if ($id_transaction = $flux['args']['id_transaction']
+	  AND $r = sql_fetsel("statut,montant","spip_transactions","id_transaction=".intval($id_transaction))
+	  AND $sous = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))){
+
+		$set = array(
+			'statut' => 'rembourse'
+		);
+		#if ($sous['abo_statut']=="ok"){
+		#	$set['montant_cumul'] = round(floatval($sous['montant_cumul']) + floatval($r['montant']),2);
+		#}
+		sql_updateq("spip_souscriptions",$set,'id_souscription='.intval($sous['id_souscription']));
+	}
+
+	$flux['data'].=" <br />Souscription #".$sous['id_souscription']." associée remboursée";
+	return $flux;
+}
+
 
 /**
  * Activer la souscription abonnee
