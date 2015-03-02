@@ -4,7 +4,7 @@ tableau est retourné lors de son utilisation via le filtre
 array_flip. ]
 #SET{liste_campagnes, #ARRAY{Tous, tous}}
 <BOUCLE_souscription_campagne(SOUSCRIPTION_CAMPAGNES)>
-  #SET{liste_campagnes, #GET{liste_campagnes}|array_merge{#ARRAY{#TITRE, #ID_SOUSCRIPTION_CAMPAGNE}}}
+  #SET{liste_campagnes, #GET{liste_campagnes}|array_merge{#ARRAY{#TITRE (##ID_SOUSCRIPTION_CAMPAGNE), #ID_SOUSCRIPTION_CAMPAGNE}}}
 </BOUCLE_souscription_campagne>
 
 <div class="formulaire_spip formulaire_exporter formulaire_#FORM">
