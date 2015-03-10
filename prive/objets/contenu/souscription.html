@@ -51,7 +51,7 @@
 Recus fiscaux :
 	<BOUCLE_annees(POUR){tableau #ID_SOUSCRIPTION|souscription_lister_recus}{', '}>
 	<a href="[(#ID_SOUSCRIPTION|souscription_generer_url_recu{#VALEUR})]">#VALEUR</a>
-	</BOUCLE_annees>
+	(<a href="[(#ID_SOUSCRIPTION|souscription_generer_url_recu{#VALEUR}|parametre_url{format,html})]">html</a>)</BOUCLE_annees>
 </B_annees>
 
 <hr />
