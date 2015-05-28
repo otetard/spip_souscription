@@ -6,9 +6,9 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// S
-	'souscription_description' => 'Module de souscription pour Attac France et Basta!',
+	'souscription_description' => 'Module de souscription de dons et adhésions, initialement développé pour <i>Attac France</i> et <i>Basta!</i>',
 	'souscription_nom' => 'Souscription',
-	'souscription_slogan' => '',
+	'souscription_slogan' => 'Collecte de dons et adhésions',
 );
 
 ?>
