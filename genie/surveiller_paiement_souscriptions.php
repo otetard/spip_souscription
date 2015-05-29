@@ -117,26 +117,28 @@ function genie_relance_souscriptions_finies($now=null){
 
 	// trouver tous les rappels en cours sur les abo_statut=fini
 	$rappels = sql_allfetsel("DISTINCT abo_relance","spip_souscriptions",'abo_statut='.sql_quote('fini').' AND abo_relance<>'.sql_quote('off'));
-	$rappels = array_map('reset',$rappels);
+	if (count($rappels)){
+		$rappels = array_map('reset',$rappels);
 
-	$where = array();
-	foreach($rappels as $r){
-		$where[] = "(abo_relance=".sql_quote($r,'','text')." AND date_fin<".sql_quote(date('Y-m-d H:i:s',strtotime('-'.(intval($r)).' day',$now))).")";
-	}
-
-	$where = "(".implode(") OR (",$where).")";
-	$where = "(($where) AND (abo_statut=".sql_quote('fini')."))";
-
-	$nb=5;
-	$notifications = charger_fonction('notifications', 'inc');
-	while($nb--){
-		if ($row = sql_fetsel('id_souscription,date_fin,abo_relance','spip_souscriptions',$where,'','date_fin','0,1')){
-			spip_log("genie_relance_souscriptions_finies id_souscription=".$row['id_souscription'].", date_fin:".$row['date_fin'].", abo_relance:".$row['abo_relance'],'souscriptions_surveillance');
-			$notifications('relancerfinsouscription', $row['id_souscription']);
-			// noter qu'on a fait le rappel
-			sql_updateq("spip_souscriptions",array('abo_relance'=>souscriptions_prochaine_relance($row['date_fin'],$now)),'id_souscription='.intval($row['id_souscription']));
+		$where = array();
+		foreach($rappels as $r){
+			$where[] = "(abo_relance=".sql_quote($r,'','text')." AND date_fin<".sql_quote(date('Y-m-d H:i:s',strtotime('-'.(intval($r)).' day',$now))).")";
 		}
-		else $nb=0;
+
+		$where = "(".implode(") OR (",$where).")";
+		$where = "(($where) AND (abo_statut=".sql_quote('fini')."))";
+
+		$nb=5;
+		$notifications = charger_fonction('notifications', 'inc');
+		while($nb--){
+			if ($row = sql_fetsel('id_souscription,date_fin,abo_relance','spip_souscriptions',$where,'','date_fin','0,1')){
+				spip_log("genie_relance_souscriptions_finies id_souscription=".$row['id_souscription'].", date_fin:".$row['date_fin'].", abo_relance:".$row['abo_relance'],'souscriptions_surveillance');
+				$notifications('relancerfinsouscription', $row['id_souscription']);
+				// noter qu'on a fait le rappel
+				sql_updateq("spip_souscriptions",array('abo_relance'=>souscriptions_prochaine_relance($row['date_fin'],$now)),'id_souscription='.intval($row['id_souscription']));
+			}
+			else $nb=0;
+		}
 	}
 }
 
