@@ -258,6 +258,12 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	if (!in_array(_request('envoyer_info'),array('on','off')))
 		set_request('envoyer_info','off');
 
+	$where_deja = array(
+		'courriel=' . sql_quote(_request('courriel')),
+		'statut=' . sql_quote('prepa'),
+		"date_souscription>".sql_quote(date('Y-m-d H:i:s',strtotime("-1 day"))),
+		'id_souscription_campagne='.intval($id_souscription_campagne),
+	);
 	$erreurs = array();
 	$montant = formulaires_souscription_trouver_montant($campagne,$erreurs);
 	$abo = false;
@@ -265,11 +271,22 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 		$abo = true;
 		$montant = substr($montant,3);
 		set_request("abo_statut","commande");
+		$where_deja[] = 'abo_statut='.sql_quote('commande');
+	}
+	else {
+		$where_deja[] = 'abo_statut='.sql_quote('non');
 	}
 	set_request('montant',$montant);
+	$where_deja[] = 'montant='.sql_quote($montant,'','text');
+
+	// si on a une souscription du meme montant, meme email, en commande, qui date de moins de 24h
+	// on la reutilise pour pas generer plein de souscription en base en cas de retour arriere/modif saisie/revalidation
+	if (!$id_souscription = sql_getfetsel('id_souscription','spip_souscriptions',$where_deja)){
+		$id_souscription='new';
+	}
 
 	$ret = formulaires_editer_objet_traiter('souscription',
-		'new',
+		$id_souscription,
 		'',
 		$lier_trad,
 		$retour,
@@ -288,9 +305,11 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 			"id_auteur" => $id_auteur,
 			"parrain" => "souscription",
 			"tracking_id" => $ret['id_souscription'],
+			"force" => false,
 		);
 		if ($id_transaction = $inserer_transaction($montant,$options)
 		  AND $hash = sql_getfetsel('transaction_hash',"spip_transactions","id_transaction=".intval($id_transaction))){
+
 			// associer transaction et souscription
 			include_spip("action/editer_liens");
 			objet_associer(array("souscription"=>$ret['id_souscription']),array("transaction"=>$id_transaction));
