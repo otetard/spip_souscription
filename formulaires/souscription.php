@@ -75,7 +75,7 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 		'abo_montant_libre' => '',
 		'courriel' => $email,
 		'recu_fiscal' => $recu_fiscal,
-		'envoyer_info' => 'on',
+		'envoyer_info' => 'off',
 		'informer_comite_local' => 'on',
 		'civilite' => '',
 		'prenom' => '',
