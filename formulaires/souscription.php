@@ -297,7 +297,8 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 	if ($ret['id_souscription']){
 		// recuperer l'id_auteur de la souscription, qui a pu etre renseigne en post_edition par un autre plugin
 		// ou recupere de la session courante hors espace prive
-		$id_auteur = sql_getfetsel("id_auteur","spip_souscriptions","id_souscription=".intval($ret['id_souscription']));
+		$souscription = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($ret['id_souscription']));
+		$id_auteur = $souscription['id_auteur'];
 		// generer la transaction et l'associer a la souscription
 		$inserer_transaction = charger_fonction('inserer_transaction', 'bank');
 		$options = array(
@@ -314,6 +315,17 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 			include_spip("action/editer_liens");
 			objet_associer(array("souscription"=>$ret['id_souscription']),array("transaction"=>$id_transaction));
 			sql_updateq("spip_souscriptions",array('id_transaction_echeance'=>$id_transaction),"id_souscription=".intval($ret['id_souscription']));
+
+			// si pas d'auteur ni en base ni en session, passer nom et prenom en session pour un eventuel usage dans le paiement (SEPA)
+			if (!$id_auteur AND (!isset($GLOBALS['visiteur_session']['id_auteur']) OR !$GLOBALS['visiteur_session']['id_auteur'])){
+				include_spip('inc/session');
+				if ($souscription['nom']){
+					session_set("session_nom",$souscription['nom']);
+				}
+				if ($souscription['prenom']){
+					session_set("session_prenom",$souscription['prenom']);
+				}
+			}
 
 			$target = ($abo?"payer-abonnement":"payer-acte");
 			spip_log(sprintf("La souscription [%s], associee a la transaction [%s] a bien ete cree.", $ret['id_souscription'], $id_transaction), "souscription");
