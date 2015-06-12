@@ -167,14 +167,6 @@ function souscription_bank_abos_activer_abonnement($flux){
 			// fixer le montant cumul des dons
 			$set['montant_cumul'] = sql_quote($r['montant']);
 
-
-			if ($row['abo_statut']==='ok'
-			  AND $row['abonne_uid']===$abo_uid
-			  AND $row['montant_cumul']==$r['montant']){
-				// c'est un double appel, on retourne sans rien faire
-				return $flux;
-			}
-
 		}
 		elseif (
 			!$abo_uid
@@ -183,6 +175,21 @@ function souscription_bank_abos_activer_abonnement($flux){
 		  spip_log("Impossible de retrouver l'abo_uid $abo_uid",'souscriptions_abos'._LOG_ERREUR);
 			return $flux;
 		}
+
+		if ($row['abo_statut']==='non'){
+			// cela ne nous concerne pas : ce n'est pas une souscription recurrente
+			spip_log("activer_abonnement sur souscription #".$row['id_souscription']." non recurente",'souscriptions_abos');
+			return $flux;
+		}
+
+		if ($row['abo_statut']==='ok'
+		  AND $row['abonne_uid']===$abo_uid
+		  AND (!isset($set['montant_cumul']) OR $row['montant_cumul']==$set['montant_cumul'])){
+			// c'est un double appel, on retourne sans rien faire
+			spip_log("activer_abonnement sur souscription #".$row['id_souscription']." abo_statut=ok (double appel)",'souscriptions_abos');
+			return $flux;
+		}
+
 
 		if ($id_transaction
 		  AND ($id_transaction==$row['id_transaction_echeance']) ){
