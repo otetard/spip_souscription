@@ -103,7 +103,8 @@ function souscription_bank_traiter_reglement($flux){
 	  AND $sous = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))){
 
 		$set = array(
-			'statut' => 'ok'
+			'statut' => 'ok',
+			'id_transaction_echeance' => 0
 		);
 		if ($sous['abo_statut']=="ok"){
 			$set['montant_cumul'] = round(floatval($sous['montant_cumul']) + floatval($r['montant']),2);
@@ -158,6 +159,7 @@ function souscription_bank_abos_activer_abonnement($flux){
 			}
 
 			if (!$r = sql_fetsel("statut,montant","spip_transactions","id_transaction=".intval($id_transaction))){
+				spip_log("transaction $id_transaction inconnue (abo $abo_uid)",'souscriptions_abos'._LOG_ERREUR);
 				return $flux;
 			}
 			if ($r['statut']!=='ok'){
@@ -182,9 +184,11 @@ function souscription_bank_abos_activer_abonnement($flux){
 			return $flux;
 		}
 
+		// ici on ne traite que le premier appel, a la premiere transaction payee
+		// et pas les autres appels sur paiements reccurentes (bank v3.0+)
 		if ($row['abo_statut']==='ok'
 		  AND $row['abonne_uid']===$abo_uid
-		  AND (!isset($set['montant_cumul']) OR $row['montant_cumul']==$set['montant_cumul'])){
+		  AND (!isset($set['montant_cumul']) OR floatval($row['montant_cumul'])>=0.01)){
 			// c'est un double appel, on retourne sans rien faire
 			spip_log("activer_abonnement sur souscription #".$row['id_souscription']." abo_statut=ok (double appel)",'souscriptions_abos');
 			return $flux;
@@ -265,8 +269,10 @@ function souscription_bank_abos_renouveler($flux){
 
 			// verifier que c'est bien l'echeance attendue
 			// et sinon generer des transactions offline de rattrapage
-			if (!intval($row["date_echeance"]))
+			if (!intval($row["date_echeance"])){
+				spip_log("souscription #".$row['id_souscription']." date echeance vide ".$row["date_echeance"],'souscriptions_abos');
 				$row["date_echeance"] = $row["date_souscription"];
+			}
 			$date_echeance = $row['date_echeance'];
 			$datem45 = date('Y-m-d H:i:s',strtotime("-45 day"));
 			while ($date_echeance<$datem45){
@@ -290,6 +296,7 @@ function souscription_bank_abos_renouveler($flux){
 					sql_updateq('spip_souscriptions',$set,"id_souscription=".intval($row['id_souscription']));
 					$row = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($row['id_souscription']));
 					objet_associer(array("souscription"=>$row['id_souscription']),array("transaction"=>$id_transaction));
+					spip_log("transaction offline $id_transaction sur souscription #".$row['id_souscription']." / prochaine echeance $prochaine_echeance",'souscriptions_abos');
 				}
 				$date_echeance = $prochaine_echeance;
 			}
@@ -314,13 +321,16 @@ function souscription_bank_abos_renouveler($flux){
 			elseif ($id_transaction = $inserer_transaction($row['montant'],$options)){
 				$prochaine_echeance = $row['date_echeance'];
 				$datep15 = date('Y-m-d H:i:s',strtotime("+15 day"));
+				spip_log("souscription #".$row['id_souscription']." $prochaine_echeance vs $datep15","souscriptions_abos");
 				// recaler la prochaine echeance si trop en avance (double appel anterieur ou erreur de calcul)
 				while($prochaine_echeance>$datep15){
 					$prochaine_echeance = date('Y-m-d H:i:s',strtotime("-1 month",strtotime($prochaine_echeance)));
+					spip_log("souscription #".$row['id_souscription']." echeance=echeance-1 month : $prochaine_echeance vs $datep15","souscriptions_abos");
 				}
 				// l'incrementer pour atteindre celle du mois prochain
 				while($prochaine_echeance<$datep15){
 					$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($prochaine_echeance)));
+					spip_log("souscription #".$row['id_souscription']." echeance=echeance+1 month : $prochaine_echeance vs $datep15","souscriptions_abos");
 				}
 
 				// a ce stade on ne sait pas encore si la transaction est reussie ou en echec
