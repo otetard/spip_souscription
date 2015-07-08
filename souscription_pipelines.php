@@ -104,10 +104,13 @@ function souscription_bank_traiter_reglement($flux){
 
 		$set = array(
 			'statut' => 'ok',
-			'id_transaction_echeance' => 0
 		);
-		if ($sous['abo_statut']=="ok"){
+		if ($sous['abo_statut']==="ok"){
 			$set['montant_cumul'] = round(floatval($sous['montant_cumul']) + floatval($r['montant']),2);
+			$set['id_transaction_echeance'] = 0;
+		}
+		elseif($sous['abo_statut']==='non'){
+			$set['id_transaction_echeance'] = 0;
 		}
 		sql_updateq("spip_souscriptions",$set,'id_souscription='.intval($sous['id_souscription']));
 	}
@@ -168,7 +171,6 @@ function souscription_bank_abos_activer_abonnement($flux){
 			}
 			// fixer le montant cumul des dons
 			$set['montant_cumul'] = sql_quote($r['montant']);
-
 		}
 		elseif (
 			!$abo_uid
@@ -212,7 +214,7 @@ function souscription_bank_abos_activer_abonnement($flux){
 				}
 				$set["date_fin"] = sql_quote($flux['args']['validite']);
 			}
-
+			$set['id_transaction_echeance'] = 0;
 		}
 
 		if ($row['id_souscription'] AND count($set)){
