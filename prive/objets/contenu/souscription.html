@@ -30,7 +30,7 @@
 	<div class='label'><:souscription:label_abonne_uid:> : </div>
 	<span class="#EDIT{abonne_uid} abonne_uid">(#ABONNE_UID)</span>
 </div>]
-[<div class="champ contenu_date_echeance[ (#DATE_ECHEANCE*|>{#DATE_SOUSCRIPTION}|et{#DATE_ECHEANCE*|<{#DATE_FIN}}|?{'',vide})]">
+[<div class="champ contenu_date_echeance[ (#DATE_ECHEANCE*|>{#DATE_SOUSCRIPTION}|et{#DATE_FIN|intval|non|ou{#DATE_ECHEANCE*|<{#DATE_FIN}}}|?{'',vide})]">
 	<div class='label'><:souscription:label_date_echeance:> : </div>
 	<span class="#EDIT{date_echeance} date_echeance">(#DATE_ECHEANCE|affdate)</span>
 </div>]
