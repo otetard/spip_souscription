@@ -65,14 +65,11 @@ function souscription_upgrade($nom_meta_base_version, $version_cible){
 		array('sql_update','spip_souscriptions',array('date_echeance'=>'date_souscription','date_fin'=>'date_souscription')),
 		array('souscription_maj_montants_date'),
 	);
-	$maj['0.8.0'] = array(
-		array('maj_tables',	array('spip_souscriptions')),
-	);
-	$maj['0.8.1'] = array(
-		array('souscription_maj_statut'),
-	);
 	$maj['0.8.3'] = array(
 		array('maj_tables',	array('spip_souscriptions')),
+	);
+	$maj['0.8.4'] = array(
+		array('souscription_maj_statut'),
 	);
 
 	include_spip('base/upgrade');
@@ -89,6 +86,72 @@ function souscription_maj_statut(){
 	#var_dump($ids);
 	$ids = array_map('reset',$ids);
 	sql_updateq("spip_souscriptions",array('statut'=>'ok'),"statut=".sql_quote('prepa')." AND ".sql_in('id_souscription',$ids));
+
+	// toutes les souscriptions ok mais dont abo_statut='commande'
+	// recalculer le montant_cumul
+	$souscriptions = sql_allfetsel("*","spip_souscriptions","statut=".sql_quote('ok')." AND abo_statut=".sql_quote('commande'));
+	if ($souscriptions){
+		foreach($souscriptions as $souscription){
+			$montants = sql_allfetsel(
+				"T.montant",
+				"spip_souscriptions_liens AS L JOIN spip_transactions AS T ON (L.objet=".sql_quote('transaction')." AND L.id_objet=T.id_transaction)",
+				"T.statut=".sql_quote('ok')." AND L.id_souscription=".intval($souscription['id_souscription'])
+			);
+			$montants = array_map('reset',$montants);
+			$montants = array_map('floatval',$montants);
+			$cumul = round(array_sum($montants),2);
+			$set = array(
+				'abo_statut' => 'ok',
+				'montant_cumul' => $cumul,
+			);
+			sql_updateq('spip_souscriptions',$set,'id_souscription='.intval($souscription['id_souscription']));
+			spip_log("Corriger montant_cumul/abo_statut sur souscription ".$souscription['id_souscription'],"maj");
+			if (time()>_TIME_OUT)
+				return;
+		}
+	}
+
+	// toutes les souscriptions dont date_echeance=date_souscription
+	$souscriptions = sql_allfetsel("*","spip_souscriptions","abo_statut=".sql_quote('ok')." AND date_echeance=date_souscription");
+	if ($souscriptions){
+		foreach($souscriptions as $souscription){
+			$trans = sql_allfetsel(
+				"T.montant,T.date_transaction",
+				"spip_souscriptions_liens AS L JOIN spip_transactions AS T ON (L.objet=".sql_quote('transaction')." AND L.id_objet=T.id_transaction)",
+				"T.statut=".sql_quote('ok')." AND L.id_souscription=".intval($souscription['id_souscription']),
+				'',
+				'date_transaction DESC'
+			);
+			$montants = array_map('reset',$trans);
+			$montants = array_map('floatval',$montants);
+			$cumul = round(array_sum($montants),2);
+
+			$last = reset($trans);
+			$last = $last['date_transaction'];
+			$datep15 = date('Y-m-d H:i:s',strtotime("+15 day",strtotime($last)));
+			$prochaine_echeance = $souscription['date_echeance'];
+			spip_log("souscription #".$souscription['id_souscription']." $prochaine_echeance vs $datep15","souscriptions_abos");
+			// l'incrementer pour atteindre celle du mois prochain
+			while($prochaine_echeance<$datep15){
+				$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($prochaine_echeance)));
+				spip_log("souscription #".$souscription['id_souscription']." echeance=echeance+1 month : $prochaine_echeance vs $datep15","souscriptions_abos");
+			}
+
+			$set = array(
+				'abo_statut' => 'ok',
+				'montant_cumul' => $cumul,
+				'date_echeance' => $prochaine_echeance,
+			);
+
+			#var_dump($souscription);
+			#var_dump($set);
+			sql_updateq('spip_souscriptions',$set,'id_souscription='.intval($souscription['id_souscription']));
+			spip_log("Corriger montant_cumul/abo_statut/date_echeance sur souscription ".$souscription['id_souscription'],"maj");
+
+			if (time()>_TIME_OUT)
+				return;
+		}
+	}
 
 }
 
