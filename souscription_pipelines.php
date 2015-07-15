@@ -206,7 +206,8 @@ function souscription_bank_abos_activer_abonnement($flux){
 				$set["date_fin"] = $set["date_echeance"];
 			}
 			else {
-				if ($prochaine_echeance<$flux['args']['validite']){
+				if ($prochaine_echeance<$flux['args']['validite']
+					OR $flux['args']['validite']<$row["date_souscription"]){
 					$set["date_echeance"] = sql_quote($prochaine_echeance);
 				}
 				else {
