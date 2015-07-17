@@ -46,7 +46,7 @@ function souscription_campagne_historique_encaissements($id_campagne){
 			JOIN spip_souscriptions_liens AS L ON (L.objet='transaction' AND L.id_objet=T.id_transaction)
 			JOIN spip_souscriptions AS S ON S.id_souscription=L.id_souscription",
 		"T.statut='ok' AND S.id_souscription_campagne=".intval($id_campagne),
-		"month(T.date_paiement)",
+		"DATE_FORMAT(T.date_paiement,'%Y-%m')",
 		"T.date_paiement DESC"
 	);
 	$out = "";
