@@ -99,8 +99,12 @@ function souscription_bank_traiter_reglement($flux){
 	// on peut marquer cette souscription comme effective
 	// et mettre a jour le montant cumul si besoin
 	if ($id_transaction = $flux['args']['id_transaction']
-	  AND $r = sql_fetsel("statut,montant","spip_transactions","id_transaction=".intval($id_transaction))
-	  AND $sous = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))){
+	  AND $r = sql_fetsel("statut,montant,abo_uid","spip_transactions","id_transaction=".intval($id_transaction))
+	  AND (
+		     $sous = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))
+		  OR $sous = sql_fetsel("*","spip_souscriptions","abonne_uid=".sql_quote($r['abo_uid'])." AND abo_statut=".sql_quote('ok'))
+		  )
+	  ){
 
 		$set = array(
 			'statut' => 'ok',
@@ -113,9 +117,10 @@ function souscription_bank_traiter_reglement($flux){
 			$set['id_transaction_echeance'] = 0;
 		}
 		sql_updateq("spip_souscriptions",$set,'id_souscription='.intval($sous['id_souscription']));
+
+		$flux['data'].=" <br />Vous allez recevoir un email de confirmation.";
 	}
 
-	$flux['data'].=" <br />Vous allez recevoir un email de confirmation.";
 	return $flux;
 }
 
