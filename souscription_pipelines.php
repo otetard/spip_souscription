@@ -162,7 +162,7 @@ function souscription_bank_abos_activer_abonnement($flux){
 		if ($id_transaction = $flux['args']['id_transaction']){
 			if (!$row = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))
 			  OR !$id_souscription = $row['id_souscription']){
-			 	spip_log("Impossible de retrouver la souscription liee a la transaction $id_transaction",'souscriptions_abos'._LOG_ERREUR);
+			 	spip_log("Pas de souscription recurente a activer pour la transaction $id_transaction",'souscriptions_abos'._LOG_ERREUR);
 				return $flux;
 			}
 
@@ -329,16 +329,16 @@ function souscription_bank_abos_renouveler($flux){
 			elseif ($id_transaction = $inserer_transaction($row['montant'],$options)){
 				$prochaine_echeance = $row['date_echeance'];
 				$datep15 = date('Y-m-d H:i:s',strtotime("+15 day"));
-				spip_log("souscription #".$row['id_souscription']." $prochaine_echeance vs $datep15","souscriptions_abos");
+				spip_log("souscription #".$row['id_souscription']." $prochaine_echeance vs $datep15","souscriptions_abos"._LOG_DEBUG);
 				// recaler la prochaine echeance si trop en avance (double appel anterieur ou erreur de calcul)
 				while($prochaine_echeance>$datep15){
 					$prochaine_echeance = date('Y-m-d H:i:s',strtotime("-1 month",strtotime($prochaine_echeance)));
-					spip_log("souscription #".$row['id_souscription']." echeance=echeance-1 month : $prochaine_echeance vs $datep15","souscriptions_abos");
+					spip_log("souscription #".$row['id_souscription']." echeance=echeance-1 month : $prochaine_echeance vs $datep15","souscriptions_abos"._LOG_DEBUG);
 				}
 				// l'incrementer pour atteindre celle du mois prochain
 				while($prochaine_echeance<$datep15){
 					$prochaine_echeance = date('Y-m-d H:i:s',strtotime("+1 month",strtotime($prochaine_echeance)));
-					spip_log("souscription #".$row['id_souscription']." echeance=echeance+1 month : $prochaine_echeance vs $datep15","souscriptions_abos");
+					spip_log("souscription #".$row['id_souscription']." echeance=echeance+1 month : $prochaine_echeance vs $datep15","souscriptions_abos"._LOG_DEBUG);
 				}
 
 				// a ce stade on ne sait pas encore si la transaction est reussie ou en echec
