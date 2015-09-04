@@ -382,6 +382,8 @@ function souscription_bank_abos_renouveler($flux){
  */
 function souscription_bank_abos_resilier($flux){
 
+	spip_log("souscription_bank_abos_resilier id=".$flux['args']['id'],"souscriptions_abos");
+
 	$id = $flux['args']['id'];
 	if (strncmp($id,"uid:",4)==0){
 		$where = "abonne_uid=".sql_quote(substr($id,4));
@@ -407,7 +409,7 @@ function souscription_bank_abos_resilier($flux){
 
 		$ok = true;
 		if ($flux['args']['notify_bank']
-		  AND $mode_paiement = sql_getfetsel("mode","spip_transactions","id_transaction=".intval($row['id_transaction_echeance']))){
+		  AND $mode_paiement = sql_getfetsel("mode","spip_transactions","abo_uid=".sql_quote($row['abonne_uid'],'','text'),"","id_transaction DESC")){
 			$ok = abos_resilier_notify_bank($row['abonne_uid'],$mode_paiement);
 		}
 		if ($ok){
@@ -426,6 +428,9 @@ function souscription_bank_abos_resilier($flux){
 			}
 		}
 
+	}
+	else {
+		spip_log("Pas de souscription WHERE $where","souscriptions_abos"._LOG_ERREUR);
 	}
 
 	return $flux;
