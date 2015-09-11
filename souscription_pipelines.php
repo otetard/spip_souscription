@@ -54,7 +54,10 @@ function souscription_optimiser_base_disparus($flux){
  * @return array       Données du pipeline
  */
 function souscription_trig_bank_notifier_reglement($flux) {
-	$souscription = sql_fetsel(array('courriel', 'id_souscription_campagne','abo_statut','id_souscription'), 'spip_souscriptions', 'id_transaction_echeance='.intval($flux['args']['id_transaction']));
+       $souscription = sql_fetsel(array('courriel', 'id_souscription_campagne','abo_statut','id_souscription'),
+                                  'spip_souscriptions LEFT JOIN spip_souscriptions_liens USING (id_souscription)',
+                                  array('id_objet='.intval($flux['args']['id_transaction']),
+                                        "objet=".sql_quote('transaction')));
 
 	// on ne notifie pas les N echeances d'un don mensuel mais seulement la premiere
 	$n_echeance = 1;
