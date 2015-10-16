@@ -260,6 +260,8 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 
 	$where_deja = array(
 		'courriel=' . sql_quote(_request('courriel')),
+		'nom=' . sql_quote(_request('nom')),
+		'prenom=' . sql_quote(_request('prenom')),
 		'statut=' . sql_quote('prepa'),
 		"date_souscription>".sql_quote(date('Y-m-d H:i:s',strtotime("-1 day"))),
 		'id_souscription_campagne='.intval($id_souscription_campagne),
