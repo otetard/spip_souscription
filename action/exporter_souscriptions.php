@@ -126,6 +126,8 @@ function action_exporter_souscriptions_dist($arg = null){
 		_T("souscription:label_exporter_entete_id_campagne"),
 		_T("souscription:label_exporter_entete_titre_campagne")
 	);
+	include_spip('inc/charsets');
+	$entete = array_map('unicode2charset',$entete);
 
 	/* Utilisation de la fonction exporter_csv de Bonux */
 	$exporter_csv = charger_fonction('exporter_csv', 'inc/', true);
