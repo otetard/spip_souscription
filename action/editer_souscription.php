@@ -79,10 +79,10 @@ function souscription_inserer(){
  * $c est un contenu (par defaut on prend le contenu via _request())
  *
  * @param int $id_souscription
- * @param array|bool $set
+ * @param array|null $set
  * @return string
  */
-function souscription_modifier($id_souscription, $set = false){
+function souscription_modifier($id_souscription, $set = null){
 	include_spip('inc/modifier');
 
 	$c = collecter_requests(
@@ -101,6 +101,10 @@ function souscription_modifier($id_souscription, $set = false){
 
 	$c = array_merge($c,array("pays" => $pays));
 
-	if ($err = objet_modifier_champs('souscription', $id_souscription, array(), $c))
+	if ($err = objet_modifier_champs('souscription', $id_souscription,
+		array(
+			'data' => $set,
+		),
+		$c))
 		return $err;
 }
