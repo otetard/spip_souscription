@@ -61,7 +61,7 @@
 			      <legend><:souscription:label_legende_bloc_fiscal:></legend>
 			      [(#INCLURE{fond=inclure/souscription/bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
 			      <ul>
-				      #SET{name0,civilite}#SET{obli1,'obligatoire'}#SET{defaut0,''}#SET{erreurs0,#ENV**{erreurs}|table_valeur{#GET{name0}}}
+				      #SET{name0,civilite}#SET{obli1,''}#SET{defaut0,''}#SET{erreurs0,#ENV**{erreurs}|table_valeur{#GET{name0}}}
 				      #SET{name1,prenom}#SET{obli1,'obligatoire'}#SET{defaut1,''}#SET{erreurs1,#ENV**{erreurs}|table_valeur{#GET{name1}}}
 				      #SET{name2,nom}#SET{obli2,'obligatoire'}#SET{defaut2,''}#SET{erreurs2,#ENV**{erreurs}|table_valeur{#GET{name2}}}
 		          <li class="editer [ (#GET{obli1})][ (#GET{erreurs1}|oui)erreur][ (#GET{erreurs2}|oui)erreur]">

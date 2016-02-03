@@ -128,7 +128,7 @@ function formulaires_souscription_verifier_dist($id_souscription_campagne){
 
 
 	if (_request('recu_fiscal')==="on" OR $type_campagne=="adhesion"){
-		foreach (array('civilite', 'prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire){
+		foreach (array('prenom', 'nom', 'adresse', 'code_postal', 'ville', 'pays') as $obligatoire){
 			if (!_request($obligatoire)){
 				if ($type_campagne=="adhesion"){
 					$erreurs[$obligatoire] = _T('souscription:erreur_adhesion_champ_obligatoire');
@@ -319,7 +319,9 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 			sql_updateq("spip_souscriptions",array('id_transaction_echeance'=>$id_transaction),"id_souscription=".intval($ret['id_souscription']));
 
 			// si pas d'auteur ni en base ni en session, passer nom et prenom en session pour un eventuel usage dans le paiement (SEPA)
-			if (!$id_auteur AND (!isset($GLOBALS['visiteur_session']['id_auteur']) OR !$GLOBALS['visiteur_session']['id_auteur'])){
+			if (!isset($GLOBALS['visiteur_session']['id_auteur'])
+				OR !$GLOBALS['visiteur_session']['id_auteur']
+				OR !$GLOBALS['visiteur_session']['id_auteur']==$id_auteur){
 				include_spip('inc/session');
 				if ($souscription['nom']){
 					session_set("session_nom",$souscription['nom']);
