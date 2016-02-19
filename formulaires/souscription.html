@@ -12,7 +12,7 @@
 
       #ACTION_FORMULAIRE{#ENV{action}}
 
-      <ul>
+      <ul class="editer-groupe">
 	      [(#ENV{_montant_type}|sinon{none}|=={none}|non)
 	      #SET{name,montant}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
         <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
@@ -60,7 +60,7 @@
 		      <fieldset>
 			      <legend><:souscription:label_legende_bloc_fiscal:></legend>
 			      [(#INCLURE{fond=inclure/souscription/bloc_fiscal_intro,type_souscription=#ENV{type_souscription}})]
-			      <ul>
+			      <ul class="editer-groupe">
 				      #SET{name0,civilite}#SET{obli1,''}#SET{defaut0,''}#SET{erreurs0,#ENV**{erreurs}|table_valeur{#GET{name0}}}
 				      #SET{name1,prenom}#SET{obli1,'obligatoire'}#SET{defaut1,''}#SET{erreurs1,#ENV**{erreurs}|table_valeur{#GET{name1}}}
 				      #SET{name2,nom}#SET{obli2,'obligatoire'}#SET{defaut2,''}#SET{erreurs2,#ENV**{erreurs}|table_valeur{#GET{name2}}}
@@ -175,11 +175,11 @@
 		[(#ENV{_montant_type}|sinon{none}|=={none}|non)*/
 		jQuery(".editer_abo_montant").find("input[name=abo_montant],select[name=abo_montant]").change(function(){
 			jQuery(".editer_montant").find("input.text,select").val('');
-			jQuery(".editer_montant").find("input.radio").attr("checked",false);
+			jQuery(".editer_montant").find("input.radio").prop("checked",false);
 		});
 		jQuery(".editer_montant").find("input[name=montant],select[name=montant]").change(function(){
 			jQuery(".editer_abo_montant").find("input[name=abo_montant].text,select[name=abo_montant]").val('');
-			jQuery(".editer_abo_montant").find("input[name=abo_montant].radio").attr("checked",false);
+			jQuery(".editer_abo_montant").find("input[name=abo_montant].radio").prop("checked",false);
 		});
 /*]
 ]*/

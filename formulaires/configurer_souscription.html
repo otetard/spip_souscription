@@ -14,7 +14,7 @@
 		#ACTION_FORMULAIRE{#ENV{action}}
 
 		#SET{fl,souscription}
-		<ul>
+		<ul class="editer-groupe">
 			#SET{name,adhesion_activer}#SET{obli,''}#SET{defaut,'off'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 				<span class='erreur_message'>(#GET{erreurs})</span>
@@ -28,11 +28,11 @@
 				</div>
 			</li>
 			<li class="suite fieldset adhesion[(#ENV{adhesion_activer,off}|=={on}|non)none]">
-				<ul>
+				<ul class="editer-groupe">
 					<li class="fieldset">
 						<fieldset>
 							<legend><:souscription:label_adhesion_groupe:></legend>
-							<ul>
+							<ul class="editer-groupe">
 								<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=adhesion,env} />
 							</ul>
 						</fieldset>
@@ -40,7 +40,7 @@
 					<li class="fieldset">
 						<fieldset>
 							<legend><:souscription:label_adhesion_abo_groupe:></legend>
-							<ul>
+							<ul class="editer-groupe">
 								<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=adhesion_abo,env} />
 							</ul>
 						</fieldset>
@@ -75,13 +75,13 @@
 			<li class="suite fieldset don[(#ENV{don_activer,off}|=={on}|non)none]">
 				<fieldset>
 					<legend><:souscription:label_don_groupe:></legend>
-					<ul>
+					<ul class="editer-groupe">
 						<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=don,env} />
 					</ul>
 				</fieldset>
 				<fieldset>
 					<legend><:souscription:label_don_abo_groupe:></legend>
-					<ul>
+					<ul class="editer-groupe">
 						<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=don_abo,env} />
 					</ul>
 				</fieldset>
@@ -91,7 +91,7 @@
 		</ul>
 		<fieldset>
 			<legend><:souscription:label_general_groupe:></legend>
-			<ul>
+			<ul class="editer-groupe">
 				#SET{name,processus_paiement}#SET{obli,''}#SET{defaut,'redirige'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label>[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
@@ -138,7 +138,7 @@
 		</fieldset>
 		<fieldset>
 			<legend><:bank:label_notifications:></legend>
-			<ul>
+			<ul class="editer-groupe">
 				#SET{name,email_alerte_echeances}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 				<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_email_alerte_echeances:></label>[
@@ -150,7 +150,7 @@
 
 		<fieldset>
 			<legend><:souscription:label_recu_groupe:></legend>
-			<ul>
+			<ul class="editer-groupe">
 				#SET{name,association_nom}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_association_nom:></label>[

@@ -17,7 +17,7 @@ array_flip. ]
   [(#ENV{editable})
   <form method="post" action="#ENV{action}">
     #ACTION_FORMULAIRE{#ENV{action}}
-    <ul>
+    <[(#DIV|sinon{ul})] class="editer-groupe">
       [(#SAISIE{selection, exporter_type_souscription, label=<:souscription:label_exporter_type_souscription:>,
                 cacher_option_intro=oui, datas=#ARRAY{tous, Tous, don, Dons, adhesion, Adhésions}})]
 
@@ -30,7 +30,7 @@ array_flip. ]
       [(#SAISIE{date, exporter_date_debut, label=<:souscription:label_exporter_date_debut:>})]
 
       [(#SAISIE{date, exporter_date_fin, label=<:souscription:label_exporter_date_fin:>})]
-    </ul>
+    </[(#DIV|sinon{ul})]>
 
     <p class="boutons"><input type="submit" class="submit" value="<:souscription:bouton_exporter:>" /></p>
   </form>

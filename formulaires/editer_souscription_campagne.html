@@ -6,7 +6,7 @@
   <form method="post" action="#ENV{action}"><div>
       #ACTION_FORMULAIRE{#ENV{action}}
 
-      <ul>
+      <ul class="editer-groupe">
 	      #SET{name,titre}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
         <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
           <label for="#GET{name}"><:souscription_campagne:label_titre_campagne:> <:info_obligatoire_02:></label>[
@@ -50,7 +50,7 @@
 	      <li class="suite fieldset limite[(#ENV{#GET{name},#GET{defaut}}|=={on}|non)none]">
 	     		<fieldset>
 	     			<legend><:souscription_campagne:label_objectif_groupe:></legend>
-	     			<ul>
+	     			<ul class="editer-groupe">
 				      #SET{name,objectif}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 			        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 			          <label for="#GET{name}"><:souscription_campagne:label_objectif:> <:info_obligatoire_02:></label>[
@@ -97,13 +97,13 @@
 	      <li class="suite fieldset configuration_specifique[(#ENV{#GET{name},#GET{defaut}}|=={on}|non)none]">
 	     		<fieldset>
 	     			<legend><:souscription_campagne:label_montant_groupe:></legend>
-			      <ul>
+			      <ul class="editer-groupe">
 	            <INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier='',campagne=oui,env} />
 	          </ul>
 		      </fieldset>
 		      <fieldset>
 	     			<legend><:souscription_campagne:label_abo_montant_groupe:></legend>
-			      <ul>
+			      <ul class="editer-groupe">
 	            <INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier='abo',campagne=oui,env} />
 	          </ul>
 		      </fieldset>
