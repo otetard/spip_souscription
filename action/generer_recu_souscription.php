@@ -13,7 +13,18 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 
 include_spip("public/parametrer"); // fonctions
 
-function action_generer_recu_souscription_dist($id_souscription = null, $annee=null){
+
+/**
+ * @param null $id_souscription
+ * @param null $annee
+ * @param string $mode
+ * si le mode n'est pas "telecharger", le pdf est généré et la fonction retourner le nom du pdf généré.
+ * Permet de faire un appel
+ * 		$generer_recu = charger_fonction('generer_recu_souscription','action',true);
+ * 		$toto=$generer_recu($id_souscription, $annee,'generer');
+ * @return string
+ */
+function action_generer_recu_souscription_dist($id_souscription = null, $annee=null,$mode='telecharger'){
 	if (is_null($id_souscription)){
 		$id_souscription = _request('id_souscription');
 		$annee = _request('annee');
@@ -55,24 +66,28 @@ function action_generer_recu_souscription_dist($id_souscription = null, $annee=n
 		ecrire_fichier($file,$content);
 	}
 
-	$mime = "text/html";
-	if ($format=="pdf")
-		$mime = "application/pdf";
-	header("Content-type: $mime");
-	if ($format=="pdf"){
-		$filename = preg_replace(",\W+,","",$GLOBALS['meta']['nom_site'])."-Recu-".$filename;
-		header("Content-Disposition: attachment; filename=$filename");
-		//header("Content-Transfer-Encoding: binary");
+	if ($mode=="telecharger") {
+
+		$mime = "text/html";
+		if ($format == "pdf")
+			$mime = "application/pdf";
+		header("Content-type: $mime");
+		if ($format == "pdf") {
+			$filename = preg_replace(",\W+,", "", $GLOBALS['meta']['nom_site']) . "-Recu-" . $filename;
+			header("Content-Disposition: attachment; filename=$filename");
+			//header("Content-Transfer-Encoding: binary");
+		}
+
+		// fix for IE catching or PHP bug issue
+		header("Pragma: public");
+		header("Expires: 0"); // set expiration time
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		if ($cl = filesize($file))
+			header("Content-Length: " . $cl);
+
+		readfile($file);
 	}
-
-	// fix for IE catching or PHP bug issue
-	header("Pragma: public");
-	header("Expires: 0"); // set expiration time
-	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-
-	if ($cl = filesize($file))
-		header("Content-Length: ". $cl);
-
-	readfile($file);
-
+	else
+		return $file;
 }

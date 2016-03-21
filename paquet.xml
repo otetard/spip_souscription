@@ -1,6 +1,6 @@
 <paquet prefix="souscription"
         categorie="communication"
-        version="2.5.0"
+        version="2.5.1"
         etat="test"
         compatibilite="[3.0.5;3.1.*]"
         logo="souscription-32.png"
