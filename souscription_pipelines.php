@@ -286,6 +286,9 @@ function souscription_bank_abos_renouveler($flux){
 				'parrain' => 'souscription',
 				'tracking_id' => $row['id_souscription'],
 				'id_auteur' => $row['id_auteur'],
+				'champs' => array(
+					'date_transaction' => date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']),
+				)
 			);
 			$inserer_transaction = charger_fonction("inserer_transaction","bank");
 			include_spip("action/editer_liens");
@@ -297,7 +300,7 @@ function souscription_bank_abos_renouveler($flux){
 				$row["date_echeance"] = $row["date_souscription"];
 			}
 			$date_echeance = $row['date_echeance'];
-			$datem45 = date('Y-m-d H:i:s',strtotime("-45 day"));
+			$datem45 = date('Y-m-d H:i:s',strtotime("-45 day",$_SERVER['REQUEST_TIME']));
 			while ($date_echeance<$datem45){
 				$o = $options;
 				$o['champs']['date_transaction'] = $date_echeance;
@@ -326,7 +329,7 @@ function souscription_bank_abos_renouveler($flux){
 
 			// si il y a deja eu une transaction echeance il y a moins de 15j sur cette souscription
 			// c'est un double appel, renvoyer l'id_transaction concerne
-			$datem15 = date('Y-m-d H:i:s',strtotime("-15 day"));
+			$datem15 = date('Y-m-d H:i:s',strtotime("-15 day",$_SERVER['REQUEST_TIME']));
 			if ($id_transaction = sql_getfetsel(
 				"id_transaction",
 				"spip_transactions",
@@ -343,7 +346,7 @@ function souscription_bank_abos_renouveler($flux){
 			// ouvrir la transaction
 			elseif ($id_transaction = $inserer_transaction($row['montant'],$options)){
 				$prochaine_echeance = $row['date_echeance'];
-				$datep15 = date('Y-m-d H:i:s',strtotime("+15 day"));
+				$datep15 = date('Y-m-d H:i:s',strtotime("+15 day",$_SERVER['REQUEST_TIME']));
 				spip_log("souscription #".$row['id_souscription']." $prochaine_echeance vs $datep15","souscriptions_abos"._LOG_DEBUG);
 				// recaler la prochaine echeance si trop en avance (double appel anterieur ou erreur de calcul)
 				while($prochaine_echeance>$datep15){
