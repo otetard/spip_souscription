@@ -206,7 +206,7 @@ function souscription_numero_recu($id_souscription,$annee){
  */
 function souscription_lister_recus($id_souscription){
 	$annees = array();
-	$souscription = sql_fetsel('id_souscription,date_souscription,date_fin,statut,abo_statut','spip_souscriptions','id_souscription='.intval($id_souscription));
+	$souscription = sql_fetsel('id_souscription,date_souscription,date_fin,date_echeance,statut,abo_statut','spip_souscriptions','id_souscription='.intval($id_souscription));
 
 	if ($souscription['statut']!=='ok')
 		return $annees;
