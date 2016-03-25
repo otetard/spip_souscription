@@ -216,7 +216,7 @@ function souscription_lister_recus($id_souscription){
 	}
 	else {
 		$annee = date('Y',strtotime($souscription['date_souscription']));
-		$annee_fin = max($annee,date('Y',strtotime($souscription['date_fin'])));
+		$annee_fin = max($annee,date('Y',strtotime($souscription['date_fin'])),date('Y',strtotime($souscription['date_echeance'])));
 		$annee_fiscalenmoins1 = date('Y')-1;
 
 		while ($annee<=$annee_fin AND $annee<=$annee_fiscalenmoins1) {
