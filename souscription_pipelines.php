@@ -251,6 +251,7 @@ function souscription_bank_abos_decrire_echeance($flux){
 	return $flux;
 }
 
+
 /**
  * Gerer le renouvellement lors de la notification de paiement d'une echeance par le presta bancaire
  *
@@ -264,6 +265,17 @@ function souscription_bank_abos_renouveler($flux){
 		$id = $flux['args']['id'];
 		if (strncmp($id,"uid:",4)==0){
 			$where = "abonne_uid=".sql_quote(substr($id,4));
+			// retrouver la souscription via la transaction si jamais on a pas cet abonne_uid
+			// resilience
+			if (!sql_countsel("spip_souscriptions",$where)
+			  AND $id_transaction = sql_getfetsel("id_transaction","spip_transactions","statut=".sql_quote('ok')." AND abo_uid=".sql_quote(substr($id,4)))
+			  AND $id_souscription = sql_getfetsel("id_souscription","spip_souscriptions_liens","objet=".sql_quote('transaction')." AND id_objet=".intval($id_transaction))){
+				$where="id_souscription=".intval($id_souscription);
+				// mettre a jour l'abonne_uid si il est reste vide
+				if (!sql_getfetsel('abonne_uid','spip_souscriptions',$where)){
+					sql_updateq('spip_souscriptions',array('abonne_uid'=>substr($id,4)),$where);
+				}
+			}
 		}
 		else {
 			$where = "id_souscription=".intval($id);
