@@ -133,7 +133,7 @@ function souscription_bank_traiter_remboursement($flux){
 	// et mettre a jour le montant cumul si besoin
 	if ($id_transaction = $flux['args']['id_transaction']
 	  AND $r = sql_fetsel("statut,montant","spip_transactions","id_transaction=".intval($id_transaction))
-	  AND $sous = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction))){
+	  AND $sous = sql_fetsel("id_souscription","spip_souscriptions_liens", array("objet=".sql_quote('transaction'), "id_objet=".intval($id_transaction)))){
 
 		$set = array(
 			'statut' => 'rembourse'
