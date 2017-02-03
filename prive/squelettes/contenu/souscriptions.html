@@ -17,6 +17,7 @@
 		<li>[(#SELF|parametre_url{statut_transaction,'ok'}|lien_ou_expose{Payés,#ENV{statut_transaction}|=={ok},ajax})]</li>
 		<li>[(#SELF|parametre_url{statut_transaction,'echec'}|lien_ou_expose{Echec,#ENV{statut_transaction}|=={echec},ajax})]</li>
 		<li>[(#SELF|parametre_url{statut_transaction,'commande'}|lien_ou_expose{Commande,#ENV{statut_transaction}|=={commande},ajax})]</li>
+		<li>[(#SELF|parametre_url{statut_transaction,'attente'}|lien_ou_expose{En attente,#ENV{statut_transaction}|=={attente},ajax})]</li>
 	</ul>
 </div>
 <BOUCLE_hasabo(SOUSCRIPTIONS){abo_statut!=non}{0,1}> </BOUCLE_hasabo>

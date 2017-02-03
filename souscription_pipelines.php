@@ -127,6 +127,23 @@ function souscription_bank_traiter_reglement($flux){
 	return $flux;
 }
 
+
+function souscription_trig_bank_reglement_en_attente($flux) {
+
+	if ($id_transaction = $flux['args']['id_transaction']
+	  AND $r = sql_fetsel("statut,montant","spip_transactions","id_transaction=".intval($id_transaction))
+	  AND $sous = sql_fetsel("id_souscription","spip_souscriptions_liens", array("objet=".sql_quote('transaction'), "id_objet=".intval($id_transaction)))){
+
+		$set = array(
+			'statut' => 'attente',
+		);
+		sql_updateq("spip_souscriptions",$set,'id_souscription='.intval($sous['id_souscription']));
+
+	}
+
+	return $flux;
+}
+
 function souscription_bank_traiter_remboursement($flux){
 
 	// on marque cette souscription comme remboursee
