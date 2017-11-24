@@ -102,6 +102,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_exporter_entete_recu_fiscal' => 'Souhaite reçu fiscal',
 	'label_exporter_entete_reglee' => 'Reglée',
 	'label_exporter_entete_statut' => 'Statut',
+	'label_exporter_entete_statut_don' => 'Statut Don' , 
 	'label_exporter_entete_telephone' => 'Téléphone',
 	'label_exporter_entete_titre_campagne' => 'Titre de la campagne',
 	'label_exporter_entete_type_souscription' => 'Type de souscription',

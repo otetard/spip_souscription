@@ -69,7 +69,7 @@ function action_exporter_souscriptions_dist($arg = null){
 	}
 
 	/* Préparation de la requête */
-	$select = "S.id_souscription, S.courriel, S.type_souscription,"
+	$select = "S.id_souscription, S.courriel, S.type_souscription,S.abo_statut,"
 		. "T.montant, T.reglee, T.statut, T.date_paiement, T.mode, T.autorisation_id,"
 		. "S.nom, S.prenom, S.adresse, S.code_postal, S.ville, S.pays, S.telephone, S.recu_fiscal, S.envoyer_info, S.informer_comite_local, S.date_souscription,"
 		. "C.id_souscription_campagne, C.titre";
@@ -106,6 +106,7 @@ function action_exporter_souscriptions_dist($arg = null){
 		_T("souscription:label_exporter_entete_id_don"),
 		_T("souscription:label_exporter_entete_courriel"),
 		_T("souscription:label_exporter_entete_type_souscription"),
+		_T("souscription:label_exporter_entete_statut_don"),
 		_T("souscription:label_exporter_entete_montant"),
 		_T("souscription:label_exporter_entete_reglee"),
 		_T("souscription:label_exporter_entete_statut"),
