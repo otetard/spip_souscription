@@ -11,6 +11,16 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+/**
+ * ieconfig
+ * http://contrib.spip.net/Importeur-Exporteur-de-configurations-documentation#reply460680
+*/
+function souscription_ieconfig_metas($table){
+    $table['souscription']['titre'] = _T('souscription:titre_configurer_souscriptions');
+    $table['souscription']['icone'] = 'prive/themes/spip/images/souscription-16.png';
+    $table['souscription']['metas_serialize'] = 'souscription';
+    return $table;
+}
 
 /**
  * Afficher la liste des transactions d'un auteur sur la page auteur de l'espace prive
