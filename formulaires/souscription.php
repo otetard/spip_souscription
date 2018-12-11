@@ -355,7 +355,10 @@ function formulaires_souscription_traiter_dist($id_souscription_campagne){
 		$nom = array(_request("prenom"),_request("nom"));
 		$nom = array_filter($nom);
 		$nom = implode(" ",$nom);
-		$subscribe($email,array('nom'=>$nom));
+		$subscribe($email,array(
+				'nom'=>$nom,
+				'listes'=> explode(',',lire_config("souscription/mailing_list"))
+		));
 	}
 
 	return $ret;
