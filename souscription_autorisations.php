@@ -84,10 +84,10 @@ function autoriser_souscription_exporter_dist($faire, $type, $id, $qui, $opt) {
   return autoriser('webmestre', '', '', $qui);
 }
 
-function autoriser_souscription_configurer_dist($faire, $mode='', $id=0, $qui = NULL, $opt = NULL){
+function autoriser_souscription_configurer_dist($faire, $mode='', $id=0, $qui = null, $opt = null){
   return autoriser('webmestre');
 }
 
-function autoriser_souscriptioncampagne_dist($faire, $mode='', $id=0, $qui = NULL, $opt = NULL){
+function autoriser_souscriptioncampagne_dist($faire, $mode='', $id=0, $qui = null, $opt = null){
   return autoriser('webmestre');
 }
