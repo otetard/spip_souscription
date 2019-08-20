@@ -57,6 +57,30 @@ function souscription_optimiser_base_disparus($flux){
 }
 
 /**
+ * Renseigner les infos nominatives/adresses liees a une demande de paiement
+ * @param $flux
+ * @return mixed
+ */
+function souscription_bank_dsp2_renseigner_facturation($flux) {
+
+	if ($id_transaction = $flux['args']['id_transaction']
+	  AND $sous = sql_fetsel("*","spip_souscriptions","id_transaction_echeance=".intval($id_transaction)) ){
+
+		$flux['data']['nom'] = $sous['nom'];
+		$flux['data']['prenom'] = $sous['prenom'];
+		$flux['data']['email'] = $sous['courriel'];
+		$flux['data']['adresse'] = $sous['adresse'];
+		$flux['data']['code_postal'] = $sous['code_postal'];
+		$flux['data']['ville'] = $sous['ville'];
+		$flux['data']['pays'] = $sous['pays'];
+
+	}
+
+	return $flux;
+}
+
+
+/**
  * Envoi d'une notification après reglement
  *
  * @pipeline trig_bank_notifier_reglement
