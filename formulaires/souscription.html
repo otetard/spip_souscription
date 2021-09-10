@@ -69,10 +69,10 @@
 				          <label for="#GET{name0}"><:souscription:label_civilite:></label>[
 			            <span class='erreur_message'>(#GET{erreurs0})</span>
 			            ]<select name="#GET{name0}" class="select" id="#GET{name0}">
-				      <option value=""></option>
-				      <option value="monsieur"[ (#ENV*{#GET{name0},#GET{defaut0}}|=={monsieur}|oui)selected="selected"]><:souscription:label_monsieur:></option>
-				      <option value="madame"[ (#ENV*{#GET{name0},#GET{defaut0}}|=={madame}|oui)selected="selected"]><:souscription:label_madame:></option>
-				    </select>
+							      <option value=""></option>
+							      <option value="monsieur"[ (#ENV*{#GET{name0},#GET{defaut0}}|=={monsieur}|oui)selected="selected"]><:souscription:label_monsieur:></option>
+							      <option value="madame"[ (#ENV*{#GET{name0},#GET{defaut0}}|=={madame}|oui)selected="selected"]><:souscription:label_madame:></option>
+							    </select>
 			          </div>
 			          <div class="demi left editer_[(#GET{name1})]">
 				          <label for="#GET{name1}"><:souscription:label_prenom:></label>[
