@@ -6,15 +6,15 @@
   <form method="post" action="#ENV{action}"><div>
       #ACTION_FORMULAIRE{#ENV{action}}
 
-      <ul class="editer-groupe">
+      <div class="editer-groupe">
 	      #SET{name,titre}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+        <div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
           <label for="#GET{name}"><:souscription_campagne:label_titre_campagne:> <:info_obligatoire_02:></label>[
           <span class='erreur_message'>(#GET{erreurs})</span>
           ]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
-        </li>
+        </div>
 	      #SET{name,type_objectif}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+        <div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
           <label for="#GET{name}"><:souscription_campagne:label_type_objectif:></label>[
           <span class='erreur_message'>(#GET{erreurs})</span>
           ]<select name="#GET{name}" class="select" id="#GET{name}">
@@ -27,16 +27,16 @@
             <option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription_campagne:label_type_objectif_adhesions:> <:souscription_campagne:info_type_objectif_adhesions:></option>
 		        ]
           </select>
-        </li>
+        </div>
 	      #SET{name,texte}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription_campagne:label_description:></label>[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]<textarea name="#GET{name}" class="textarea" rows="10">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
-				</li>
+				</div>
 	      #SET{name,objectif_oui_non}#SET{obli,''}#SET{defaut,#ENV{_defaut_objectif,''}}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-	      <li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+	      <div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 	     		<span class='erreur_message'>(#GET{erreurs})</span>
 	     		]
 	     		#SET{val,'off'}
@@ -46,27 +46,27 @@
 	     			<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
 	     			<label for="#GET{name}_#GET{val}"><:souscription_campagne:label_objectif_oui_non:></label>
 	     		</div>
-	     	</li>
-	      <li class="suite fieldset limite[(#ENV{#GET{name},#GET{defaut}}|=={on}|non)none]">
+	     	</div>
+	      <div class="suite fieldset limite[(#ENV{#GET{name},#GET{defaut}}|=={on}|non)none]">
 	     		<fieldset>
 	     			<legend><:souscription_campagne:label_objectif_groupe:></legend>
-	     			<ul class="editer-groupe">
+	     			<div class="editer-groupe">
 				      #SET{name,objectif}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-			        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+			        <div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 			          <label for="#GET{name}"><:souscription_campagne:label_objectif:> <:info_obligatoire_02:></label>[
 			          <span class='erreur_message'>(#GET{erreurs})</span>
 			          ]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}"/>
 				        <p class="explication"><:souscription_campagne:explication_campagne_objectif:></p>
-			        </li>
+			        </div>
 				      #SET{name,objectif_initial}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-			        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+			        <div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 			          <label for="#GET{name}"><:souscription_campagne:label_objectif_initial:></label>[
 			          <span class='erreur_message'>(#GET{erreurs})</span>
 			          ]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
 				        <p class="explication"><:souscription_campagne:explication_campagne_objectif_initial:></p>
-			        </li>
+			        </div>
 				      #SET{name,objectif_limiter}#SET{obli,''}#SET{defaut,#ENV{_defaut_objectif,''}}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				      <li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+				      <div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 				     		<span class='erreur_message'>(#GET{erreurs})</span>
 				     		]
 				     		#SET{val,'off'}
@@ -77,12 +77,12 @@
 				     			<label for="#GET{name}_#GET{val}"><:souscription_campagne:label_objectif_limite:></label>
 				     		</div>
 					      <p class="explication"><:souscription_campagne:explication_campagne_objectif_limite:></p>
-				     	</li>
-			      </ul>
+				     	</div>
+			      </div>
 		      </fieldset>
-	      </li>
+	      </div>
 	      #SET{name,configuration_specifique}#SET{obli,''}#SET{defaut,#ENV{_defaut_objectif,''}}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-	      <li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+	      <div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 	     		<span class='erreur_message'>(#GET{erreurs})</span>
 	     		]
 	     		#SET{val,'off'}
@@ -93,22 +93,22 @@
 	     			<label for="#GET{name}_#GET{val}"><:souscription_campagne:label_configuration_specifique:></label>
 	     		</div>
 		      <p class="explication"><:souscription_campagne:explication_configuration_specifique:></p>
-	     	</li>
-	      <li class="suite fieldset configuration_specifique[(#ENV{#GET{name},#GET{defaut}}|=={on}|non)none]">
+	     	</div>
+	      <div class="suite fieldset configuration_specifique[(#ENV{#GET{name},#GET{defaut}}|=={on}|non)none]">
 	     		<fieldset>
 	     			<legend><:souscription_campagne:label_montant_groupe:></legend>
-			      <ul class="editer-groupe">
+			      <div class="editer-groupe">
 	            <INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier='',campagne=oui,env} />
-	          </ul>
+	          </div>
 		      </fieldset>
 		      <fieldset>
 	     			<legend><:souscription_campagne:label_abo_montant_groupe:></legend>
-			      <ul class="editer-groupe">
+			      <div class="editer-groupe">
 	            <INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier='abo',campagne=oui,env} />
-	          </ul>
+	          </div>
 		      </fieldset>
-	      </li>
-      </ul>
+	      </div>
+      </div>
 
       <p class="boutons"><input type="submit" class="submit" value="<:souscription:confirmer_creation_campagne:>" /></p>
     </div>
