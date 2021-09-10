@@ -1,8 +1,8 @@
 <paquet prefix="souscription"
         categorie="communication"
-        version="2.6.0"
-        etat="test"
-        compatibilite="[3.0.5;3.2.*]"
+        version="3.0.0"
+        etat="dev"
+        compatibilite="[3.2.0;4.0.*]"
         logo="souscription-32.png"
         documentation="https://github.com/otetard/spip_souscription/"
         schema="0.8.4">
@@ -11,11 +11,11 @@
   <auteur lien='http://olivier.miskin.fr'>Olivier Tétard</auteur>
   <licence>GNU/GPL</licence>
 
-  <necessite nom="saisies" compatibilite="[1.24.0;]"/>
-  <necessite nom="verifier" compatibilite="[1.0.2;]"/>
-  <necessite nom="bank" compatibilite="[2.21.0;]"/>
-  <necessite nom="spip_bonux" compatibilite="[3.0.4;]"/>
-  <necessite nom="pays" compatibilite="];["/>
+  <necessite nom="saisies" compatibilite="[3.54.7;]"/>
+  <necessite nom="verifier" compatibilite="[2.0.0;]"/>
+  <necessite nom="bank" compatibilite="[5.0.3;]"/>
+  <necessite nom="spip_bonux" compatibilite="[3.8.3;]"/>
+  <necessite nom="pays" compatibilite="[3.4.9;]"/>
 
   <pipeline nom="affiche_auteurs_interventions" inclure="souscription_pipelines.php"/>
   <pipeline nom="autoriser" inclure="souscription_autorisations.php"/>
