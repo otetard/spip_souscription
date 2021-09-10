@@ -14,9 +14,9 @@
 		#ACTION_FORMULAIRE{#ENV{action}}
 
 		#SET{fl,souscription}
-		<ul class="editer-groupe">
+		<div class="editer-groupe">
 			#SET{name,adhesion_activer}#SET{obli,''}#SET{defaut,'off'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+			<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 				<span class='erreur_message'>(#GET{erreurs})</span>
 				]
 				#SET{val,off}
@@ -26,27 +26,23 @@
 					<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
 					<label for="#GET{name}_#GET{val}"><:souscription:label_activer_adhesion:></label>
 				</div>
-			</li>
-			<li class="suite fieldset adhesion[(#ENV{adhesion_activer,off}|=={on}|non)none]">
-				<ul class="editer-groupe">
-					<li class="fieldset">
-						<fieldset>
-							<legend><:souscription:label_adhesion_groupe:></legend>
-							<ul class="editer-groupe">
-								<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=adhesion,env} />
-							</ul>
-						</fieldset>
-					</li>
-					<li class="fieldset">
-						<fieldset>
-							<legend><:souscription:label_adhesion_abo_groupe:></legend>
-							<ul class="editer-groupe">
-								<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=adhesion_abo,env} />
-							</ul>
-						</fieldset>
-					</li>
+			</div>
+			<div class="suite fieldset adhesion[(#ENV{adhesion_activer,off}|=={on}|non)none]">
+				<fieldset>
+					<legend><:souscription:label_adhesion_groupe:></legend>
+					<div class="editer-groupe">
+						<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=adhesion,env} />
+					</div>
+				</fieldset>
+				<fieldset>
+					<legend><:souscription:label_adhesion_abo_groupe:></legend>
+					<div class="editer-groupe">
+						<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=adhesion_abo,env} />
+					</div>
+				</fieldset>
+				<div class="editer-groupe">
 					#SET{name,proposer_informer_comite_local}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-					<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+					<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 						<span class='erreur_message'>(#GET{erreurs})</span>
 						]
 						#SET{val,off}
@@ -56,12 +52,12 @@
 							<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
 							<label for="#GET{name}_#GET{val}"><:souscription:label_proposer_informer_comite_local:></label>
 						</div>
-					</li>
-				</ul>
-			</li>
+					</div>
+				</div>
+			</div>
 
 			#SET{name,don_activer}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+			<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 				<span class='erreur_message'>(#GET{erreurs})</span>
 				]
 				#SET{val,off}
@@ -71,29 +67,29 @@
 					<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
 					<label for="#GET{name}_#GET{val}"><:souscription:label_activer_don:></label>
 				</div>
-			</li>
-			<li class="suite fieldset don[(#ENV{don_activer,off}|=={on}|non)none]">
+			</div>
+			<div class="suite fieldset don[(#ENV{don_activer,off}|=={on}|non)none]">
 				<fieldset>
 					<legend><:souscription:label_don_groupe:></legend>
-					<ul class="editer-groupe">
+					<div class="editer-groupe">
 						<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=don,env} />
-					</ul>
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend><:souscription:label_don_abo_groupe:></legend>
-					<ul class="editer-groupe">
+					<div class="editer-groupe">
 						<INCLURE{fond=formulaires/inc-configurer_souscription_montants,casier=don_abo,env} />
-					</ul>
+					</div>
 				</fieldset>
-			</li>
+			</div>
 
 
-		</ul>
+		</div>
 		<fieldset>
 			<legend><:souscription:label_general_groupe:></legend>
-			<ul class="editer-groupe">
+			<div class="editer-groupe">
 				#SET{name,processus_paiement}#SET{obli,''}#SET{defaut,'redirige'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label>[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]
@@ -107,23 +103,23 @@
 						<input type="radio" name="#GET{name}" class="radio" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
 						<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
 					</div>
-				</li>
+				</div>
 				#SET{name,dispositions_fiscales_explications}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_dispositions_fiscales_explications:></label>[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]<textarea name="#GET{name}" class="textarea" rows="4">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
-				</li>
+				</div>
 				#SET{name,donnees_personnelles_explications}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_donnees_personnelles_explications:></label>[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]<textarea name="#GET{name}" class="textarea" rows="4">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
-				</li>
+				</div>
 				#SET{name,proposer_infolettre}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+				<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]
 					#SET{val,off}
@@ -133,54 +129,54 @@
 						<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
 						<label for="#GET{name}_#GET{val}"><:souscription:label_proposer_infolettre:></label>
 					</div>
-				</li>
-        <li class="editer long_label">
+				</div>
+        <div class="editer long_label">
             <label for="mailing_list">Choix de liste de diffusion</label>
-            <input type="text" class="text email" name="mailing_list" value="#ENV{mailing_list,newsletter}">
-        </li>
-			</ul>
+            <input type="text" class="text email" name="mailing_list" id="mailing_list" value="#ENV{mailing_list,newsletter}">
+        </div>
+			</div>
 		</fieldset>
 		<fieldset>
 			<legend><:bank:label_notifications:></legend>
-			<ul class="editer-groupe">
+			<div class="editer-groupe">
 				#SET{name,email_alerte_echeances}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<div class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_email_alerte_echeances:></label>[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]<input type="text" name="#GET{name}" class="text email" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
-				</li>
-			</ul>
+				</div>
+			</div>
 		</fieldset>
 
 		<fieldset>
 			<legend><:souscription:label_recu_groupe:></legend>
-			<ul class="editer-groupe">
+			<div class="editer-groupe">
 				#SET{name,association_nom}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_association_nom:></label>[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]<input type="text" name="#GET{name}" class="text email" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
-				</li>
+				</div>
 				#SET{name,association_adresse}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_association_adresse:></label>[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]<textarea name="#GET{name}" class="textarea" rows="4">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
-				</li>
+				</div>
 				#SET{name,association_objet}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_association_objet:></label>[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]<input type="text" name="#GET{name}" class="text email" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
-				</li>
+				</div>
 				#SET{name,association_mention}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 					<label for="#GET{name}"><:souscription:label_association_mention:></label>[
 					<span class='erreur_message'>(#GET{erreurs})</span>
 					]<input type="text" name="#GET{name}" class="text email" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
-				</li>
-			</ul>
+				</div>
+			</div>
 		</fieldset>
 
 		<input type="hidden" name="_meta_casier" value="souscription" />
