@@ -1,5 +1,5 @@
 [(#SET{name,[(#ENV{casier})_]type_saisie})]#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+<div class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 	<label for="#GET{name}"><:souscription:label_type_saisie:></label>[
 	<span class='erreur_message'>(#GET{erreurs})</span>
 	]<select name="#GET{name}" class="select" id="#GET{name}">
@@ -14,29 +14,29 @@
 		#SET{val,selection}
 		<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]><:souscription:configurer_type_saisie_selection:></option>
 	</select>
-</li>
+</div>
 [(#ENV{campagne,0}|non)
 [(#SET{name,[(#ENV{casier})_]montants_label})]#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+<div class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 	<label for="#GET{name}"><:souscription:label_montants_label:></label>[
 	<span class='erreur_message'>(#GET{erreurs})</span>
 	]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
-</li>
+</div>
 ]
 [(#SET{name,[(#ENV{casier})_]montants})]#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 	<label for="#GET{name}"><:souscription:label_montants:></label>[
 	<span class='erreur_message'>(#GET{erreurs})</span>
 	]<textarea name="#GET{name}" class="textarea" rows="4">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
 	<p class="explication"><:souscription:explication_montants:></p>
-</li>
+</div>
 [(#ENV{campagne,0}|non)
 [(#SET{name,[(#ENV{casier})_]montants_description})]#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 	<label for="#GET{name}"><:souscription:label_montants_explication:></label>[
 	<span class='erreur_message'>(#GET{erreurs})</span>
 	]<textarea name="#GET{name}" class="textarea" rows="4">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
-</li>
+</div>
 ]
