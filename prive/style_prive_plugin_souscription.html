@@ -10,7 +10,7 @@
 .souscription #wysiwyg .label {display:inline;}
 .souscription .fiche_objet.commande .inner,
 .souscription .fiche_objet[class*='echec'] .inner,
-.souscription .fiche_objet.abandon .inner {background:url(#CHEMIN{images/rayures-gris.gif}) center repeat;}
+.souscription .fiche_objet.abandon .inner {background:url(#CHEMIN{images/rayures-gris.svg}|sinon{#CHEMIN{images/rayures-gris.gif}}) center repeat;}
 .souscription #wysiwyg .contenu_abo_statut .bouton_action_post {float: #ENV{right}}
 
 .souscription .fiche_objet.abonnement:after {
@@ -30,7 +30,7 @@
 .liste-objets.souscriptions .abandon th,
 .liste-objets.souscriptions tr[class*='echec'] td,
 .liste-objets.souscriptions tr[class*='echec'] th
-{background:url(#CHEMIN{images/rayures-gris.gif}) center repeat fixed;opacity:0.6;}
+{background:url(#CHEMIN{images/rayures-gris.svg}|sinon{#CHEMIN{images/rayures-gris.gif}}) center repeat fixed;opacity:0.6;}
 
 .liste-objets.souscriptions .abonnement .id:after {
 	content: "";
