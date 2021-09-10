@@ -371,18 +371,20 @@ function verifier_campagne($id_souscription_campagne, $type_souscription = null)
 		'spip_souscription_campagnes', 'id_souscription_campagne=' . sql_quote(intval($id_souscription_campagne)));
 
 	/* La campagne doit exister */
-	if (!count($campagne['type_objectif']))
+	if (empty($campagne['type_objectif'])) {
 		return false;
-
-	elseif ($type_souscription!=null && $campagne['type_objectif']!=$type_souscription)
+	}
+	elseif ($type_souscription!=null && $campagne['type_objectif']!=$type_souscription) {
 		return false;
+	}
 
 	/* Si la campagne doit être fermée lorsque l'objectif est atteint,
 	 * alors on bloque. */
 	elseif ($campagne['objectif_limiter'] == 'on' &&
 		calcul_avancement_campagne($id_souscription_campagne, $campagne['type_objectif'], $campagne['objectif_initial'])>=$campagne['objectif']
-	)
+	) {
 		return false;
+	}
 
 	return true;
 }
