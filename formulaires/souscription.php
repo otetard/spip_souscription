@@ -68,6 +68,10 @@ function formulaires_souscription_charger_dist($id_souscription_campagne){
 			$email = $GLOBALS['visiteur_session']['session_email'];
 	}
 
+	if (!function_exists('montants_str2array')) {
+		include_spip('souscription_fonctions');
+	}
+
 	$valeurs = array(
 		'montant' => '',
 		'montant_libre' => '',
