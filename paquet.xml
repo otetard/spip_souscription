@@ -1,7 +1,7 @@
 <paquet prefix="souscription"
         categorie="communication"
         version="3.0.0"
-        etat="dev"
+        etat="test"
         compatibilite="[3.2.0;4.0.*]"
         logo="souscription-32.png"
         documentation="https://github.com/otetard/spip_souscription/"
