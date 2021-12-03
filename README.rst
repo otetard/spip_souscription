@@ -1,9 +1,16 @@
-==========================================
+Dépôt archivé
+========================
+
+Le développement de ce plugin se poursuit sur https://git.spip.net/spip-contrib-extensions/souscription
+
+
+
+
 Souscription : dons et adhésions avec SPIP
 ==========================================
 
 Présentation du *plugin*
-========================
+------------------------
 
 Souscription est un *plugin* permettant de mettre en place, sur un
 site fonctionnant sous `SPIP <http://www.spip.net/>`_, des campagnes
@@ -17,7 +24,7 @@ Ce *plugin* a été développé pour les besoins d'`Attac France
 <http://www.bastamag.net>`_.
 
 Installation
-============
+------------
 
 Le *plugin* étant encore largement en développement (bien qu'utilisé
 en production par Attac France), il n'est pas installable directement
@@ -44,14 +51,14 @@ des *plugins* de SPIP, ce qui permettra de télécharger les autres
 dépendances automatiquement.
 
 Configuration
-=============
+-------------
 
 Il est possible de configurer le *plugin* (définition des montants
 proposés pour l'adhésion et/ou le dons). Pour cela, il faut se rendre
 dans le menu « Configuration » puis « Souscriptions ».
 
 Première utilisation
-====================
+--------------------
 
 La première étape pour utiliser le *plugin* souscription est de mettre
 en place une campagne, d'adhésions ou de dons. Une campagne peut avoir
